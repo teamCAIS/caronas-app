@@ -2,9 +2,9 @@ import React from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 
-export default class HomeScreen extends React.Component {
+export default class CaronaDetailsScreen extends React.Component {
 
-  static navigationOptions = ({ navigation }) => {
+ /*  static navigationOptions = ({ navigation }) => {
     return {
       title: 'Caronas',
       headerTitle: 'Caronas',
@@ -17,16 +17,12 @@ export default class HomeScreen extends React.Component {
         />
       ),
     }
-  }
+  } */
 
   render() {
     return (
       <View style={styles.container}>
-        <Text>Imagine uma lista de caronas</Text>
-        <Button
-          title="Ver detalhes"
-          onPress={() => this.props.navigation.navigate('Details')}
-        />
+        <Text>Detalhes da carona</Text>
       </View>
     );
   }
