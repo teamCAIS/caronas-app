@@ -43,6 +43,6 @@ export default createSwitchNavigator(
     
   },
   {
-    initialRouteName: 'App',
+    initialRouteName: 'Auth',
   }
 );
