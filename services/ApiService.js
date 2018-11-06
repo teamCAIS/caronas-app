@@ -25,7 +25,7 @@ function getUserInfo(token, action) {
     })
     .then(response => response.json())
     .then(result => {
-        action(result);
+        action(result, token);
     });
 }
 

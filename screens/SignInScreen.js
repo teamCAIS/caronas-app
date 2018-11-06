@@ -4,11 +4,6 @@ import { login } from '../services/ApiService';
 
 export default class App extends React.Component {
 
-  constructor() {
-    super();
-    this.state = { user: [{nome: 'faça o login'}]}
-  }
-
   static navigationOptions = {
     header: null,
   };
@@ -21,7 +16,6 @@ export default class App extends React.Component {
           title='Login'
           onPress={this._handleLoginPress}
         />
-        <Text>{this.state.user[0].nome}</Text>
         <Text
           style={{color: '#0033dd'}}
           onPress={this._handleCadastroPress}
@@ -34,13 +28,23 @@ export default class App extends React.Component {
 
   _handleLoginPress = () => {
     payload = {
-      email: 'eu@eu.com',
+      email: 'ele@ele.com',
 			password: 1234
     }
-    login(payload, (result) => {
-      this.setState({ user: result })
+    login(payload, (userArray, token) => {
+
+      //salvar o token na AsyncStorage
+
+      const tipo = userArray[0].tipo;
+      //ir para o drawer do tipo certo
+      if(tipo == 1)
+        this.props.navigation.navigate('PassageiroApp');
+      else if(tipo == 2)
+        this.props.navigation.navigate('MotoristaApp');
+      else
+        alert("Erro ao logar");
+
     });
-    //this.props.navigation.navigate('App');
   }
   
   _handleCadastroPress = () => {

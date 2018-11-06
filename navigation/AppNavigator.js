@@ -1,24 +1,43 @@
 import { createSwitchNavigator, createStackNavigator, createDrawerNavigator } from 'react-navigation';
 //screens
 import AuthLoadingScreen from '../screens/AuthLoadingScreen';
-import HomeScreen from '../screens/HomeScreen';
+import PassageiroHomeScreen from '../screens/PassageiroHomeScreen';
 import SignInScreen from '../screens/SignInScreen';
 import CadastroScreen from '../screens/CadastroScreen';
 import CaronaDetailsScreen from '../screens/CaronaDetailsScreen';
+import MotoristaHomeScreen from '../screens/MotoristaHomeScreen';
 
-const AppStack = createStackNavigator(
+const MotoristaAppStack = createStackNavigator(
   {
-    Home: HomeScreen,
+    MotoristaHome: MotoristaHomeScreen,
+  },
+  {
+    initialRouteName: 'MotoristaHome'
+  }
+);
+
+const PassageiroAppStack = createStackNavigator(
+  {
+    PassageiroHome: PassageiroHomeScreen,
     Details: CaronaDetailsScreen,
   },
   {
-    initialRouteName: 'Home'
+    initialRouteName: 'PassageiroHome'
+  }
+);
+
+const MotoristaAppDrawer = createDrawerNavigator(
+  {
+    Inicio: MotoristaAppStack,
+  },
+  {
+    initialRouteName: 'Inicio',
   }
 )
 
-const AppDrawer = createDrawerNavigator(
+const PassageiroAppDrawer = createDrawerNavigator(
   {
-    Caronas: AppStack,
+    Caronas: PassageiroAppStack,
   },
   {
     initialRouteName: 'Caronas',
@@ -39,8 +58,8 @@ export default createSwitchNavigator(
   {
     AuthLoading: AuthLoadingScreen,
     Auth: AuthStack,
-    App: AppDrawer,
-    
+    PassageiroApp: PassageiroAppDrawer,
+    MotoristaApp: MotoristaAppDrawer,
   },
   {
     initialRouteName: 'Auth',

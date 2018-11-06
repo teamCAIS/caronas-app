@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 
-export default class HomeScreen extends React.Component {
+export default class PassageiroHomeScreen extends React.Component {
 
   static navigationOptions = ({ navigation }) => {
     return {
@@ -22,6 +22,7 @@ export default class HomeScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
+        <Text>Tela dos passageiros</Text>
         <Text>Imagine uma lista de caronas</Text>
         <Button
           title="Ver detalhes"
