@@ -6,6 +6,8 @@ import SignInScreen from '../screens/SignInScreen';
 import CadastroScreen from '../screens/CadastroScreen';
 import CaronaDetailsScreen from '../screens/CaronaDetailsScreen';
 import MotoristaHomeScreen from '../screens/MotoristaHomeScreen';
+import HistoricoScreen from '../screens/HistoricoScreen';
+import PerfilScreen from '../screens/PerfilScreen';
 
 const MotoristaAppStack = createStackNavigator(
   {
@@ -38,6 +40,11 @@ const MotoristaAppDrawer = createDrawerNavigator(
 const PassageiroAppDrawer = createDrawerNavigator(
   {
     Caronas: PassageiroAppStack,
+    Historico: HistoricoScreen,
+    Perfil: {
+      screen: PerfilScreen,
+      drawerLabel: 'Seu perfil',
+    },
   },
   {
     initialRouteName: 'Caronas',

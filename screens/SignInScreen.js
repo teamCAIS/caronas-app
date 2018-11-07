@@ -28,7 +28,7 @@ export default class App extends React.Component {
 
   _handleLoginPress = () => {
     payload = {
-      email: 'ele@ele.com',
+      email: 'eu@eu.com',
 			password: 1234
     }
     login(payload, (userArray, token) => {
