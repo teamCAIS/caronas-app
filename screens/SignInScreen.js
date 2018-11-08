@@ -1,6 +1,7 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { StyleSheet, AsyncStorage } from 'react-native';
 import { login } from '../services/ApiService';
+import { Container, Text, Content, Button } from 'native-base';
 
 export default class App extends React.Component {
 
@@ -10,19 +11,22 @@ export default class App extends React.Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        <Text>Sign In</Text>
-        <Button
-          title='Login'
-          onPress={this._handleLoginPress}
-        />
-        <Text
-          style={{color: '#0033dd'}}
-          onPress={this._handleCadastroPress}
-        >
-        Cadastro
-        </Text>
-      </View>
+      <Container>
+        <Content padder>
+          <Text>Sign In</Text>
+          <Button
+            onPress={this._handleLoginPress}
+          >
+            <Text>Login</Text>
+          </Button>
+          <Text
+            style={{color: '#0033dd'}}
+            onPress={this._handleCadastroPress}
+          >
+          Cadastro
+          </Text>
+        </Content>
+      </Container>
     );
   }
 
@@ -34,6 +38,7 @@ export default class App extends React.Component {
     login(payload, (userArray, token) => {
 
       //salvar o token na AsyncStorage
+      this._storeToken(token);
 
       const tipo = userArray[0].tipo;
       //ir para o drawer do tipo certo
@@ -49,6 +54,14 @@ export default class App extends React.Component {
   
   _handleCadastroPress = () => {
     this.props.navigation.navigate('Cadastro');
+  }
+
+  _storeToken = async (token) => {
+    try {
+      await AsyncStorage.setItem('userToken', token);
+    } catch (error) {
+      alert("erro ao salvar o token");
+    }
   }
 }
 

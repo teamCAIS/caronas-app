@@ -8,6 +8,7 @@ import CaronaDetailsScreen from '../screens/CaronaDetailsScreen';
 import MotoristaHomeScreen from '../screens/MotoristaHomeScreen';
 import HistoricoScreen from '../screens/HistoricoScreen';
 import PerfilScreen from '../screens/PerfilScreen';
+import Menu from '../components/Menu';
 
 const MotoristaAppStack = createStackNavigator(
   {
@@ -48,6 +49,7 @@ const PassageiroAppDrawer = createDrawerNavigator(
   },
   {
     initialRouteName: 'Caronas',
+    contentComponent: Menu,
   }
 );
 
@@ -69,6 +71,6 @@ export default createSwitchNavigator(
     MotoristaApp: MotoristaAppDrawer,
   },
   {
-    initialRouteName: 'Auth',
+    initialRouteName: 'AuthLoading',
   }
 );

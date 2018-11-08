@@ -1,5 +1,4 @@
-baseUrl = 'http://192.168.15.10/caronas/backend/public/api';
-
+baseUrl = 'http://192.168.15.7/caronas/backend/public/api';
 
 export function login(payload, action) {
     fetch(baseUrl, {
