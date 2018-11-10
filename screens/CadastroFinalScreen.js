@@ -3,15 +3,19 @@ import { StyleSheet, View, AsyncStorage } from 'react-native';
 import { Input, Container, Content, Form, Item, Label, Button, Text } from 'native-base';
 import { checarCodigo } from '../services/ApiService';
 
-export default class CodigoScreen extends React.Component {
+export default class CadastroFinalScreen extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { codigoDigitado: '' }
+    const codigoValidacao = this.props.navigation.getParam('codigoValidacao', '');
+    this.state = { 
+        codigoValidacao,
+        tipoUsuario: '',
+    }
   }
 
   static navigationOptions = {
-    title: 'Código',
+    title: 'Cadastro',
   }
 
   render() {
@@ -20,8 +24,8 @@ export default class CodigoScreen extends React.Component {
           <Content>
               <Form>
                   <Item floatingLabel>
-                      <Label>Código de acesso</Label>
-                      <Input value={this.state.codigoDigitado} onChangeText={text => this.setState({codigoDigitado: text})}/>
+                      <Label>Você é motorista ou passageiro?</Label>
+                      <Input value={this.state.tipoUsuario} onChangeText={text => this.setState({tipoUsuario: text})}/>
                   </Item>
                   <Button onPress={this._enviaCodigo}><Text>Confirmar</Text></Button>
               </Form>
@@ -30,15 +34,11 @@ export default class CodigoScreen extends React.Component {
     );
   }
 
-  _enviaCodigo = async () => {
-    const token = await AsyncStorage.getItem('userToken');
-    const payload = {codigo_validacao: this.state.codigoDigitado}
-    const result = await checarCodigo(token, payload);
-
-    if(result == "success")
-      this.props.navigation.navigate('CadastroFinal', { codigoValidacao: this.state.codigoDigitado });
-    else
-      alert(result);
+  _enviaCodigo = () => {
+    alert(this.state.codigoValidacao);
+    /* const token = await AsyncStorage.getItem('userToken');
+    const payload = {codigo_usuario: this.state.codigoDigitado}
+    checarCodigo(token, payload, (res) => {alert(res.message);}); */
       
   }
 }

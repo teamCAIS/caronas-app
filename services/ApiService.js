@@ -57,22 +57,24 @@ function checarTipoUsuario(token, payload, action) {
     });
 }
 
-export function checarCodigo(token, payload, action) {
-    fetch(baseUrl+'/checarCadastroUsuario', {
+export async function checarCodigo(token, payload) {
+    const response = await fetch(baseUrl+'/checarCadastroUsuario', {
         method: 'post',
         body: JSON.stringify(payload),
         headers: {
             "Content-Type": "application/json",
             "Authorization": "bearer "+token
         }
-    })
-    .then(response => {
-        if(!response.ok)
-            throw Error('O código não foi verificado');
-        return response.json()
-    })
-    .then(result => {
-        action(result);
-    })
-    .catch(error => alert(error));
+    });
+
+    if(!response.ok)
+        return 'Falha na conexão';
+
+    const result = await response.json();
+
+    if(result.status == "error")
+        return result.message;
+    
+    if(result.status == "success")
+        return result.status;
 }
