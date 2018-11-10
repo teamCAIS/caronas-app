@@ -4,13 +4,13 @@ import { StyleSheet, Text, View } from 'react-native';
 export default class CadastroScreen extends React.Component {
 
   static navigationOptions = {
-    title: 'Cadastro',
+    title: 'Pré-cadastro',
   }
 
   render() {
     return (
       <View style={styles.container}>
-        <Text>Cadastro</Text>
+        <Text>Pré-cadastro</Text>
       </View>
     );
   }

@@ -42,7 +42,9 @@ export default class App extends React.Component {
 
       const tipo = userArray[0].tipo;
       //ir para o drawer do tipo certo
-      if(tipo == 1)
+      if(tipo == 0)
+        this.props.navigation.navigate('Codigo');
+      else if(tipo == 1)
         this.props.navigation.navigate('PassageiroApp');
       else if(tipo == 2)
         this.props.navigation.navigate('MotoristaApp');

@@ -9,6 +9,7 @@ import MotoristaHomeScreen from '../screens/MotoristaHomeScreen';
 import HistoricoScreen from '../screens/HistoricoScreen';
 import PerfilScreen from '../screens/PerfilScreen';
 import Menu from '../components/Menu';
+import CodigoScreen from '../screens/CodigoScreen';
 
 const MotoristaAppStack = createStackNavigator(
   {
@@ -56,7 +57,8 @@ const PassageiroAppDrawer = createDrawerNavigator(
 const AuthStack = createStackNavigator(
   { 
     SignIn: SignInScreen,
-    Cadastro: CadastroScreen 
+    Cadastro: CadastroScreen,
+    Codigo: CodigoScreen,
   },
   {
     initialRouteName: 'SignIn',
