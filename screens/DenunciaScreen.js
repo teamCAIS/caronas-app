@@ -2,15 +2,14 @@ import React from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 
-export default class MotoristaHomeScreen extends React.Component {
+export default class DenunciaScreen extends React.Component {
 
-  static navigationOptions = ({ navigation }) => {
+ /*  static navigationOptions = ({ navigation }) => {
     return {
-      title: 'Início',
-      headerTitle: 'Início',
+      title: 'Caronas',
+      headerTitle: 'Caronas',
       headerLeft: (
         <MaterialIcons
-          style={{marginLeft: 12}}
           name="menu"
           size={32}
           onPress={() => navigation.openDrawer()}
@@ -18,16 +17,12 @@ export default class MotoristaHomeScreen extends React.Component {
         />
       ),
     }
-  }
+  } */
 
   render() {
     return (
       <View style={styles.container}>
-        <Text>Tela dos motoristas</Text>
-        <Button
-          title="Criar carona"
-          onPress={() => {}}
-        />
+        <Text>Denúncia</Text>
       </View>
     );
   }

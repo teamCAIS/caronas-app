@@ -32,7 +32,7 @@ export default class CodigoScreen extends React.Component {
 
   _enviaCodigo = async () => {
     const token = await AsyncStorage.getItem('userToken');
-    const payload = {codigo_validacao: this.state.codigoDigitado}
+    const payload = {codigo_validacao: 'FADCAC06'}
     const result = await checarCodigo(token, payload);
 
     if(result == "success")

@@ -4,7 +4,7 @@ import { Container, Content, Text,  View,  } from "native-base";
 import { MaterialIcons } from '@expo/vector-icons';
 const routes = ["Caronas", "Historico", "Perfil"];
 
-export default class Menu extends React.Component {
+export default class MenuMotorista extends React.Component {
   render() {
     return (
       <Container>
@@ -23,8 +23,8 @@ export default class Menu extends React.Component {
 
           <View style={[styles.listItem, {borderTopColor: '#aaa', borderTopWidth: 1, paddingTop: 12}]}>
             <MaterialIcons style={styles.icons} name="directions-car" size={32} />
-            <Text onPress={() => this.props.navigation.navigate('Caronas')} style={[styles.item]}>
-              Ver caronas
+            <Text onPress={() => this.props.navigation.navigate('Inicio')} style={[styles.item]}>
+              Início
             </Text>
           </View>
 

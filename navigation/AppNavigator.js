@@ -11,6 +11,9 @@ import PerfilScreen from '../screens/PerfilScreen';
 import Menu from '../components/Menu';
 import CodigoScreen from '../screens/CodigoScreen';
 import CadastroFinalScreen from '../screens/CadastroFinalScreen';
+import DenunciaScreen from '../screens/DenunciaScreen';
+import SobreScreen from '../screens/SobreScreen';
+import MenuMotorista from '../components/MenuMotorista';
 
 const MotoristaAppStack = createStackNavigator(
   {
@@ -34,9 +37,16 @@ const PassageiroAppStack = createStackNavigator(
 const MotoristaAppDrawer = createDrawerNavigator(
   {
     Inicio: MotoristaAppStack,
+    Historico: HistoricoScreen,
+    Perfil: {
+      screen: PerfilScreen,
+    },
+    Denuncia: DenunciaScreen,
+    Sobre: SobreScreen,
   },
   {
     initialRouteName: 'Inicio',
+    contentComponent: MenuMotorista,
   }
 )
 
@@ -46,8 +56,9 @@ const PassageiroAppDrawer = createDrawerNavigator(
     Historico: HistoricoScreen,
     Perfil: {
       screen: PerfilScreen,
-      drawerLabel: 'Seu perfil',
     },
+    Denuncia: DenunciaScreen,
+    Sobre: SobreScreen,
   },
   {
     initialRouteName: 'Caronas',

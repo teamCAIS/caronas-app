@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, View, AsyncStorage } from 'react-native';
 import { Input, Container, Content, Form, Item, Label, Button, Text } from 'native-base';
-import { checarCodigo } from '../services/ApiService';
+import { cadastroFinal } from '../services/ApiService';
 
 export default class CadastroFinalScreen extends React.Component {
 
@@ -34,11 +34,23 @@ export default class CadastroFinalScreen extends React.Component {
     );
   }
 
-  _enviaCodigo = () => {
-    alert(this.state.codigoValidacao);
-    /* const token = await AsyncStorage.getItem('userToken');
-    const payload = {codigo_usuario: this.state.codigoDigitado}
-    checarCodigo(token, payload, (res) => {alert(res.message);}); */
+  _enviaCodigo = async () => {
+    const payload = {
+      tipo: 2,
+      codigo_validacao: this.state.codigoValidacao,
+      url_foto: '',
+      corCarro: 'Verde',
+      placa: 'xxxxxxx',
+      modelo: 'Celta'
+    }
+    const token = await AsyncStorage.getItem('userToken');
+    const result = await cadastroFinal(token, payload);
+
+    if(result == "success")
+      alert('Sucesso');
+      //this.props.navigation.navigate('CadastroFinal');
+    else
+      alert(result);
       
   }
 }

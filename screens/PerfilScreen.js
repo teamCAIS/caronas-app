@@ -13,6 +13,7 @@ class PerfilScreen extends React.Component {
       drawerLabel: 'Seu perfil',
       headerLeft: (
         <MaterialIcons
+          style={{marginLeft: 12}}
           name="menu"
           size={32}
           onPress={() => navigation.openDrawer()}

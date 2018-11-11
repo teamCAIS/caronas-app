@@ -16,6 +16,7 @@ export function login(payload, action) {
         return response.json()
     })
     .then(result =>{
+        //action(result, result['data']['token'])
         getUserInfo(result['data']['token'], action);
         //alert(result['data']['token']);
         
@@ -27,7 +28,6 @@ function getUserInfo(token, action) {
     fetch(baseUrl+'/checarTipoUsuario', {
         method: 'get',
         headers: {
-            "Content-Type": "application/json",
             "Authorization": "bearer "+token
         }
     })
@@ -39,26 +39,21 @@ function getUserInfo(token, action) {
     .then(result => {
         action(result, token);
     })
-    .catch(error => alert(error));
-}
-
-function checarTipoUsuario(token, payload, action) {
-    fetch(baseUrl+'/checarCadastroUsuario', {
-        method: 'post',
-        headers: {
-            "Content-Type": "application/json",
-            body: JSON.stringify(payload),
-            "Authorization": "bearer "+token
-        }
-    })
-    .then(response => response.json())
-    .then(result => {
-        action(result);
-    });
+    .catch(error => alert("Erro getUserInfo"));
 }
 
 export async function checarCodigo(token, payload) {
-    const response = await fetch(baseUrl+'/checarCadastroUsuario', {
+    const result = post(token, payload, '/checarCadastroUsuario');
+    return result;
+}
+
+export async function cadastroFinal(token, payload) {
+    const result = await post(token, payload, '/cadastroFinalUsuario');
+    return result;
+}
+
+async function post(token, payload, rota) {
+    const response = await fetch(baseUrl+rota, {
         method: 'post',
         body: JSON.stringify(payload),
         headers: {
@@ -77,4 +72,19 @@ export async function checarCodigo(token, payload) {
     
     if(result.status == "success")
         return result.status;
+}
+
+export async function getCorridaAtual(token) {
+    const response = await fetch(baseUrl+'/corridaAtualMotorista', {
+        method: 'get',
+        headers: {
+            "Authorization": "bearer "+token
+        }
+    })
+
+    if(!response.ok)
+        return 'Falha na conexão';
+
+    const data = await response.json();
+    return data;
 }

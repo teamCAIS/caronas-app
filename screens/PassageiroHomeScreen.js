@@ -10,6 +10,7 @@ export default class PassageiroHomeScreen extends React.Component {
       headerTitle: 'Caronas',
       headerLeft: (
         <MaterialIcons
+          style={{marginLeft: 12}}
           name="menu"
           size={32}
           onPress={() => navigation.openDrawer()}

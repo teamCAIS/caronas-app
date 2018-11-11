@@ -21,7 +21,8 @@ export default class AuthLoadingScreen extends React.Component {
 
   _handleFinishLoading = async () => {
     const userToken = await AsyncStorage.getItem('userToken');
-    this.props.navigation.navigate(userToken ? 'PassageiroApp' : 'Auth');
+    //this.props.navigation.navigate(userToken ? 'MotoristaApp' : 'Auth');
+    this.props.navigation.navigate(userToken ? 'MotoristaApp' : 'PassageiroApp');
   }
 
   // Render any loading content that you like here
