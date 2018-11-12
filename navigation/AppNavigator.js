@@ -14,10 +14,12 @@ import CadastroFinalScreen from '../screens/CadastroFinalScreen';
 import DenunciaScreen from '../screens/DenunciaScreen';
 import SobreScreen from '../screens/SobreScreen';
 import MenuMotorista from '../components/MenuMotorista';
+import AdicionarCaronaScreen from '../screens/AdicionarCaronaScreen';
 
 const MotoristaAppStack = createStackNavigator(
   {
     MotoristaHome: MotoristaHomeScreen,
+    AdicionarCarona: AdicionarCaronaScreen,
   },
   {
     initialRouteName: 'MotoristaHome'

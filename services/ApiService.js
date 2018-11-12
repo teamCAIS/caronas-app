@@ -64,6 +64,11 @@ async function post(token, payload, rota) {
         return result.status;
 }
 
+export async function criarCorrida(token, payload) {
+    const result = await post(token, payload, '/criarCorridaMotorista');
+    return result;
+}
+
 export async function getCorridaAtual(token) {
     const response = await fetch(baseUrl+'/corridaAtualMotorista', {
         method: 'get',
