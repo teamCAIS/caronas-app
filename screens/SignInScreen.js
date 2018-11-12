@@ -1,9 +1,14 @@
 import React from 'react';
 import { StyleSheet, AsyncStorage } from 'react-native';
-import { login } from '../services/ApiService';
-import { Container, Text, Content, Button } from 'native-base';
+import { login, getUserInfo } from '../services/ApiService';
+import { Container, Text, Content, Button, Input, Form, Item, Label } from 'native-base';
 
 export default class App extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {email: '', password: ''}
+  }
 
   static navigationOptions = {
     header: null,
@@ -13,12 +18,22 @@ export default class App extends React.Component {
     return (
       <Container>
         <Content padder>
-          <Text>Sign In</Text>
-          <Button
-            onPress={this._handleLoginPress}
-          >
-            <Text>Login</Text>
-          </Button>
+          <Form>
+            <Item floatingLabel>
+              <Label>Email</Label>
+              <Input textContentType="emailAddress" value={this.state.email} onChangeText={text => this.setState({email: text})} />
+            </Item>
+            <Item floatingLabel>
+              <Label>Senha</Label>
+              <Input textContentType="password" value={this.state.password} onChangeText={text => this.setState({password: text})} />
+            </Item>
+            <Button
+              onPress={this._handleLoginPress}
+            >
+              <Text>Login</Text>
+            </Button>
+          </Form>
+          
           <Text
             style={{color: '#0033dd'}}
             onPress={this._handleCadastroPress}
@@ -30,28 +45,37 @@ export default class App extends React.Component {
     );
   }
 
-  _handleLoginPress = () => {
+  _handleLoginPress = async () => {
+    /* payload = {
+      email: this.state.email,
+			password: this.state.password
+    } */
     payload = {
-      email: 'eu@eu.com',
-			password: 1234
+      email: 'eu@eu.br',
+      password: '1234'
     }
-    login(payload, (userArray, token) => {
 
-      //salvar o token na AsyncStorage
-      this._storeToken(token);
+    const token = await login(payload);
 
-      const tipo = userArray[0].tipo;
-      //ir para o drawer do tipo certo
-      if(tipo == 0)
-        this.props.navigation.navigate('Codigo');
-      else if(tipo == 1)
-        this.props.navigation.navigate('PassageiroApp');
-      else if(tipo == 2)
-        this.props.navigation.navigate('MotoristaApp');
-      else
-        alert("Erro ao logar");
+    //salvar o token na AsyncStorage
+    this._storeToken(token);
 
-    });
+    alert(token);
+
+    const info = await getUserInfo(token);
+
+    const tipo = info[0].tipo;
+    this._storeUser(info[0]);
+    //ir para a tela do tipo certo
+    if(tipo == 0)
+      this.props.navigation.navigate('Codigo');
+    else if(tipo == 1)
+      this.props.navigation.navigate('PassageiroApp');
+    else if(tipo == 2)
+      this.props.navigation.navigate('MotoristaApp');
+    else
+      alert("Erro ao logar");
+
   }
   
   _handleCadastroPress = () => {
@@ -62,7 +86,15 @@ export default class App extends React.Component {
     try {
       await AsyncStorage.setItem('userToken', token);
     } catch (error) {
-      alert("erro ao salvar o token");
+      console.log("erro ao salvar o token");
+    }
+  }
+  _storeUser = async (userObj) => {
+    try {
+      const user = JSON.stringify(userObj);
+      await AsyncStorage.setItem('user', user);
+    } catch (error) {
+      console.log(error);
     }
   }
 }

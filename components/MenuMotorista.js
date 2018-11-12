@@ -5,7 +5,26 @@ import { MaterialIcons } from '@expo/vector-icons';
 const routes = ["Caronas", "Historico", "Perfil"];
 
 export default class MenuMotorista extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = { user: { nome: 'não foi', email: '', genero: 2} }
+  }
+
+  async componentDidMount() {
+    let user = await AsyncStorage.getItem('user');
+    userObj = JSON.parse(user);
+    this.setState({user: userObj});
+  }
+
   render() {
+
+    let letra = 'x';
+    if(this.state.user.genero == 0)
+      letra = 'o';
+    if(this.state.user.genero == 1)
+      letra = 'a';
+
     return (
       <Container>
         <Content style={{ marginLeft: 16 }}>
@@ -17,8 +36,8 @@ export default class MenuMotorista extends React.Component {
                 uri: "https://static1.squarespace.com/static/51435924e4b02285c8b9c92d/t/558c96c3e4b03457461d0f2e/1508845725260/caiobraga-perfil.jpg"
               }}
             />
-            <Text>Bem vindx, Usuário</Text>
-            <Text style={{fontSize: 14}}>email@email.com</Text>
+            <Text>Bem vind{letra}, {this.state.user.nome}</Text>
+            <Text style={{fontSize: 14}}>{this.state.user.email}</Text>
           </View>
 
           <View style={[styles.listItem, {borderTopColor: '#aaa', borderTopWidth: 1, paddingTop: 12}]}>

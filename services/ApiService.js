@@ -1,45 +1,35 @@
-const baseUrl = 'http://192.168.15.5/caronas/backend/public/api';
+const baseUrl = 'http://192.168.15.5/backend/public/api';
 
 const msgErro = 'Erro ao conectar com o servidor';
 
-export function login(payload, action) {
-    fetch(baseUrl, {
+export async function login(payload) {
+    let response = await fetch(baseUrl, {
         method: 'post',
         body: JSON.stringify(payload),
         headers: {
             "Content-Type": "application/json"
-          }
+        }
     })
-    .then(response =>  {
-        if(!response.ok)
-            throw Error(msgErro);
-        return response.json()
-    })
-    .then(result =>{
-        //action(result, result['data']['token'])
-        getUserInfo(result['data']['token'], action);
-        //alert(result['data']['token']);
-        
-    })
-    .catch(error => alert(error));
+
+    let result = await response.json();
+    let token = result.data.token;
+    return token;
 }
 
-function getUserInfo(token, action) {
-    fetch(baseUrl+'/checarTipoUsuario', {
+export async function getUserInfo(token) {
+    const response = await fetch(baseUrl+'/indexUsuario', {
         method: 'get',
         headers: {
+            "Content-Type": "application/json",
             "Authorization": "bearer "+token
         }
     })
-    .then(response =>  {
-        if(!response.ok)
-            throw Error(response.status);
-        return response.json()
-    })
-    .then(result => {
-        action(result, token);
-    })
-    .catch(error => alert("Erro getUserInfo"));
+
+    if(!response.ok)
+        return 'Falha na conexão'
+    
+    const data = await response.json();
+    return data;
 }
 
 export async function checarCodigo(token, payload) {

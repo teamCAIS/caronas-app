@@ -36,19 +36,19 @@ export default class CadastroFinalScreen extends React.Component {
 
   _enviaCodigo = async () => {
     const payload = {
-      tipo: 2,
+      tipo: 1,
       codigo_validacao: this.state.codigoValidacao,
-      url_foto: '',
-      corCarro: 'Verde',
-      placa: 'xxxxxxx',
-      modelo: 'Celta'
+      url_foto: ''
     }
     const token = await AsyncStorage.getItem('userToken');
     const result = await cadastroFinal(token, payload);
 
-    if(result == "success")
-      alert('Sucesso');
-      //this.props.navigation.navigate('CadastroFinal');
+    if(result == "success") {
+      if(payload.tipo == 1)
+        this.props.navigation.navigate('PassageirosApp');
+      if(payload.tipo == 2)
+        this.props.navigation.navigate('MotoristaApp');
+    }
     else
       alert(result);
       

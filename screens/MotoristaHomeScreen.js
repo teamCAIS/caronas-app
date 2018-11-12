@@ -4,6 +4,12 @@ import { MaterialIcons } from '@expo/vector-icons';
 
 export default class MotoristaHomeScreen extends React.Component {
 
+  constructor(props) {
+    super(props);
+    const user = this.props.navigation.getParam('user');
+    this.state = { user }
+  }
+
   static navigationOptions = ({ navigation }) => {
     return {
       title: 'Início',
@@ -23,7 +29,7 @@ export default class MotoristaHomeScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text>Tela dos motoristas</Text>
+        <Text>Bem vindo, </Text>
         <Button
           title="Criar carona"
           onPress={() => {}}
