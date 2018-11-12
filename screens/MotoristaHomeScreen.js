@@ -4,12 +4,13 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { Button, Text, Container } from 'native-base';
 import { NavigationEvents } from 'react-navigation';
 import { getCorridaAtual } from '../services/ApiService'
+import CaronaAtualMotorista from '../components/CaronaAtualMotorista';
 
 export default class MotoristaHomeScreen extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { token: '', temCarona: false, corrida: {} }
+    this.state = { token: '', corrida: {} }
   }
 
   async componentDidMount() {
@@ -20,8 +21,9 @@ export default class MotoristaHomeScreen extends React.Component {
     const corridaArray = await getCorridaAtual(token);
     const corrida = corridaArray[0];
 
-    if(corrida)
-      this.setState({ token, corrida, temCarona: true });
+    if(corrida) {
+      this.setState({ token, corrida });
+    }
     else
       this.setState({token});
 
@@ -45,7 +47,7 @@ export default class MotoristaHomeScreen extends React.Component {
 
   render() {
 
-    if(!this.state.temCarona)
+    if(!this.state.corrida)
       return (
         
         <Container style={styles.container}>
@@ -66,9 +68,7 @@ export default class MotoristaHomeScreen extends React.Component {
     
       return (
 
-        <Container style={styles.container}>
-          <Text>Tem carona, arrombado!</Text>
-        </Container>
+        <CaronaAtualMotorista corrida={this.state.corrida} />
 
       );
 
@@ -77,7 +77,7 @@ export default class MotoristaHomeScreen extends React.Component {
   _verificaCarona = () => {
     const novaCarona = this.props.navigation.getParam('novaCarona', false);
     if(novaCarona)
-      this.setState({ temCarona: true});
+      this.setState({ corrida: novaCarona });
   }
 
 }

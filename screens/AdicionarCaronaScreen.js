@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, AsyncStorage } from 'react-native';
 import { Container, Content, Form, Button, Picker, Text } from 'native-base';
-import { criarCorrida } from '../services/ApiService';
+import { criarCorrida, getCorridaAtual } from '../services/ApiService';
 
 export default class AdicionarCaronaScreen extends React.Component {
 
@@ -98,8 +98,10 @@ export default class AdicionarCaronaScreen extends React.Component {
 
     const result = await criarCorrida(token, payload);
     
-    if(result == "success")
-      this.props.navigation.navigate('MotoristaHome', {novaCarona: true});
+    if(result == "success") {
+      const novaCarona = await getCorridaAtual(token);
+      this.props.navigation.navigate('MotoristaHome', { novaCarona });
+    }
     else
       alert("Não foi possível publicar uma nova carona");
 
