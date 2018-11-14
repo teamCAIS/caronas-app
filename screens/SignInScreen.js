@@ -21,11 +21,11 @@ export default class App extends React.Component {
           <Form>
             <Item floatingLabel>
               <Label>Email</Label>
-              <Input textContentType="emailAddress" value={this.state.email} onChangeText={text => this.setState({email: text})} />
+              <Input textContentType="emailAddress" keyboardType="email-address" value={this.state.email} onChangeText={text => this.setState({email: text})} />
             </Item>
             <Item floatingLabel>
               <Label>Senha</Label>
-              <Input textContentType="password" value={this.state.password} onChangeText={text => this.setState({password: text})} />
+              <Input textContentType="password" secureTextEntry={true} value={this.state.password} onChangeText={text => this.setState({password: text})} />
             </Item>
             <Button
               onPress={this._handleLoginPress}

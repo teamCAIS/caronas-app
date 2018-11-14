@@ -1,6 +1,6 @@
 import React from "react";
 import { Image, StyleSheet } from "react-native";
-import { Container, Content, Text,  View, Button,  } from "native-base";
+import { Container, Content, Text,  View, Button } from "native-base";
 import { MaterialIcons } from '@expo/vector-icons';
 
 export default class CaronaAtualMotorista extends React.Component {
@@ -33,8 +33,8 @@ export default class CaronaAtualMotorista extends React.Component {
             <Text style={styles.label}>Motorista:</Text>
             <Text style={styles.listItem} >{this.props.corrida.nome}</Text>
             <Text style={styles.label}>Carro e placa:</Text>
-            <Text style={[styles.listItem, {marginBottom:0}]} >{this.props.corrida.modelo}, {this.props.corrida.corCarro}</Text>
-            <Text style={[styles.listItem, {marginTop: 0}]}>{this.props.corrida.placa}</Text>
+            <Text style={[styles.listItem]} >{this.props.corrida.modelo}, {this.props.corrida.corCarro}</Text>
+            <Text style={[styles.listItem, {marginTop: -8}]}>{this.props.corrida.placa}</Text>
             <Text style={styles.label}>Horário:</Text>
             <Text style={styles.listItem} >{this.props.corrida.hora}</Text>
             <Text style={styles.label}>Destino:</Text>
@@ -91,6 +91,7 @@ const Vaga = (props) => (
 
 const styles = StyleSheet.create({
   listItem: {
+      marginTop: -4,
   },
   item: {
   },
@@ -117,8 +118,9 @@ const styles = StyleSheet.create({
       alignItems: "center",
   },
   label: {
-    marginTop: 8,
-    fontSize: 14,
+    marginTop: 16,
+    fontSize: 12,
+    fontWeight: "bold",
   },
   vagasContainer: {
       flexDirection: "row",

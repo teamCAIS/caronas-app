@@ -83,3 +83,20 @@ export async function getCorridaAtual(token) {
     const data = await response.json();
     return data;
 }
+
+export async function postBuscaUsuario(token, payload) {
+    const response = await fetch(baseUrl+'/buscarNomeUsuario', {
+        method: 'post',
+        body: JSON.stringify(payload),
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": "bearer "+token
+        }
+    })
+
+    if(!response.ok)
+        return 'Falha na conexão';
+
+    const data = await response.json();
+    return data;
+}
