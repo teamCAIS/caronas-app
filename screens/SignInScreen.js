@@ -63,16 +63,19 @@ export default class App extends React.Component {
 			password: this.state.password
     } */
     payload = {
+<<<<<<< HEAD
       email: 'ele@ele.com',
       password: '123456'
+=======
+      email: 'ela@eu.br',
+      password: '1234'
+>>>>>>> feed-passageiro
     }
 
     const token = await login(payload);
 
     //salvar o token na AsyncStorage
     this._storeToken(token);
-
-    alert(token);
 
     const info = await getUserInfo(token);
 

@@ -1,38 +1,37 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
+import CaronaInfo from '../components/CaronaInfo';
+import { Button, Text, Container } from 'native-base';
 
 export default class CaronaDetailsScreen extends React.Component {
 
- /*  static navigationOptions = ({ navigation }) => {
+  static navigationOptions = ({ navigation }) => {
     return {
-      title: 'Caronas',
-      headerTitle: 'Caronas',
-      headerLeft: (
-        <MaterialIcons
-          name="menu"
-          size={32}
-          onPress={() => navigation.openDrawer()}
-          color="#000"
-        />
-      ),
+      title: 'Detalhes da carona',
+      headerTitle: 'Detalhes da carona',
     }
-  } */
+  }
 
   render() {
     return (
-      <View style={styles.container}>
-        <Text>Detalhes da carona</Text>
-      </View>
+      <Container>
+        <CaronaInfo corrida={this.props.navigation.getParam('corrida')}/>
+        <Button style={styles.button} onPress={() => this._entrarCarona}>
+          <Text>Aceitar</Text>
+        </Button>
+      </Container>
+      
     );
+  }
+  _entrarCarona = async () => {
+
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+  button: {
+    alignSelf: "center",
+    marginTop: 16,
+  }
 });

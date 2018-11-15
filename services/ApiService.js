@@ -100,3 +100,20 @@ export async function postBuscaUsuario(token, payload) {
     const data = await response.json();
     return data;
 }
+
+export async function mostraFeed(token, payload) {
+    const response = await fetch(baseUrl+'/feedPassageiro', {
+        method: 'post',
+        body: JSON.stringify(payload),
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": "bearer "+token
+        }
+    })
+
+    if(!response.ok)
+        return 'Falha na conexão';
+
+    const data = await response.json();
+    return data;
+}
