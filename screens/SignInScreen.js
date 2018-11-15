@@ -51,7 +51,7 @@ export default class App extends React.Component {
 			password: this.state.password
     } */
     payload = {
-      email: 'eu@eu.br',
+      email: 'ela@eu.br',
       password: '1234'
     }
 
@@ -59,8 +59,6 @@ export default class App extends React.Component {
 
     //salvar o token na AsyncStorage
     this._storeToken(token);
-
-    alert(token);
 
     const info = await getUserInfo(token);
 
