@@ -10,7 +10,7 @@ export default class MotoristaHomeScreen extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { token: '', corrida: {} }
+    this.state = { token: '', corrida: null }
   }
 
   async componentDidMount() {
@@ -18,10 +18,10 @@ export default class MotoristaHomeScreen extends React.Component {
     
 
     //chamar função que verifica se já tem carona
-    const corridaArray = await getCorridaAtual(token);
-    const corrida = corridaArray[0];
+    const res = await getCorridaAtual(token);
+    const corrida = res[0];
 
-    if(corrida) {
+    if(res != 'Falha na conexão') {
       this.setState({ token, corrida });
     }
     else
@@ -68,16 +68,27 @@ export default class MotoristaHomeScreen extends React.Component {
     
       return (
 
-        <CaronaAtualMotorista corrida={this.state.corrida} />
+        <CaronaAtualMotorista 
+          corrida={this.state.corrida} 
+          excluiCarona={() => this._excluiCarona()} 
+          concluiCarona={() => this._concluiCarona()}
+        />
 
       );
 
   }
 
   _verificaCarona = () => {
-    const novaCarona = this.props.navigation.getParam('novaCarona', false);
-    if(novaCarona)
-      this.setState({ corrida: novaCarona });
+    const novaCarona = this.props.navigation.getParam('novaCarona', this.state.corrida);    
+    this.setState({ corrida: novaCarona });
+  }
+
+  _excluiCarona = () => {
+    this.setState({corrida: null});
+  }
+
+  _concluiCarona = () => {
+    this.setState({corrida: null});
   }
 
 }

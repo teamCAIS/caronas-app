@@ -51,10 +51,10 @@ export default class CaronaAtualMotorista extends React.Component {
           </View>
 
           <View style={{flexDirection: "row", margin: 14, justifyContent: "space-evenly"}}>
-              <Button bordered>
+              <Button bordered onPress={() => this.props.excluiCarona()}>
                   <Text>Excluir carona</Text>
               </Button>
-              <Button>
+              <Button onPress={() => this.props.concluiCarona()}>
                   <Text>Concluir carona</Text>
               </Button>
           </View>

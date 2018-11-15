@@ -99,7 +99,8 @@ export default class AdicionarCaronaScreen extends React.Component {
     const result = await criarCorrida(token, payload);
     
     if(result == "success") {
-      const novaCarona = await getCorridaAtual(token);
+      const resp = await getCorridaAtual(token);
+      const novaCarona = resp[0];
       this.props.navigation.navigate('MotoristaHome', { novaCarona });
     }
     else
