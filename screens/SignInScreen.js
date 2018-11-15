@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, AsyncStorage, Image, View } from 'react-native';
 import { login, getUserInfo } from '../services/ApiService';
-import { Container, Text, Content, Button, Input, Form, Item, Label } from 'native-base';
+import { Container, Text, Content, Button, Input, Item, Label } from 'native-base';
 
 export default class App extends React.Component {
 
@@ -21,21 +21,21 @@ export default class App extends React.Component {
           <View style={styles.container}>
 			<Item style={{borderColor:'transparent'}}>
 				<Image
-				  style={{width:123, height:123,marginTop:0}}
+				  style={{width:123, height:123,marginTop:0,marginRight:10}}
 				  source={require('../assets/logo.png')}
 				/>
 			</Item>
-            <Item style={{borderColor:'#727272',backgroundColor:'#fff',marginTop:18,width:328,height:50}}>   
-			  <Label style={{position:'relative',left:10,fontSize:16,color:'#727272'}}>E-mail </Label>			
+            <Item style={{borderColor:'#727272',backgroundColor:'#fff',marginTop:18,width:328,height:55}}>   
+			  <Label style={{position:'relative',left:10,fontSize:14,color:'#727272'}}>E-mail </Label>			
               <Input textContentType="emailAddress" keyboardType="email-address" value={this.state.email} onChangeText={text => this.setState({email: text})} />
             </Item>
-            <Item style={{borderColor:'#727272',backgroundColor:'#fff',marginTop:18,width:328,height:50}}>
-              <Label style={{position:'relative',left:10,fontSize:16,color:'#727272'}}>Senha </Label>
+            <Item style={{borderColor:'#727272',backgroundColor:'#fff',marginTop:18,width:328,height:55}}>
+              <Label style={{position:'relative',left:10,fontSize:14,color:'#727272'}}>Senha </Label>
               <Input textContentType="password" secureTextEntry={true} value={this.state.password} onChangeText={text => this.setState({password: text})} />
             </Item>
 			<Item style={{marginTop:25,width:157.5,height:40}}>
 				<Button style={{backgroundColor:'#ffca28',width:157.5,height:40}} onPress={this._handleLoginPress}>
-					<Text uppercase={false} style={{color:'black',fontSize:18,textAlign:'center',width:155,height:25}}>Entrar</Text>
+					<Text uppercase={false} style={{color:'black',fontSize:18,textAlign:'center',width:150,height:25}}>Entrar</Text>
 				</Button>
 			</Item>
 			<Item style={{marginTop:16,borderColor:'transparent'}}>
@@ -43,7 +43,7 @@ export default class App extends React.Component {
 					Esqueceu a senha?
 				</Text>
 			</Item>
-			<Item style={{marginTop:95,width:115,borderColor:'transparent'}}>
+			<Item style={{marginTop:85,width:115,borderColor:'transparent'}}>
 				<Text uppercase={false} style={{color: '#000',fontSize:12,width:115,textAlign:'center'}}>
 					Ainda não é usuario?{"\n"}
 					<Text uppercase={false} style={{color: '#000',fontSize:12,fontWeight:'bold'}} onPress={this._handleCadastroPress}>
@@ -63,8 +63,8 @@ export default class App extends React.Component {
 			password: this.state.password
     } */
     payload = {
-      email: 'eu@eu.br',
-      password: '1234'
+      email: 'ele@ele.com',
+      password: '123456'
     }
 
     const token = await login(payload);
@@ -113,8 +113,8 @@ export default class App extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-	marginRight:16,
-	marginLeft:16,
+	marginRight:17,
+	marginLeft:17,
 	padding:0,
 	flexDirection: 'column',
     backgroundColor: '#f5f5f6',
