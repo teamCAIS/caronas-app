@@ -4,16 +4,16 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { Container, Content, Card, CardItem, Body, Text, Right } from 'native-base';
 import CardCarona from '../components/CardCarona';
 import { mostraFeed } from '../services/ApiService';
+import { NavigationEvents } from 'react-navigation';
 
 export default class PassageiroHomeScreen extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { corridas: [], caronaAtual: null, avaliar: false }
+    this.state = { corridas: [], caronaAtual: null, avaliar: false, token: '' }
   }
 
   async componentDidMount() {
-
     const token = await AsyncStorage.getItem('userToken');
     const res = await mostraFeed(token,{filtroGenero: 3, filtroSaida: '', filtroHora: ''});
 
@@ -51,12 +51,44 @@ export default class PassageiroHomeScreen extends React.Component {
   }
 
   render() {
+
+    let caronaAtualComponent = null;
+    if(this.state.caronaAtual)
+      caronaAtualComponent = (
+        <View>
+          <Text style={{textAlign:"center"}}>Carona Atual</Text>
+          <TouchableHighlight
+            underlayColor='#eee9' 
+            onPress={() => 
+              this.props.navigation.navigate('Details', {corrida: this.state.caronaAtual, 
+                token: this.state.token,
+                atual: 'atual'
+              })
+            }
+          >
+            <CardCarona 
+              corrida={this.state.caronaAtual}
+            />
+          </TouchableHighlight>
+          <Text style={{textAlign:"center"}}>Caronas Disponíveis</Text>
+        </View>
+      );
+
     return (
       
         <Content style={{padding:8}}>
+          <NavigationEvents 
+            onWillFocus={payload => this._verificaCaronaAtual()}
+          />
+
+          {caronaAtualComponent}
 
           {this.state.corridas.map((corrida, i) => (
-            <TouchableHighlight key={i} underlayColor='#eee9' onPress={() => this.props.navigation.navigate('Details', {corrida})}>
+            <TouchableHighlight 
+              key={i} 
+              underlayColor='#eee9' 
+              onPress={() => this.props.navigation.navigate('Details', {corrida, token: this.state.token})}
+            >
               <CardCarona 
                 corrida={corrida}
               />
@@ -66,6 +98,12 @@ export default class PassageiroHomeScreen extends React.Component {
         </Content>
       
     );
+  }
+
+  _verificaCaronaAtual = () => {
+    const caronaAtual = this.props.navigation.getParam('caronaAtual', false);
+    if(caronaAtual !== false)
+      this.setState({ caronaAtual });
   }
 }
 

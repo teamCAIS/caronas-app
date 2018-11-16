@@ -117,3 +117,8 @@ export async function mostraFeed(token, payload) {
     const data = await response.json();
     return data;
 }
+
+export async function entraCorrida(token, payload) {
+    const result = await post(token, payload, '/entrarCorridaPassageiro');
+    return result;
+}

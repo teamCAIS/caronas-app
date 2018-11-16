@@ -63,7 +63,7 @@ export default class App extends React.Component {
 			password: this.state.password
     } */
     payload = {
-      email: 'ela@eu.br',
+      email: 'eu@eu.br',
       password: '1234'
     }
 
