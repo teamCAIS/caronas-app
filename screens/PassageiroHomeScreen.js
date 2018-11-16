@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, View, Image, AsyncStorage, TouchableHighlight } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
-import { Container, Content, Card, CardItem, Body, Text, Right } from 'native-base';
+import { Container, Content, Card, CardItem, Body, Text, Right, Button } from 'native-base';
 import CardCarona from '../components/CardCarona';
 import { mostraFeed } from '../services/ApiService';
 import { NavigationEvents } from 'react-navigation';
@@ -11,7 +11,7 @@ export default class PassageiroHomeScreen extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { corridas: [], caronaAtual: null, avaliacao: {avaliar:false}, token: '' }
+    this.state = { corridas: [], caronaAtual: null, avaliacao: {avaliar:false}, token: '', nota: 0 }
   }
 
   /* 
@@ -23,18 +23,30 @@ export default class PassageiroHomeScreen extends React.Component {
 
 
   async componentDidMount() {
+    
     const token = await AsyncStorage.getItem('userToken');
     const res = await mostraFeed(token,{filtroGenero: 3, filtroSaida: '', filtroHora: ''});
 
     let avaliacao = false;
     let caronaAtual = null;
 
-    if(res[0].avaliar)
+    if(res[0].avaliar) {
       avaliacao = res.shift();
+      if(!res.length) {
+        this.setState({token, avaliacao});
+        return;
+      }
+        
+    }
 
-    if(res[0].atual) 
+    if(res[0].atual) {
       caronaAtual = res.shift();
-
+      if(!res.length) {
+        this.setState({token, caronaAtual, avaliacao});
+        return;
+      }
+    }
+      
     if(res != 'Falha na conexão')
       this.setState({token, corridas: res, caronaAtual, avaliacao});
     else
@@ -104,13 +116,21 @@ export default class PassageiroHomeScreen extends React.Component {
 
           <Modal
             isVisible={this.state.avaliacao.avaliar}
-            onBackdropPress={() => this.setState({ isVisible: false })}
-            style={{ width:280, height:100, backgroundColor:'#e9e9e9' }}
+            onBackdropPress={() => this._skipAvaliacao()}
+            
           >
-            <View>
-              <Text>Deseja avaliar a carona?</Text>
-              <Text>Você recebeu uma carona de {this.state.avaliacao.nome}</Text>
-              <Text>Você recebeu uma carona de {this.state.avaliacao.nome}</Text>
+            <View style={styles.modalContent}>
+              <Text style={styles.modalTitle}>Deseja avaliar a carona?</Text>
+              <Text style={styles.modalItem}>Você recebeu, recentemente, uma carona de <Text style={styles.modalMotorista}>{this.state.avaliacao.nome}</Text>.</Text>
+              <Text style={styles.modalItem}>Dê uma nota ao motorista que te ajudou a chegar mais cedo em casa:</Text>
+              <View style={[styles.starsContainer, styles.modalItem]}>
+                {this._createStars()}
+              </View>
+              <Button style={[{alignSelf:'center'}, styles.modalItem]} onPress={() => this._avaliaCorrida()}>
+                <Text>
+                  Avaliar
+                </Text>
+              </Button>
             </View>
           </Modal>
  
@@ -119,10 +139,44 @@ export default class PassageiroHomeScreen extends React.Component {
     );
   }
 
+  _createStars = () => {
+    let stars = []
+    let estrelasCompletas = this.state.nota;
+    for(let i = 1; i <= 5; i++) {
+      stars.push((
+        <MaterialIcons
+          key={i}
+          size={38}
+          color='#ffca28'
+          name={(estrelasCompletas > 0) ? 'star' : 'star-border'}
+          onPress={() => {this.setState({nota:i})}}
+        />
+      ));
+      estrelasCompletas--;
+    }
+    return stars;
+  }
+
   _verificaCaronaAtual = () => {
     const caronaAtual = this.props.navigation.getParam('caronaAtual', false);
     if(caronaAtual !== false)
       this.setState({ caronaAtual });
+  }
+
+  _avaliaCorrida = () => {
+    //avaliacao passando:
+    //avaliacao.id como id_corrida
+    //status_nota: 1
+    //nota de 1 a 5 (ver quantas estrelas estao selecionadas)
+    this.setState({ avaliacao:{avaliar: false} });
+  }
+
+  _skipAvaliacao = () => {
+    //avaliacao passando:
+    //avaliacao.id como id_corrida
+    //status_nota: 2
+    //nota: ''
+    this.setState({ avaliacao:{avaliar: false} });
   }
 }
 
@@ -144,4 +198,26 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: "bold",
   },
+  modalContent: {
+    height:270,
+    backgroundColor:'#e9e9e9',
+    padding:16,
+    borderRadius: 5,
+  },
+  modalTitle: {
+    fontWeight: "bold",
+    fontSize: 20
+  },
+  modalMotorista: {
+    fontWeight: "bold",
+  },
+  modalItem: {
+    marginTop:8,
+  },
+  starsContainer: {
+    flexDirection:'row',
+    alignSelf:'stretch',
+    justifyContent:'space-between',
+    margin:12,
+  }
 });

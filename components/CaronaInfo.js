@@ -20,7 +20,7 @@ export default class CaronaInfo extends React.Component {
                 <Image
                     style={ styles.fotoMotorista }
                     source={{
-                        uri: "https://static1.squarespace.com/static/51435924e4b02285c8b9c92d/t/558c96c3e4b03457461d0f2e/1508845725260/caiobraga-perfil.jpg"
+                        uri: this.props.corrida.url_foto
                     }}
                 />
                 <Text style={styles.label} >Nota do motorista</Text>
