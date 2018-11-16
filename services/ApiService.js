@@ -69,6 +69,22 @@ export async function criarCorrida(token, payload) {
     return result;
 }
 
+export async function concluirCorrida(token) {
+    const response = await fetch(baseUrl+'/concluirCorridaMotorista', {
+        method: 'get',
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": "bearer "+token
+        }
+    })
+
+    if(!response.ok)
+        return 'Falha na conexão'
+    
+    const data = await response.json();
+    return data;
+}
+
 export async function getCorridaAtual(token) {
     const response = await fetch(baseUrl+'/corridaAtualMotorista', {
         method: 'get',
@@ -116,4 +132,9 @@ export async function mostraFeed(token, payload) {
 
     const data = await response.json();
     return data;
+}
+
+export async function entraCorrida(token, payload) {
+    const result = await post(token, payload, '/entrarCorridaPassageiro');
+    return result;
 }

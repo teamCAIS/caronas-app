@@ -3,7 +3,7 @@ import { StyleSheet, View, AsyncStorage } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Button, Text, Container } from 'native-base';
 import { NavigationEvents } from 'react-navigation';
-import { getCorridaAtual } from '../services/ApiService'
+import { getCorridaAtual, concluirCorrida } from '../services/ApiService'
 import CaronaAtualMotorista from '../components/CaronaAtualMotorista';
 
 export default class MotoristaHomeScreen extends React.Component {
@@ -87,8 +87,12 @@ export default class MotoristaHomeScreen extends React.Component {
     this.setState({corrida: null});
   }
 
-  _concluiCarona = () => {
-    this.setState({corrida: null});
+  _concluiCarona = async () => {
+    const result = await concluirCorrida(this.state.token);
+    if(result.status == 'success')
+      this.setState({corrida: null});
+    else
+      alert('Não foi possível concluir a corrida');
   }
 
 }
