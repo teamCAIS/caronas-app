@@ -21,7 +21,7 @@ export default class App extends React.Component {
           <View style={styles.container}>
 			<Item style={{borderColor:'transparent'}}>
 				<Image
-				  style={{width:123, height:123,marginTop:0,marginRight:10}}
+				  style={{width:120, height:120,marginTop:0,marginRight:10}}
 				  source={require('../assets/logo.png')}
 				/>
 			</Item>
@@ -39,14 +39,14 @@ export default class App extends React.Component {
 				</Button>
 			</Item>
 			<Item style={{marginTop:16,borderColor:'transparent'}}>
-				<Text uppercase={false} style={{color: '#000',fontSize:12,fontWeight:'bold'}}>
+				<Text uppercase={false} style={{color: '#000',fontSize:14,fontWeight:'bold'}}>
 					Esqueceu a senha?
 				</Text>
 			</Item>
-			<Item style={{marginTop:85,width:115,borderColor:'transparent'}}>
-				<Text uppercase={false} style={{color: '#000',fontSize:12,width:115,textAlign:'center'}}>
+			<Item style={{marginTop:80,width:130,borderColor:'transparent'}}>
+				<Text uppercase={false} style={{color: '#000',fontSize:14,width:130,textAlign:'center'}}>
 					Ainda não é usuario?{"\n"}
-					<Text uppercase={false} style={{color: '#000',fontSize:12,fontWeight:'bold'}} onPress={this._handleCadastroPress}>
+					<Text uppercase={false} style={{color: '#000',fontSize:14,fontWeight:'bold'}} onPress={this._handleCadastroPress}>
 						Cadastre-se
 					</Text>
 				</Text>
@@ -63,8 +63,8 @@ export default class App extends React.Component {
 			password: this.state.password
     } */
     payload = {
-      email: 'ela@eu.br',
-      password: '1234'
+      email: 'caionunes3000@gmail.com',
+      password: '123456'
     }
 
     const token = await login(payload);
@@ -111,6 +111,7 @@ export default class App extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
+	flex:1,
 	marginRight:17,
 	marginLeft:17,
 	padding:0,

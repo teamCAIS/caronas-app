@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, View, AsyncStorage } from 'react-native';
-import { Input, Container, Content, Form, Item, Label, Button, Text } from 'native-base';
+import { Input, Container, Content, Item, Label, Button, Text } from 'native-base';
 import { checarCodigo } from '../services/ApiService';
 
 export default class CodigoScreen extends React.Component {
@@ -11,32 +11,39 @@ export default class CodigoScreen extends React.Component {
   }
 
   static navigationOptions = {
-    title: 'Código',
+    title: 'Código de acesso',
+	headerStyle: {backgroundColor: '#263238', height:57.5},
+    headerTintColor: '#fff',
+	headerLeft:null
   }
 
   render() {
     return (
-      <Container>
-          <Content>
-              <Form>
-                  <Item floatingLabel>
-                      <Label>Código de acesso</Label>
-                      <Input value={this.state.codigoDigitado} onChangeText={text => this.setState({codigoDigitado: text})}/>
-                  </Item>
-                  <Button onPress={this._enviaCodigo}><Text>Confirmar</Text></Button>
-              </Form>
-          </Content>
-      </Container>
-    );
+	<Container style={{margin:0,backgroundColor:'#f5f5f6'}}>
+        <Content style={{margin:0,marginTop:182.5}}>
+          <View style={styles.container}>
+			<Item style={{borderColor:'#727272',backgroundColor:'#fff',width:328,height:55}}>   
+			  <Label style={{position:'relative',left:10,fontSize:14,color:'#727272'}}>Código de acesso </Label>			
+              <Input value={this.state.codigoDigitado} onChangeText={text => this.setState({codigoDigitado: text})}/>
+            </Item>
+			<Item style={{marginTop:27.5}}>
+				<Button onPress={this._enviaCodigo} style={{backgroundColor:'#ffca28',width:157.5,height:40}}>
+					<Text uppercase={false} style={{color:'black',fontSize:18,textAlign:'center',width:153,height:27}}>Confirmar</Text>
+				</Button>
+			</Item>
+		  </View>
+		</Content>
+	</Container>
+   );
   }
 
   _enviaCodigo = async () => {
     const token = await AsyncStorage.getItem('userToken');
-    const payload = {codigo_validacao: '9C3D23B6'}
+    const payload = {codigo_validacao: '2FFFE1AD'}
     const result = await checarCodigo(token, payload);
 
     if(result == "success")
-      this.props.navigation.navigate('CadastroFinal', { codigoValidacao: '9C3D23B6' });
+      this.props.navigation.navigate('CadastroFinal', { codigoValidacao: '2FFFE1AD' });
     else
       alert(result);
       
@@ -45,9 +52,13 @@ export default class CodigoScreen extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#fff',
+    marginRight:17,
+	marginLeft:17,
+	padding:0,
+	flexDirection: 'column',
+    backgroundColor: '#f5f5f6',
     alignItems: 'center',
     justifyContent: 'center',
+    color: '#000'
   },
 });
