@@ -55,6 +55,7 @@ export default class CaronaInfo extends React.Component {
 
   _createVagas = () => {
       let vagas = []
+      //muda limite do for para (vagas + passageiros.length) ???
       for(let i = 0; i < this.props.corrida.vagas; i++) {
           vagas.push( <Vaga key={i} passageiros={this.props.corrida.passageiros} /> );
       }

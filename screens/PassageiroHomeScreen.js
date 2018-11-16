@@ -5,31 +5,38 @@ import { Container, Content, Card, CardItem, Body, Text, Right } from 'native-ba
 import CardCarona from '../components/CardCarona';
 import { mostraFeed } from '../services/ApiService';
 import { NavigationEvents } from 'react-navigation';
+import Modal from "react-native-modal";
 
 export default class PassageiroHomeScreen extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { corridas: [], caronaAtual: null, avaliar: false, token: '' }
+    this.state = { corridas: [], caronaAtual: null, avaliacao: {avaliar:false}, token: '' }
   }
+
+  /* 
+  avaliar: true
+  data_hora: "2018-11-15 19:30:00"
+  id: 12
+  nome: "eu"
+   */
+
 
   async componentDidMount() {
     const token = await AsyncStorage.getItem('userToken');
     const res = await mostraFeed(token,{filtroGenero: 3, filtroSaida: '', filtroHora: ''});
 
-    let avaliar = false;
+    let avaliacao = false;
     let caronaAtual = null;
 
-    if(res[0].avaliar) {
-      res.shift();
-      avaliar = true;
-    }
+    if(res[0].avaliar)
+      avaliacao = res.shift();
 
     if(res[0].atual) 
       caronaAtual = res.shift();
 
     if(res != 'Falha na conexão')
-      this.setState({token, corridas: res, caronaAtual, avaliar});
+      this.setState({token, corridas: res, caronaAtual, avaliacao});
     else
       alert('Houve um problema com a conexão');
   }
@@ -94,6 +101,18 @@ export default class PassageiroHomeScreen extends React.Component {
               />
             </TouchableHighlight>
           ))}
+
+          <Modal
+            isVisible={this.state.avaliacao.avaliar}
+            onBackdropPress={() => this.setState({ isVisible: false })}
+            style={{ width:280, height:100, backgroundColor:'#e9e9e9' }}
+          >
+            <View>
+              <Text>Deseja avaliar a carona?</Text>
+              <Text>Você recebeu uma carona de {this.state.avaliacao.nome}</Text>
+              <Text>Você recebeu uma carona de {this.state.avaliacao.nome}</Text>
+            </View>
+          </Modal>
  
         </Content>
       
