@@ -1,8 +1,8 @@
 import React from "react";
-import { Image, AsyncStorage, StyleSheet, FlatList } from "react-native";
+import { Image, AsyncStorage, StyleSheet, TouchableNativeFeedback } from "react-native";
 import { Container, Content, Text,  View,  } from "native-base";
 import { MaterialIcons } from '@expo/vector-icons';
-const routes = ["Caronas", "Historico", "Perfil"];
+import { colors } from '../constants/styles'
 
 export default class MenuMotorista extends React.Component {
 
@@ -26,55 +26,67 @@ export default class MenuMotorista extends React.Component {
       letra = 'a';
 
     return (
-      <Container>
+      <Container style={{backgroundColor: colors.primary}}>
         <Content style={{ marginLeft: 16 }}>
           <View style={styles.menuHeader}>
-            <Text style={{fontSize: 24}}>Menu</Text>
+            <Text style={{fontSize: 24,color:colors.white}}>Menu</Text>
             <Image
-              style={{ height: 100, width: 100, marginTop:32, marginBottom:16, borderRadius: 50}}
+              style={{ height: 100, width: 100, marginTop:32, marginBottom:16, borderRadius: 50, backgroundColor:'#222'}}
               source={{
-                uri: "https://static1.squarespace.com/static/51435924e4b02285c8b9c92d/t/558c96c3e4b03457461d0f2e/1508845725260/caiobraga-perfil.jpg"
+                uri: this.state.user.url_foto
               }}
             />
-            <Text>Bem vind{letra}, {this.state.user.nome}</Text>
-            <Text style={{fontSize: 14}}>{this.state.user.email}</Text>
+            <Text style={{color:colors.white}}>Bem vind{letra}, {this.state.user.nome}</Text>
+            <Text style={{fontSize: 14,color:colors.white}}>{this.state.user.email}</Text>
           </View>
 
-          <View style={[styles.listItem, {borderTopColor: '#aaa', borderTopWidth: 1, paddingTop: 12}]}>
-            <MaterialIcons style={styles.icons} name="directions-car" size={32} />
-            <Text onPress={() => this.props.navigation.navigate('Inicio')} style={[styles.item]}>
-              Início
-            </Text>
-          </View>
+          <TouchableNativeFeedback onPress={() => this.props.navigation.navigate('Inicio')}>
+            <View style={[styles.listItem, {borderTopColor: colors.white, borderTopWidth: 1, paddingTop: 12}]}>
+              <MaterialIcons style={styles.icons} name="directions-car" size={32} />
+              <Text  style={[styles.item]}>
+                Início
+              </Text>
+            </View>
+          </TouchableNativeFeedback>
 
-          <View style={styles.listItem}>
-            <MaterialIcons style={styles.icons} name="access-time" size={32} />
-            <Text onPress={() => this.props.navigation.navigate('Historico')} style={styles.item}>Ver histórico</Text>
-          </View>
+          <TouchableNativeFeedback onPress={() => this.props.navigation.navigate('Historico')}>
+            <View style={styles.listItem}>
+              <MaterialIcons style={styles.icons} name="access-time" size={32} />
+              <Text style={styles.item}>Ver histórico</Text>
+            </View>
+          </TouchableNativeFeedback>
 
+          <TouchableNativeFeedback onPress={() => this.props.navigation.navigate('Perfil')}>
           <View style={styles.listItem}>
             <MaterialIcons style={styles.icons} name="person" size={32} />
-            <Text onPress={() => this.props.navigation.navigate('Perfil')} >Seu perfil</Text>
+            <Text style={[styles.item]} >Seu perfil</Text>
           </View>
+          </TouchableNativeFeedback>
+          
+          <TouchableNativeFeedback onPress={() => this.props.navigation.navigate('Denuncia')}>
+            <View style={[styles.listItem, {borderBottomColor: colors.gray, borderBottomWidth: 1, paddingBottom: 12}]}>
+              <MaterialIcons style={styles.icons} name="report-problem" size={32} />
+              <Text style={[styles.item]}>
+                Fazer denúcia
+              </Text>
+            </View>
+          </TouchableNativeFeedback>
 
-          <View style={[styles.listItem, {borderBottomColor: '#aaa', borderBottomWidth: 1, paddingBottom: 12}]}>
-            <MaterialIcons style={styles.icons} name="report-problem" size={32} />
-            <Text onPress={() => this.props.navigation.navigate('Denuncia')} style={[styles.item]}>
-              Fazer denúcia
-            </Text>
-          </View>
+          <TouchableNativeFeedback onPress={() => this.props.navigation.navigate('Sobre')}>
+            <View style={[styles.listItem, {paddingTop: 12}]}>
+              <MaterialIcons style={styles.icons} name="info" size={32} />
+              <Text style={[styles.item]}>Sobre o app</Text>
+            </View>
+          </TouchableNativeFeedback>
 
-          <View style={[styles.listItem, {paddingTop: 12}]}>
-            <MaterialIcons style={styles.icons} name="info" size={32} />
-            <Text onPress={() => this.props.navigation.navigate('Sobre')} style={[styles.item]}>Sobre o app</Text>
-          </View>
-
-          <View  style={[styles.listItem]}>
-            <MaterialIcons style={styles.icons} name="exit-to-app" size={32} />
-            <Text onPress={this._deslogar} style={styles.item}>
-              Deslogar
-            </Text>
-          </View>
+          <TouchableNativeFeedback onPress={this._deslogar} >
+            <View  style={[styles.listItem]}>
+              <MaterialIcons style={styles.icons} name="exit-to-app" size={32} />
+              <Text style={styles.item}>
+                Deslogar
+              </Text>
+            </View>
+          </TouchableNativeFeedback>
         </Content>
       </Container>
     );
@@ -94,6 +106,7 @@ const styles = StyleSheet.create({
     paddingBottom: 6,
   },
   item: {
+    color:colors.white,
   },
   menuHeader: {
     marginTop: 32,
@@ -101,6 +114,7 @@ const styles = StyleSheet.create({
   },
   icons: {
     margin: 0,
-    marginRight: 16
+    marginRight: 16,
+    color:colors.white,
   }
 })

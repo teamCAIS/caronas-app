@@ -98,6 +98,7 @@ const styles = StyleSheet.create({
     width: 100, 
     marginTop:16,
     borderRadius: 50,
+    backgroundColor:'#222',
   },
   fotoMotoristaContainer: {
       position: "absolute",

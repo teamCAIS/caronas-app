@@ -115,7 +115,7 @@ class DenunciaScreen extends React.Component {
 _buscarUsuarios = (text) => {
   clearTimeout(this.state.timeId);
 
-  if(!text)
+  if(!text.length)
     this.setState({usuariosBuscados: []});
   
   let timeId = setTimeout(async () => {

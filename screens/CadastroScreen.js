@@ -14,7 +14,7 @@ export default class CadastroScreen extends React.Component {
 		this.state = {nome:'',email: '',password: '',cpassword:'',dataNasc: new Date(),genero: '3',doc:''}
 		 this.setDate = this.setDate.bind(this);
 	}
-	onValueChange(value: string) {
+	onValueChange(value) {
 		this.setState({
 		  genero: value
 		});

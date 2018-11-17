@@ -63,8 +63,8 @@ export default class App extends React.Component {
 			password: this.state.password
     } */
     payload = {
-      email: 'caionunes3000@gmail.com',
-      password: '123456'
+      email: 'eu@eu.br',
+      password: '1234'
     }
 
     const token = await login(payload);
