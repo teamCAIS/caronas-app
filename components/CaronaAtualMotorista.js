@@ -43,7 +43,7 @@ export default class CaronaAtualMotorista extends React.Component {
           </View>
 
           <View style={{top:16.5,marginBottom:40}}>
-            <Text style={{textAlign: "center",fontSize:14,fontWeight:'bold',marginRight:5}} >Vagas disponíveis:</Text>
+            <Text style={{textAlign: "center",fontSize:14,fontWeight:'bold'}} >Vagas disponíveis:</Text>
             <View style={styles.vagasContainer}>
                 {this._createVagas()}
             </View>

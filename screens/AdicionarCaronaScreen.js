@@ -1,6 +1,6 @@
 import React from 'react';
-import { StyleSheet, AsyncStorage } from 'react-native';
-import { Container, Content, Form, Button, Picker, Text } from 'native-base';
+import { StyleSheet, AsyncStorage, View } from 'react-native';
+import { Container, Content, Button, Picker, Text, Item, Label, Input } from 'native-base';
 import { criarCorrida, getCorridaAtual } from '../services/ApiService';
 
 export default class AdicionarCaronaScreen extends React.Component {
@@ -14,7 +14,9 @@ export default class AdicionarCaronaScreen extends React.Component {
     return {
       title: 'Criar carona',
       headerTitle: 'Criar carona',
-    }
+	  headerStyle: {backgroundColor: '#263238', height:57.5},
+      headerTintColor: '#fff',
+	}
   }
 
   render() {
@@ -22,75 +24,94 @@ export default class AdicionarCaronaScreen extends React.Component {
     let isDisabled = !(this.state.saida && this.state.horario && this.state.pontoEncontro && this.state.vagas);
 
     return (
-      <Container style={styles.container}>
-        <Content padder>
-          <Form>
-            <Picker
-              placeholder="Destino"
-              mode="dropdown"
-              style={styles.picker}
-              selectedValue={this.state.saida}
-              onValueChange={(value) => this.setState({saida: value})}
-            >
-              <Picker.Item enabled={false} label="Destino" value={null}/>
-              <Picker.Item label="Humberto Monte" value="Humberto Monte" />
-              <Picker.Item label="Educação Física" value="Educação Física" />
-              <Picker.Item label="Mister Hull" value="Mister Hull" />
-            </Picker>
-
-            <Picker
-              mode="dropdown"
-              style={styles.picker}
-              selectedValue={this.state.pontoEncontro}
-              onValueChange={(value) => this.setState({pontoEncontro: value})}
-            >
-              <Picker.Item enabled={false} label="Ponto de encontro" value={null}/>
-              <Picker.Item label="Saída do bloco" value="Saída do bloco" />
-              <Picker.Item label="CA" value="CA" />
-              <Picker.Item label="Escada" value="Escada" />
-            </Picker>
-
-            <Picker
-              mode="dropdown"
-              style={styles.picker}
-              selectedValue={this.state.horario}
-              onValueChange={(value) => this.setState({horario: value})}
-            >
-              <Picker.Item enabled={false} label="Horário de saída" value={null}/>
-              <Picker.Item label="19:00" value="19:00:00" />
-              <Picker.Item label="19:30" value="19:30:00" />
-              <Picker.Item label="20:00" value="20:00:00" />
-              <Picker.Item label="20:30" value="20:30:00" />
-              <Picker.Item label="21:30" value="21:30:00" />
-              <Picker.Item label="22:00" value="22:00:00" />
-            </Picker>
-
-            <Picker
-              mode="dropdown"
-              style={styles.picker}
-              selectedValue={this.state.vagas}
-              onValueChange={(value) => this.setState({vagas: value})}
-            >
-              <Picker.Item enabled={false} label="Quantidade de vagas" value={null}/>
-              <Picker.Item label="1" value="1" />
-              <Picker.Item label="2" value="2" />
-              <Picker.Item label="3" value="3" />
-              <Picker.Item label="4" value="4" />
-            </Picker>
-            
-            <Button
-              disabled={isDisabled}
-              style={{alignSelf: "center"}}
-              onPress={this._handleSubmit}
-            >
-              <Text>Publicar</Text>
-            </Button>
-          </Form>
-        </Content>
+      <Container style={{margin:0,backgroundColor:'#f5f5f6'}}>
+        <Content style={{margin:0,marginTop:18}}>
+          <View style={styles.container}>
+			<Item style={{borderColor:'#727272',backgroundColor:'#fff',width:328,height:55}}>
+				<Picker
+				  placeholder="Destino"
+				  mode="dropdown"
+				  style={styles.picker}
+				  selectedValue={this.state.saida}
+			
+				  onValueChange={(value) => this.setState({saida: value})}
+				>
+				  <Picker.Item enabled={false} label="Destino" value={null}/>
+				  <Picker.Item label="Humberto Monte" value="Humberto Monte" />
+				  <Picker.Item label="Educação Física" value="Educação Física" />
+				  <Picker.Item label="Mister Hull" value="Mister Hull" />
+				</Picker>
+			</Item>
+			<Item style={{borderColor:'#727272',backgroundColor:'#fff',marginTop:18,width:328,height:55}}>   
+			  <Label style={{position:'relative',left:18,fontSize:14,color:'#000'}}>Ponto de Encontro     </Label>			
+              <Input value={this.state.pontoEncontro} onChangeText={text => this.setState({pontoEncontro: text})} />
+            </Item>
+			<Item style={{borderColor:'#727272',backgroundColor:'#fff',marginTop:18,width:328,height:55}}>
+				<Picker
+				  mode="dropdown"
+				  style={styles.picker}
+				  selectedValue={this.state.horario}
+				  onValueChange={(value) => this.setState({horario: value})}
+				>
+				  <Picker.Item enabled={false} label="Horário de saída" value={null}/>
+				  <Picker.Item label="19:00" value="19:00:00" />
+				  <Picker.Item label="19:30" value="19:30:00" />
+				  <Picker.Item label="20:00" value="20:00:00" />
+				  <Picker.Item label="20:30" value="20:30:00" />
+				  <Picker.Item label="21:30" value="21:30:00" />
+				  <Picker.Item label="22:00" value="22:00:00" />
+				</Picker>
+			</Item>
+			<Item style={{borderColor:'#727272',backgroundColor:'#fff',marginTop:18,width:328,height:55}}>
+				<Picker
+				  mode="dropdown"
+				  style={styles.picker}
+				  selectedValue={this.state.vagas}
+				  onValueChange={(value) => this.setState({vagas: value})}
+				>
+				  <Picker.Item enabled={false} label="Quantidade de vagas" value={null}/>
+				  <Picker.Item label="1" value="1" />
+				  <Picker.Item label="2" value="2" />
+				  <Picker.Item label="3" value="3" />
+				  <Picker.Item label="4" value="4" />
+				</Picker>
+            </Item>
+			<Item style={{marginTop:18}}>
+				<Button
+				  disabled={isDisabled}
+				  style={this.getEstadoBotao(isDisabled)}
+				  onPress={this._handleSubmit}
+				>
+				  <Text uppercase={false} style={this.getEstadoTextoBotao(isDisabled)}>Publicar</Text>
+				</Button>
+			</Item>
+			</View>
+		</Content>
       </Container>
     );
   }
-
+  getEstadoBotao(estado){
+	  if(estado==true){
+		  return {
+			  alignSelf: "center",width:157.5,height:40
+		  }
+	  }else{
+		  return {
+			  alignSelf: "center",width:157.5,height:40,backgroundColor:'#ffca28',color:'#000'
+		  }
+	  }
+  }
+  getEstadoTextoBotao(estado){
+	  if(estado==true){
+		  return {
+			  fontSize:18,textAlign:'center',width:153,height:25
+		  }
+	  }else{
+		  return {
+			  fontSize:18,textAlign:'center',width:153,height:25,color:'#000'
+		  }
+	  }
+  }
   _handleSubmit = async () => {
 
     const payload = this.state;
@@ -112,13 +133,22 @@ export default class AdicionarCaronaScreen extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#fff',
+    flex:1,
+    marginRight:17,
+	marginLeft:17,
+	padding:0,
+	flexDirection: 'column',
+    backgroundColor: '#f5f5f6',
     alignItems: 'center',
     justifyContent: 'center',
+    color: '#000'
   },
   picker: {
-    width: 300,
-    marginBottom: 12,
+    marginBottom: 16,
+	right:12,
+	top:8,
+	width: 360,
+	height:55, 
+	transform: [{ scaleX: 0.87 },{ scaleY: 0.87 }],
   }
 });
