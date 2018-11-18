@@ -21,7 +21,7 @@ export default class CardCarona extends React.Component {
                 <View style={styles.fotoMotoristaContainer}>
                   <Image
                       style={ styles.fotoMotorista }
-                      source={ require('../assets/perfil.png')
+                      source={ require('../assets/motorista.png')
 						  /*{
                           uri: this.props.url_foto
                       }*/}

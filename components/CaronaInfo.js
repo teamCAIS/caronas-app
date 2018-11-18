@@ -19,7 +19,7 @@ export default class CaronaInfo extends React.Component {
             <View style={styles.fotoMotoristaContainer}>
                 <Image
                     style={ styles.fotoMotorista }
-                    source={ require('../assets/perfil.png')
+                    source={ require('../assets/motorista.png')
 						/*{
                         uri: this.props.corrida.url_foto
                     }*/ }

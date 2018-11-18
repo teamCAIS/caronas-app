@@ -17,6 +17,7 @@ class DenunciaScreen extends React.Component {
       timeId: null,
       usuariosBuscados: [], 
       usuarios: [], 
+	  height:55,
     }
   }
 
@@ -35,9 +36,11 @@ class DenunciaScreen extends React.Component {
           name="menu"
           size={32}
           onPress={() => navigation.openDrawer()}
-          color="#000"
+          color="#fff"
         />
       ),
+	  headerStyle: {backgroundColor: '#263238', height:57.5},
+	  headerTintColor: '#fff',
     }
   }
 
@@ -54,10 +57,10 @@ class DenunciaScreen extends React.Component {
     let isDisabled = !(this.state.usuarios.length && this.state.tipo && this.state.comentario);
 
     return (
-      <Container style={styles.container}>
-        <Content>
-          <Form >
-            <Item picker style={styles.form}>
+      <Container style={{margin:0,backgroundColor:'#f5f5f6'}}>
+        <Content style={{margin:0,marginTop:18}}>
+          <View style={styles.container}>
+			<Item style={{borderColor:'#727272',backgroundColor:'#fff',width:328,height:55}}>
               <Picker
                 mode="dropdown"
                 style={styles.picker}
@@ -74,10 +77,10 @@ class DenunciaScreen extends React.Component {
 
             
 
-            <Item floatingLabel style={styles.form}>
-              <Label>Nome do usuário</Label>
+            <Item style={{borderColor:'#727272',backgroundColor:'#fff',width:328,height:55,marginTop:16}}>
+              <Label style={{position:'relative',left:18,fontSize:14,color:'#000'}}>Nome do usuário      </Label>
               <Input value={this.state.busca} onChangeText={text => {this._buscarUsuarios(text)}} />
-              <Icon size={32} name="search" />
+              <Icon size={14} style={{marginRight:6,color:'#727272',transform:[{ scaleX: 0.65 },{ scaleY: 0.65 }],}} name="search" />
             </Item>
             <View>
 
@@ -85,33 +88,52 @@ class DenunciaScreen extends React.Component {
 
             </View>
 
-            <View style={[styles.form, styles.denunciadosSection]}>
+            <View style={[styles.denunciadosSection]}>
 
-            <Text>Usuários denunciados:</Text>
+            <Text style={{position:'relative',left:62,fontSize:14,color:'#000'}}>Usuários à serem denunciados</Text>
               <View style={[styles.denunciadosContainer]}>
                 {this.state.usuarios.map((usuario,i) => <UsuarioDenunciado key={i} usuario={usuario}/>)}
               </View>
             </View>
 
-            <Item floatingLabel style={styles.form}>
-              <Label>Relato do ocorrido</Label>
-              <Input multiline={true} value={this.state.comentario} onChangeText={text => this.setState({comentario: text})} />
+            <Item style={{borderColor:'#727272',backgroundColor:'#fff',width:328,height:55,marginTop:16,height: Math.max(55, this.state.height)}}>
+              <Label style={{position:'relative',left:18,fontSize:14,color:'#000'}}>Relato do ocorrido      </Label>
+              <Input onContentSizeChange={(event) => {
+            this.setState({ height: event.nativeEvent.contentSize.height })
+			}} style={{height: Math.max(55, this.state.height),paddingTop:10,paddingBottom:10}} multiline={true} value={this.state.comentario} onChangeText={text => this.setState({comentario: text})} />
             </Item>
 
             
             <Button
               disabled={isDisabled}
-              style={[styles.form, {alignSelf: "center"}]}
+			  style={this.getEstadoBotao(isDisabled)}
               onPress={this._handleSubmit}
             >
-              <Text>Enviar denúncia</Text>
+              <Text uppercase={false} style={this.getEstadoLabelBotao(isDisabled)}>Enviar denúncia</Text>
             </Button>
-          </Form>
+          </View>
         </Content>
     </Container>
   );
 }
-
+getEstadoBotao(estado){
+	if(estado==true){
+		return {alignSelf: "center",marginTop:16,width:158,height:40,elevation:0}
+	}else{
+		return {alignSelf: "center",marginTop:16,backgroundColor:'#ffca28',width:158,height:40,elevation:0}
+	}
+}
+getEstadoLabelBotao(estado){
+	if(estado==true){
+		  return {
+			  fontSize:16,textAlign:'center',width:157,height:25
+		  }
+	  }else{
+		  return {
+			  fontSize:16,textAlign:'center',width:157,height:25,color:'#000'
+		  }
+	  }
+}
 _buscarUsuarios = (text) => {
   clearTimeout(this.state.timeId);
 
@@ -120,7 +142,7 @@ _buscarUsuarios = (text) => {
   
   let timeId = setTimeout(async () => {
     if(text) {
-      const buscados = await postBuscaUsuario(this.state.token, {nome: 'e'});
+      const buscados = await postBuscaUsuario(this.state.token, {nome: 'ta'});
       this.setState({usuariosBuscados: buscados});
     }
   }, 700);
@@ -175,12 +197,12 @@ const UsuarioBuscado = (props) => (
 );
 
 const UsuarioDenunciado = (props) => (
-  <View style={{alignItems: "center", marginRight:12}}>
+  <View style={{alignItems: "center", marginRight:12,marginLeft:6}}>
       <Image
           style={ styles.foto }
-          source={{
+          source={require('../assets/passageiro.png')/*{
               uri: props.usuario.foto
-          }}
+          }*/}
       />
       <Text>{props.usuario.nome}</Text>
   </View>
@@ -188,14 +210,23 @@ const UsuarioDenunciado = (props) => (
 
 const styles = StyleSheet.create({
   container: {
-  flex: 1,
-  backgroundColor: '#fff',
-  alignItems: 'center',
-  justifyContent: 'center',
+	flex:1,
+    marginRight:17,
+	marginLeft:17,
+	padding:0,
+	flexDirection: 'column',
+    backgroundColor: '#f5f5f6',
+    alignItems: 'center',
+    justifyContent: 'center',
+    color: '#000'
   },
   picker: {
-  width: 300,
-  marginBottom: 12,
+	marginBottom: 16,
+	right:12,
+	top:8,
+	width: 360,
+	height:55, 
+	transform: [{ scaleX: 0.87 },{ scaleY: 0.87 }],
   },
   foto: {
     height: 60,
@@ -205,8 +236,11 @@ const styles = StyleSheet.create({
   },
   denunciadosSection: {
     borderWidth: 1,
-    borderColor: '#aaa',
+    borderColor: '#727272',
+	backgroundColor:'#fff',
+	width:328,
     padding: 6,
+	marginTop:16,
     minHeight: 96,
   },
   denunciadosContainer: {
@@ -214,17 +248,15 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     marginTop: 6,
   },
-  form: {
-    marginTop: 16,
-    marginLeft: 0,
-  },
   listaBuscados: {
-    backgroundColor:'#e9e9e9',
+    backgroundColor:'#fff',
     position:'absolute',
     zIndex:99,
+	right:-150,
     borderBottomWidth:1,
     borderLeftWidth:1,
     borderRightWidth:1,
+	borderColor:'#727272',
     width:296,
     paddingBottom: 12,
   }

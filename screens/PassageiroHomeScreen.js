@@ -123,15 +123,20 @@ export default class PassageiroHomeScreen extends React.Component {
             <View style={styles.modalContent}>
               <Text style={styles.modalTitle}>Deseja avaliar a carona?</Text>
               <Text style={styles.modalItem}>Você recebeu, recentemente, uma carona de <Text style={styles.modalMotorista}>{this.state.avaliacao.nome}</Text>.</Text>
-              <Text style={styles.modalItem}>Dê uma nota ao motorista que te ajudou a chegar mais cedo em casa:</Text>
+              <Text style={styles.modalItem}>Que tal dar uma nota ao motorista que te ajudou? </Text>
               <View style={[styles.starsContainer, styles.modalItem]}>
                 {this._createStars()}
               </View>
-              <Button style={[{alignSelf:'center'}, styles.modalItem]} onPress={() => this._avaliaCorrida()}>
-                <Text>
-                  Avaliar
-                </Text>
-              </Button>
+			  <View style={{flexDirection: "row", justifyContent: "space-evenly"}}>
+				  <Button style={{borderColor:'#000',width:140,height:40,marginRight:5,marginTop:8}} bordered onPress={() => this.props.excluiCarona()}>
+					  <Text uppercase={false} style={{color:'black',width:150,marginLeft:-3,height:27,fontSize:18}}>Não, obrigado</Text>
+				  </Button>
+				  <Button style={[{alignSelf:'center',width:140,height:40,backgroundColor:'#ffca28',color:'#000',elevation:0}, styles.modalItem]} onPress={() => this._avaliaCorrida()}>
+					<Text uppercase={false} style={{color:'black',fontWeight:'bold',textAlign:'center',width:137,height:27,fontSize:18}}>
+					  Avaliar
+					</Text>
+				  </Button>
+			  </View>
             </View>
           </Modal>
  
@@ -148,7 +153,7 @@ export default class PassageiroHomeScreen extends React.Component {
         <MaterialIcons
           key={i}
           size={38}
-          color='#ffca28'
+          color={(estrelasCompletas > 0) ? '#ffca28' : '#263238'}
           name={(estrelasCompletas > 0) ? 'star' : 'star-border'}
           onPress={() => {this.setState({nota:i})}}
         />
@@ -201,7 +206,7 @@ const styles = StyleSheet.create({
   },
   modalContent: {
     height:270,
-    backgroundColor:'#e9e9e9',
+    backgroundColor:'#fff',
     padding:16,
     borderRadius: 5,
   },
