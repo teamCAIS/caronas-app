@@ -13,7 +13,7 @@ export default class CaronaAtualMotorista extends React.Component {
   render() {
 
     return (
-      <Container>
+      <Container style={{margin:0,backgroundColor:'#f5f5f6'}}>
         <Content>
           <View style={styles.header}>
 
@@ -24,9 +24,8 @@ export default class CaronaAtualMotorista extends React.Component {
                         uri: "https://static1.squarespace.com/static/51435924e4b02285c8b9c92d/t/558c96c3e4b03457461d0f2e/1508845725260/caiobraga-perfil.jpg"
                     }}
                 />
-                <Text style={styles.label} >Nota do motorista</Text>
-                <View style={{flexDirection:"row", alignItems:"center"}}>
-                    <Text>{this.props.corrida.nota} </Text><MaterialIcons size={32} name="star" />
+                <View style={{flexDirection:"row", alignItems:"center",top:13}}>
+                    <Text>{this.props.corrida.nota} </Text><MaterialIcons size={18} name="star" />
                 </View>
             </View>
             
@@ -34,7 +33,7 @@ export default class CaronaAtualMotorista extends React.Component {
             <Text style={styles.listItem} >{this.props.corrida.nome}</Text>
             <Text style={styles.label}>Carro e placa:</Text>
             <Text style={[styles.listItem]} >{this.props.corrida.modelo}, {this.props.corrida.corCarro}</Text>
-            <Text style={[styles.listItem, {marginTop: -8}]}>{this.props.corrida.placa}</Text>
+            <Text style={[styles.listItem, {marginTop: -4}]}>{this.props.corrida.placa}</Text>
             <Text style={styles.label}>Horário:</Text>
             <Text style={styles.listItem} >{this.props.corrida.hora}</Text>
             <Text style={styles.label}>Destino:</Text>
@@ -43,24 +42,24 @@ export default class CaronaAtualMotorista extends React.Component {
             <Text style={styles.listItem} >{this.props.corrida.pontoEncontro}</Text>
           </View>
 
-          <View >
-            <Text style={{textAlign: "center"}} >Vagas disponíveis:</Text>
+          <View style={{top:16.5,marginBottom:40}}>
+            <Text style={{textAlign: "center",fontSize:14,fontWeight:'bold',marginRight:5}} >Vagas disponíveis:</Text>
             <View style={styles.vagasContainer}>
                 {this._createVagas()}
             </View>
           </View>
 
-          <View style={{flexDirection: "row", margin: 14, justifyContent: "space-evenly"}}>
-              <Button bordered onPress={() => this.props.excluiCarona()}>
-                  <Text>Excluir carona</Text>
+          <View style={{flexDirection: "row", marginRight:17,marginLeft:17, justifyContent: "space-evenly"}}>
+              <Button style={{borderColor:'#000',width:158,height:40,marginRight:5}} bordered onPress={() => this.props.excluiCarona()}>
+                  <Text uppercase={false} style={{color:'black',width:170,marginLeft:5,height:27,fontSize:18}}>Excluir carona</Text>
               </Button>
-              <Button onPress={() => this.props.concluiCarona()}>
-                  <Text>Concluir carona</Text>
+              <Button style={{backgroundColor:'#ffca28',width:158,height:40,marginLeft:5,elevation:0}} onPress={() => this.props.concluiCarona()}>
+                  <Text uppercase={false} style={{color:'black',fontWeight:'bold',width:168,height:27,fontSize:18}}>Concluir carona</Text>
               </Button>
           </View>
-          <Text style={{fontSize:14, textAlign: "center", marginTop:8}}>
+          <Text style={{fontSize:12, textAlign: "center", marginTop:25}}>
             Para editar alguma informação da carona 
-                <Text style={{color: '#6739D8', fontWeight: 'bold'}}> clique aqui</Text>
+                <Text style={{color: '#000', fontWeight: 'bold',fontSize:13}}> clique aqui</Text>
             </Text>
         </Content>
       </Container>
@@ -77,44 +76,42 @@ export default class CaronaAtualMotorista extends React.Component {
 }
 
 const Vaga = (props) => (
-    <View style={{alignItems: "center", marginRight:6}}>
+    <View style={{alignItems: "center"}}>
         <Image
             style={ styles.fotoPassageiro }
-            /* source={{
-                uri: "https://static1.squarespace.com/static/51435924e4b02285c8b9c92d/t/558c96c3e4b03457461d0f2e/1508845725260/caiobraga-perfil.jpg"
-            }} */
+            source={require('../assets/perfil.png')}
         />
-        <Text>Vaga</Text>
-        <Text>Disponível</Text>
+        <Text style={{width:65,height:30,fontSize:13,textAlign:'center',lineHeight:15}}>Vaga{'\n'}Disponível</Text>
     </View>
 );
 
 const styles = StyleSheet.create({
   listItem: {
       marginTop: -4,
+	  marginBottom:-5,
   },
   item: {
   },
   header: {
-    marginBottom: 8,
-    borderBottomColor: '#aaa',
+    borderBottomColor: '#000',
     borderBottomWidth: 2,
-    paddingBottom: 8,
-    paddingLeft: 16,
+	marginLeft: 18,
+	marginRight:18,
+	paddingBottom:16,
   },
   icons: {
     margin: 0,
     marginRight: 16
   },
   fotoMotorista: {
-    height: 100, 
-    width: 100, 
-    marginTop:16,
-    borderRadius: 50,
+    height: 125,
+	width: 125,
+    borderRadius: 80,
   },
   fotoMotoristaContainer: {
       position: "absolute",
-      right: 16,
+	  right:0,
+	  top:18,
       alignItems: "center",
   },
   label: {
@@ -125,7 +122,8 @@ const styles = StyleSheet.create({
   vagasContainer: {
       flexDirection: "row",
       justifyContent: "space-evenly",
-      marginTop: 6,
+      marginTop: 16,
+	  height:95,
   },
   fotoPassageiro: {
       height: 60,

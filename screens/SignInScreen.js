@@ -34,7 +34,7 @@ export default class App extends React.Component {
               <Input textContentType="password" secureTextEntry={true} value={this.state.password} onChangeText={text => this.setState({password: text})} />
             </Item>
 			<Item style={{marginTop:25,width:157.5,height:40}}>
-				<Button style={{backgroundColor:'#ffca28',width:157.5,height:40}} onPress={this._handleLoginPress}>
+				<Button style={{backgroundColor:'#ffca28',width:157.5,height:40,elevation:0}} onPress={this._handleLoginPress}>
 					<Text uppercase={false} style={{color:'black',fontSize:18,textAlign:'center',width:150,height:25}}>Entrar</Text>
 				</Button>
 			</Item>
@@ -63,8 +63,8 @@ export default class App extends React.Component {
 			password: this.state.password
     } */
     payload = {
-      email: 'eu@eu.br',
-      password: '1234'
+      email: 'ele@ele.com',
+      password: '123456'
     }
 
     const token = await login(payload);
@@ -75,6 +75,7 @@ export default class App extends React.Component {
     const info = await getUserInfo(token);
 
     const tipo = info[0].tipo;
+
     this._storeUser(info[0]);
     //ir para a tela do tipo certo
     if(tipo == 0)

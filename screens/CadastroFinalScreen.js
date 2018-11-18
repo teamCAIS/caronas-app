@@ -42,7 +42,7 @@ export default class CadastroFinalScreen extends React.Component {
 			</Item>
 			<Item style={{marginTop:27.5}}>
 				<Button onPress={this._enviaCodigo} style={{backgroundColor:'#ffca28',width:160,height:40}}>
-					<Text uppercase={false} style={{color:'black',fontSize:18,textAlign:'center',width:180,height:27,right:8}}>Finalizar cadastro</Text>
+					<Text uppercase={false} style={{color:'black',fontSize:18,textAlign:'center',width:180,height:27,right:8,elevation:0}}>Finalizar cadastro</Text>
 				</Button>
 			</Item>
 		  </View>

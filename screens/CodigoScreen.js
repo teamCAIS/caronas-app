@@ -28,7 +28,7 @@ export default class CodigoScreen extends React.Component {
             </Item>
 			<Item style={{marginTop:27.5}}>
 				<Button onPress={this._enviaCodigo} style={{backgroundColor:'#ffca28',width:157.5,height:40}}>
-					<Text uppercase={false} style={{color:'black',fontSize:18,textAlign:'center',width:153,height:27}}>Confirmar</Text>
+					<Text uppercase={false} style={{color:'black',fontSize:18,textAlign:'center',width:153,height:27,elevation:0}}>Confirmar</Text>
 				</Button>
 			</Item>
 		  </View>

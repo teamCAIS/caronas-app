@@ -39,9 +39,11 @@ export default class MotoristaHomeScreen extends React.Component {
           name="menu"
           size={32}
           onPress={() => navigation.openDrawer()}
-          color="#000"
+          color="#fff"
         />
       ),
+	  headerStyle: {backgroundColor: '#263238', height:57.5},
+	  headerTintColor: '#fff'
     }
   }
 
@@ -57,10 +59,10 @@ export default class MotoristaHomeScreen extends React.Component {
           <Text>Você ainda não criou uma carona</Text>
           <Button
             onPress={() => {this.props.navigation.navigate('AdicionarCarona')}}
-            style={{alignSelf: "center", marginTop: 24}}
+            style={{alignSelf: "center", marginTop: 24,backgroundColor:'#ffca28',width:170,height:40,elevation:0}}
             title="Criar uma carona"
           >
-          <Text>Criar uma carona</Text>
+          <Text style={{color:'black',fontWeight:'bold'}}>Criar uma carona</Text>
           </Button>
         </Container>
       

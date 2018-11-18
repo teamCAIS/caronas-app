@@ -84,7 +84,7 @@ export default class CadastroScreen extends React.Component {
 				</Button>
 			</Item>
 			<Item style={{marginTop:18,marginBottom:18}}>
-				<Button style={{backgroundColor:'#ffca28',width:157.5,height:40}}>
+				<Button style={{backgroundColor:'#ffca28',width:157.5,height:40, elevation:0}}>
 					<Text uppercase={false} style={{color:'black',fontSize:18,textAlign:'center',width:153,height:27}}>Concluir</Text>
 				</Button>
 			</Item>
