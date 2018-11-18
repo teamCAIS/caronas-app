@@ -63,9 +63,10 @@ export default class PassageiroHomeScreen extends React.Component {
           name="menu"
           size={32}
           onPress={() => navigation.openDrawer()}
-          color="#000"
-        />
-      ),
+          color="#fff"
+        />),
+      headerStyle: {backgroundColor: '#263238', height:57.5},
+	  headerTintColor: '#fff',
     }
   }
 
@@ -75,7 +76,7 @@ export default class PassageiroHomeScreen extends React.Component {
     if(this.state.caronaAtual)
       caronaAtualComponent = (
         <View>
-          <Text style={{textAlign:"center"}}>Carona Atual</Text>
+          <Text style={{textAlign:"center",fontSize:14,fontWeight:'bold',marginBottom:2}}>Carona atual</Text>
           <TouchableHighlight
             underlayColor='#eee9' 
             onPress={() => 
@@ -89,13 +90,13 @@ export default class PassageiroHomeScreen extends React.Component {
               corrida={this.state.caronaAtual}
             />
           </TouchableHighlight>
-          <Text style={{textAlign:"center"}}>Caronas Disponíveis</Text>
+          <Text style={{textAlign:"center",fontSize:14,fontWeight:'bold',marginBottom:2,marginTop:2}}>Caronas disponíveis</Text>
         </View>
       );
 
     return (
       
-        <Content style={{padding:8}}>
+        <Content style={{paddingLeft:8,paddingRight:8,paddingTop:18,paddingBottom:18}}>
           <NavigationEvents 
             onWillFocus={payload => this._verificaCaronaAtual()}
           />

@@ -33,7 +33,7 @@ export default class CaronaAtualMotorista extends React.Component {
             <Text style={styles.listItem} >{this.props.corrida.nome}</Text>
             <Text style={styles.label}>Carro e placa:</Text>
             <Text style={[styles.listItem]} >{this.props.corrida.modelo}, {this.props.corrida.corCarro}</Text>
-            <Text style={[styles.listItem, {marginTop: -4}]}>{this.props.corrida.placa}</Text>
+            <Text style={[styles.listItem, {marginTop: 2}]}>{this.props.corrida.placa}</Text>
             <Text style={styles.label}>Horário:</Text>
             <Text style={styles.listItem} >{this.props.corrida.hora}</Text>
             <Text style={styles.label}>Destino:</Text>
@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
   },
   header: {
     borderBottomColor: '#000',
-    borderBottomWidth: 2,
+    borderBottomWidth: 1.5,
 	marginLeft: 18,
 	marginRight:18,
 	paddingBottom:16,

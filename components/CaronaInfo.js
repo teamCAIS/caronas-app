@@ -13,19 +13,19 @@ export default class CaronaInfo extends React.Component {
   render() {
 
     return (
-      <View>
+      <View style={{backgroundColor:'#f5f5f6'}}>
           <View style={styles.header}>
 
             <View style={styles.fotoMotoristaContainer}>
                 <Image
                     style={ styles.fotoMotorista }
-                    source={{
+                    source={ require('../assets/perfil.png')
+						/*{
                         uri: this.props.corrida.url_foto
-                    }}
+                    }*/ }
                 />
-                <Text style={styles.label} >Nota do motorista</Text>
-                <View style={{flexDirection:"row", alignItems:"center"}}>
-                    <Text>{this.props.corrida.nota} </Text><MaterialIcons size={32} name="star" />
+                <View style={{flexDirection:"row", alignItems:"center",top:13}}>
+                    <Text>{this.props.corrida.nota} </Text><MaterialIcons size={18} name="star" />
                 </View>
             </View>
             
@@ -33,7 +33,7 @@ export default class CaronaInfo extends React.Component {
             <Text style={styles.listItem} >{this.props.corrida.nome}</Text>
             <Text style={styles.label}>Carro e placa:</Text>
             <Text style={[styles.listItem]} >{this.props.corrida.modelo}, {this.props.corrida.corCarro}</Text>
-            <Text style={[styles.listItem, {marginTop: -8}]}>{this.props.corrida.placa}</Text>
+            <Text style={[styles.listItem, {marginTop: 2}]}>{this.props.corrida.placa}</Text>
             <Text style={styles.label}>Horário:</Text>
             <Text style={styles.listItem} >{this.props.corrida.hora}</Text>
             <Text style={styles.label}>Destino:</Text>
@@ -73,7 +73,7 @@ const Vaga = (props) => (
   <View style={{alignItems: "center"}}>
       <Image
           style={ styles.fotoPassageiro }
-          source={props.foto ? {uri:props.foto} : require('../assets/perfil.png')}
+          source={props.foto ? {uri:props.foto} : require('../assets/passageiro.png')}
       />
       <Text style={{width:65,height:30,fontSize:13,textAlign:'center',lineHeight:15}}>
           {props.nome}
@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
     },
     header: {
       borderBottomColor: '#000',
-      borderBottomWidth: 2,
+      borderBottomWidth: 1.5,
       marginLeft: 18,
       marginRight:18,
       paddingBottom:16,

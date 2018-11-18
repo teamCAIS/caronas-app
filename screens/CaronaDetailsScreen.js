@@ -19,6 +19,8 @@ export default class CaronaDetailsScreen extends React.Component {
     return {
       title: `Detalhes da carona ${atual}`,
       headerTitle: `Detalhes da carona ${atual}`,
+	  headerStyle: {backgroundColor: '#263238', height:57.5},
+	  headerTintColor: '#fff',
     }
   }
 
@@ -26,19 +28,19 @@ export default class CaronaDetailsScreen extends React.Component {
 
     let ButtonComponent = (
       <Button style={styles.button} onPress={() => this._entrarCarona()}>
-        <Text>Aceitar</Text>
+        <Text uppercase={false} style={{color:'black',fontWeight:'bold',textAlign:'center',width:155,height:27,fontSize:18}}>Aceitar</Text>
       </Button>
     );
 
     if(this.props.navigation.getParam('atual', ''))
       ButtonComponent = (
         <Button style={styles.button} onPress={() => this._desistirCarona()}>
-          <Text>Desistir da carona</Text>
+          <Text uppercase={false} style={{color:'black',fontWeight:'bold',textAlign:'center',width:157,height:27,fontSize:18}}>Sair da carona</Text>
         </Button>
       );
 
     return (
-      <Container>
+      <Container style={{backgroundColor:'#f5f5f6'}}>
         <CaronaInfo corrida={this.state.corrida}/>
         {ButtonComponent}
       </Container>
@@ -61,6 +63,10 @@ export default class CaronaDetailsScreen extends React.Component {
 const styles = StyleSheet.create({
   button: {
     alignSelf: "center",
-    marginTop: 16,
+    marginTop: 5,
+	backgroundColor:'#ffca28',
+	width:158,
+	height:40,
+	elevation:0,
   }
 });

@@ -21,12 +21,13 @@ export default class CardCarona extends React.Component {
                 <View style={styles.fotoMotoristaContainer}>
                   <Image
                       style={ styles.fotoMotorista }
-                      source={{
+                      source={ require('../assets/perfil.png')
+						  /*{
                           uri: this.props.url_foto
-                      }}
+                      }*/}
                   />
-                  <View style={{flexDirection:"row", alignItems:"center"}}>
-                      <Text>{this.props.corrida.nota}</Text><MaterialIcons size={24} name="star" />
+                  <View style={{flexDirection:"row", alignItems:"center",marginTop:5}}>
+                      <Text>{this.props.corrida.nota}</Text><MaterialIcons size={18} name="star" />
                   </View>
                 </View>
               </Right>
@@ -38,9 +39,9 @@ export default class CardCarona extends React.Component {
 
 const styles = StyleSheet.create({
   fotoMotorista: {
-    height: 80, 
-    width: 80,
-    borderRadius: 40,
+    height: 90, 
+    width: 90,
+    borderRadius: 45,
     backgroundColor: '#222',
   },
   fotoMotoristaContainer: {
