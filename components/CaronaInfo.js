@@ -42,8 +42,8 @@ export default class CaronaInfo extends React.Component {
             <Text style={styles.listItem} >{this.props.corrida.pontoEncontro}</Text>
           </View>
 
-          <View >
-            <Text style={{textAlign: "center"}} >Vagas disponíveis:</Text>
+          <View style={{top:16.5,marginBottom:40}}>
+            <Text style={{textAlign: "center",fontSize:14,fontWeight:'bold',marginRight:5}} >Vagas:</Text>
             <View style={styles.vagasContainer}>
                 {this._createVagas()}
             </View>
@@ -54,71 +54,77 @@ export default class CaronaInfo extends React.Component {
   }
 
   _createVagas = () => {
-      let vagas = []
-      //muda limite do for para (vagas + passageiros.length) ???
-      for(let i = 0; i < this.props.corrida.vagas; i++) {
-          vagas.push( <Vaga key={i} passageiros={this.props.corrida.passageiros} /> );
-      }
-      return vagas;
-  }
+    let vagas = []
+    let passageiros = this.props.corrida.passageiros;
+    let limite = Number(this.props.corrida.vagas) + passageiros.length;
+    for(let i = 0; i < limite; i++) {
+        vagas.push( <Vaga 
+                  key={i}
+                  nome={i < passageiros.length ? passageiros[i].nome : `Vaga Disponível`}
+                  foto={i < passageiros.length ? passageiros[i].url_foto : ''}
+              /> 
+          );
+    }
+    return vagas;
+}
 }
 
 const Vaga = (props) => (
-    <View style={{alignItems: "center", marginRight:6}}>
-        <Image
-            style={ styles.fotoPassageiro }
-            /* source={{
-                uri: "https://static1.squarespace.com/static/51435924e4b02285c8b9c92d/t/558c96c3e4b03457461d0f2e/1508845725260/caiobraga-perfil.jpg"
-            }} */
-        />
-        <Text>Vaga</Text>
-        <Text>Disponível</Text>
-    </View>
+  <View style={{alignItems: "center"}}>
+      <Image
+          style={ styles.fotoPassageiro }
+          source={props.foto ? {uri:props.foto} : require('../assets/perfil.png')}
+      />
+      <Text style={{width:65,height:30,fontSize:13,textAlign:'center',lineHeight:15}}>
+          {props.nome}
+      </Text>
+  </View>
 );
 
 const styles = StyleSheet.create({
-  listItem: {
-      marginTop: -4,
-  },
-  item: {
-  },
-  header: {
-    marginBottom: 8,
-    borderBottomColor: '#aaa',
-    borderBottomWidth: 2,
-    paddingBottom: 8,
-    paddingLeft: 16,
-  },
-  icons: {
-    margin: 0,
-    marginRight: 16
-  },
-  fotoMotorista: {
-    height: 100, 
-    width: 100, 
-    marginTop:16,
-    borderRadius: 50,
-    backgroundColor:'#222',
-  },
-  fotoMotoristaContainer: {
-      position: "absolute",
-      right: 16,
-      alignItems: "center",
-  },
-  label: {
-    marginTop: 16,
-    fontSize: 12,
-    fontWeight: "bold",
-  },
-  vagasContainer: {
-      flexDirection: "row",
-      justifyContent: "space-evenly",
-      marginTop: 6,
-  },
-  fotoPassageiro: {
-      height: 60,
-      width: 60,
-      borderRadius: 30,
-      backgroundColor: '#050505'
-  }
-})
+    listItem: {
+        marginTop: -4,
+        marginBottom:-5,
+    },
+    item: {
+    },
+    header: {
+      borderBottomColor: '#000',
+      borderBottomWidth: 2,
+      marginLeft: 18,
+      marginRight:18,
+      paddingBottom:16,
+    },
+    icons: {
+      margin: 0,
+      marginRight: 16
+    },
+    fotoMotorista: {
+      height: 125,
+      width: 125,
+      borderRadius: 80,
+    },
+    fotoMotoristaContainer: {
+        position: "absolute",
+        right:0,
+        top:18,
+        alignItems: "center",
+    },
+    label: {
+      marginTop: 16,
+      fontSize: 12,
+      fontWeight: "bold",
+    },
+    vagasContainer: {
+        flexDirection: "row",
+        justifyContent: "space-evenly",
+        marginTop: 16,
+        height:95,
+    },
+    fotoPassageiro: {
+        height: 60,
+        width: 60,
+        borderRadius: 30,
+        backgroundColor: '#050505'
+    }
+  })

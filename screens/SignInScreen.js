@@ -1,13 +1,13 @@
 import React from 'react';
 import { StyleSheet, AsyncStorage, Image, View } from 'react-native';
 import { login, getUserInfo } from '../services/ApiService';
-import { Container, Text, Content, Button, Input, Item, Label } from 'native-base';
+import { Container, Text, Content, Button, Input, Item, Label, Spinner } from 'native-base';
 
 export default class App extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {email: '', password: ''}
+    this.state = {email: '', password: '', loading: false}
   }
 
   static navigationOptions = {
@@ -15,6 +15,7 @@ export default class App extends React.Component {
   };
 
   render() {
+
     return (
       <Container style={{margin:0,backgroundColor:'#f5f5f6'}}>
         <Content style={{margin:0,marginTop:100}}>
@@ -34,7 +35,7 @@ export default class App extends React.Component {
               <Input textContentType="password" secureTextEntry={true} value={this.state.password} onChangeText={text => this.setState({password: text})} />
             </Item>
 			<Item style={{marginTop:25,width:157.5,height:40}}>
-				<Button style={{backgroundColor:'#ffca28',width:157.5,height:40,elevation:0}} onPress={this._handleLoginPress}>
+				<Button style={{backgroundColor:'#ffca28',width:157.5,height:40,elevation:0, justifyContent:'space-evenly'}} onPress={this._handleLoginPress}>
 					<Text uppercase={false} style={{color:'black',fontSize:18,textAlign:'center',width:150,height:25}}>Entrar</Text>
 				</Button>
 			</Item>
@@ -58,13 +59,14 @@ export default class App extends React.Component {
   }
 
   _handleLoginPress = async () => {
+    this.setState({loading:true});
     /* payload = {
       email: this.state.email,
 			password: this.state.password
     } */
     payload = {
-      email: 'ele@ele.com',
-      password: '123456'
+      email: 'eu@eu.br',
+      password: '1234'
     }
 
     const token = await login(payload);

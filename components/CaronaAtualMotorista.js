@@ -68,8 +68,15 @@ export default class CaronaAtualMotorista extends React.Component {
 
   _createVagas = () => {
       let vagas = []
-      for(let i = 0; i < this.props.corrida.vagas; i++) {
-          vagas.push( <Vaga key={i} passageiros={this.props.corrida.passageiros} /> );
+      let passageiros = this.props.corrida.passageiros;
+      let limite = Number(this.props.corrida.vagas) + passageiros.length;
+      for(let i = 0; i < limite; i++) {
+          vagas.push( <Vaga 
+                    key={i}
+                    nome={i < passageiros.length ? passageiros[i].nome : `Vaga Disponível`}
+                    foto={i < passageiros.length ? passageiros[i].url_foto : ''}
+                /> 
+            );
       }
       return vagas;
   }
@@ -79,9 +86,11 @@ const Vaga = (props) => (
     <View style={{alignItems: "center"}}>
         <Image
             style={ styles.fotoPassageiro }
-            source={require('../assets/perfil.png')}
+            source={props.foto ? {uri:props.foto} : require('../assets/perfil.png')}
         />
-        <Text style={{width:65,height:30,fontSize:13,textAlign:'center',lineHeight:15}}>Vaga{'\n'}Disponível</Text>
+        <Text style={{width:65,height:30,fontSize:13,textAlign:'center',lineHeight:15}}>
+            {props.nome}
+        </Text>
     </View>
 );
 

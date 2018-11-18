@@ -31,10 +31,8 @@ export default class MenuMotorista extends React.Component {
           <View style={styles.menuHeader}>
             <Text style={{fontSize: 24,color:colors.white}}>Menu</Text>
             <Image
-              style={{ height: 100, width: 100, marginTop:32, marginBottom:16, borderRadius: 50, backgroundColor:'#222'}}
-              source={{
-                uri: this.state.user.url_foto
-              }}
+              style={styles.avatar}
+              source={this.state.user.url_foto ? {uri:this.state.user.url_foto} : require('../assets/perfil.png')}
             />
             <Text style={{color:colors.white}}>Bem vind{letra}, {this.state.user.nome}</Text>
             <Text style={{fontSize: 14,color:colors.white}}>{this.state.user.email}</Text>
@@ -116,5 +114,15 @@ const styles = StyleSheet.create({
     margin: 0,
     marginRight: 16,
     color:colors.white,
+  },
+  avatar: {
+    height: 100, 
+    width: 100, 
+    marginTop:32,
+    marginBottom:16, 
+    borderRadius: 50, 
+    backgroundColor:'#222',
+    borderWidth:2,
+    borderColor:colors.secondary,
   }
 })

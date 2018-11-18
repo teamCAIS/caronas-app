@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, View, AsyncStorage } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
-import { Button, Text, Container } from 'native-base';
+import { Button, Text, Container, Spinner } from 'native-base';
 import { NavigationEvents } from 'react-navigation';
 import { getCorridaAtual, concluirCorrida } from '../services/ApiService'
 import CaronaAtualMotorista from '../components/CaronaAtualMotorista';
@@ -10,7 +10,7 @@ export default class MotoristaHomeScreen extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { token: '', corrida: null }
+    this.state = { token: '', corrida: null, loading: true }
   }
 
   async componentDidMount() {
@@ -22,10 +22,10 @@ export default class MotoristaHomeScreen extends React.Component {
     const corrida = res[0];
 
     if(res != 'Falha na conexão') {
-      this.setState({ token, corrida });
+      this.setState({ token, corrida, loading: false });
     }
     else
-      this.setState({token});
+      this.setState({token, loading: false});
 
   }
 
@@ -48,6 +48,11 @@ export default class MotoristaHomeScreen extends React.Component {
   }
 
   render() {
+
+    if(this.state.loading)
+    return (
+      <Spinner color='#ffca28'/>
+    );
 
     if(!this.state.corrida)
       return (
