@@ -43,7 +43,7 @@ export default class CaronaAtualMotorista extends React.Component {
           </View>
 
           <View style={{top:16.5,marginBottom:40}}>
-            <Text style={{textAlign: "center",fontSize:14,fontWeight:'bold',marginRight:5}} >Vagas disponíveis:</Text>
+            <Text style={{textAlign: "center",fontSize:14,fontWeight:'bold',marginRight:5}} >Vagas:</Text>
             <View style={styles.vagasContainer}>
                 {this._createVagas()}
             </View>
@@ -74,7 +74,7 @@ export default class CaronaAtualMotorista extends React.Component {
           vagas.push( <Vaga 
                     key={i}
                     nome={i < passageiros.length ? passageiros[i].nome : `Vaga Disponível`}
-                    foto={i < passageiros.length ? passageiros[i].url_foto : require('../assets/perfil.png')}
+                    foto={i < passageiros.length ? passageiros[i].url_foto : ''}
                 /> 
             );
       }
@@ -86,7 +86,7 @@ const Vaga = (props) => (
     <View style={{alignItems: "center"}}>
         <Image
             style={ styles.fotoPassageiro }
-            source={props.foto}
+            source={props.foto ? {uri:props.foto} : require('../assets/perfil.png')}
         />
         <Text style={{width:65,height:30,fontSize:13,textAlign:'center',lineHeight:15}}>
             {props.nome}
