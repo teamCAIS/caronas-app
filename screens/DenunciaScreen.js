@@ -3,7 +3,7 @@ import { StyleSheet, View, Image, AsyncStorage } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { createStackNavigator } from 'react-navigation';
 import { Container, Content, Form, Button, Picker, Text, Input, Item, Label, Left, Body, Icon, List, ListItem, Thumbnail } from 'native-base';
-import { postBuscaUsuario } from '../services/ApiService';
+import { postBuscaUsuario, denuncia } from '../services/ApiService';
 
 class DenunciaScreen extends React.Component {
 
@@ -17,7 +17,7 @@ class DenunciaScreen extends React.Component {
       timeId: null,
       usuariosBuscados: [], 
       usuarios: [], 
-	  height:55,
+	    height:55,
     }
   }
 
@@ -106,7 +106,7 @@ class DenunciaScreen extends React.Component {
             
             <Button
               disabled={isDisabled}
-			  style={this.getEstadoBotao(isDisabled)}
+			        style={this.getEstadoBotao(isDisabled)}
               onPress={this._handleSubmit}
             >
               <Text uppercase={false} style={this.getEstadoLabelBotao(isDisabled)}>Enviar denúncia</Text>
@@ -142,7 +142,9 @@ _buscarUsuarios = (text) => {
   
   let timeId = setTimeout(async () => {
     if(text) {
-      const buscados = await postBuscaUsuario(this.state.token, {nome: 'ta'});
+      const buscados = await postBuscaUsuario(this.state.token, {nome: text});
+      if(buscados === undefined)
+        return;
       this.setState({usuariosBuscados: buscados});
     }
   }, 700);
@@ -174,12 +176,16 @@ _clickBuscado = (usuario) => {
     const payload = {
       comentario: this.state.comentario,
       tipo: this.state.tipo,
-      id: ids
+      id_denunciado: ids
     }
 
-    //post de denuncia
-
-    setTimeout(() => alert("Sua denúncia foi encaminhada para análise"), 300);
+    const result = await denuncia(this.state.token, payload);
+    if(result == 'success') {
+      alert("Sua denúncia foi encaminhada para análise");
+      this.setState({tipo:'',usuarios:[],comentario:''});
+    }
+    else
+      alert(result);
 
   }
 
@@ -188,7 +194,9 @@ _clickBuscado = (usuario) => {
 const UsuarioBuscado = (props) => (
   <ListItem avatar onPress={() => {props.handleClick(props.usuario)}}>
     <Left>
-    <Thumbnail style={{backgroundColor: '#222'}}  source={{uri: props.usuario.foto}} />
+    <Thumbnail
+      source={props.usuario.foto ? {uri: props.usuario.foro} : require('../assets/passageiro.png')}
+    />
     </Left>
     <Body>
       <Text>{props.usuario.nome}</Text>
@@ -200,9 +208,7 @@ const UsuarioDenunciado = (props) => (
   <View style={{alignItems: "center", marginRight:12,marginLeft:6}}>
       <Image
           style={ styles.foto }
-          source={require('../assets/passageiro.png')/*{
-              uri: props.usuario.foto
-          }*/}
+          source={props.usuario.foto ? {uri: props.usuario.foro} : require('../assets/passageiro.png')}
       />
       <Text>{props.usuario.nome}</Text>
   </View>

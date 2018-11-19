@@ -21,19 +21,23 @@ export default class CardCarona extends React.Component {
                 <View style={styles.fotoMotoristaContainer}>
                   <Image
                       style={ styles.fotoMotorista }
-                      source={ require('../assets/motorista.png')
-						  /*{
-                          uri: this.props.url_foto
-                      }*/}
+                      source={this.props.url_foto ? {uri: this.props.url_foto} : require('../assets/motorista.png')}
                   />
-                  <View style={{flexDirection:"row", alignItems:"center",marginTop:5}}>
-                      <Text>{this.props.corrida.nota}</Text><MaterialIcons size={18} name="star" />
-                  </View>
+                  {this._showNota()}
+                  
                 </View>
               </Right>
             </CardItem>
           </Card>
     );
+  }
+  _showNota = () => {
+    if(this.props.corrida.nota > 0)
+    return (
+      <View style={{flexDirection:"row", alignItems:"center",marginTop:5}}>
+        <Text>{this.props.corrida.nota}</Text><MaterialIcons size={18} name="star" />
+      </View>
+    )
   }
 }
 
