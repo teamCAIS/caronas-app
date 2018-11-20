@@ -27,20 +27,20 @@ export default class CadastroScreen extends React.Component {
       <Container style={{margin:0,backgroundColor:'#f5f5f6'}}>
         <Content style={{margin:0,marginTop:18}}>
           <View style={styles.container}>
-			<Item style={{borderColor:'#727272',backgroundColor:'#fff',width:328,height:55}}>   
-			  <Label style={{position:'relative',left:10,fontSize:14,color:'#727272'}}>Nome </Label>			
+			<Item floatingLabel style={{borderColor:'#727272',backgroundColor:'#fff',width:328,height:55}}>   
+			  <Label style={{position:'relative',left:10,top:10,fontSize:14,color:'#727272'}}>Nome </Label>			
               <Input value={this.state.nome} onChangeText={text => this.setState({nome: text})} />
             </Item>
-            <Item style={{borderColor:'#727272',backgroundColor:'#fff',marginTop:18,width:328,height:55}}>   
-			  <Label style={{position:'relative',left:10,fontSize:14,color:'#727272'}}>E-mail </Label>			
+            <Item floatingLabel style={{borderColor:'#727272',backgroundColor:'#fff',marginTop:18,width:328,height:55}}>   
+			  <Label style={{position:'relative',left:10,top:10,fontSize:14,color:'#727272'}}>E-mail </Label>			
               <Input textContentType="emailAddress" keyboardType="email-address" value={this.state.email} onChangeText={text => this.setState({email: text})} />
             </Item>
-            <Item style={{borderColor:'#727272',backgroundColor:'#fff',marginTop:18,width:328,height:55}}>
-              <Label style={{position:'relative',left:10,fontSize:14,color:'#727272'}}>Senha </Label>
+            <Item floatingLabel style={{borderColor:'#727272',backgroundColor:'#fff',marginTop:18,width:328,height:55}}>
+              <Label style={{position:'relative',left:10,top:10,fontSize:14,color:'#727272'}}>Senha </Label>
               <Input textContentType="password" secureTextEntry={true} value={this.state.password} onChangeText={text => this.setState({password: text})} />
             </Item>
-			<Item style={{borderColor:'#727272',backgroundColor:'#fff',marginTop:18,width:328,height:55}}>
-              <Label style={{position:'relative',left:10,fontSize:14,color:'#727272'}}>Confirmar senha </Label>
+			<Item floatingLabel style={{borderColor:'#727272',backgroundColor:'#fff',marginTop:18,width:328,height:55}}>
+              <Label style={{position:'relative',left:10,top:10,fontSize:14,color:'#727272'}}>Confirmar senha </Label>
               <Input textContentType="password" secureTextEntry={true} value={this.state.cpassword} onChangeText={text => this.setState({cpassword: text})} />
             </Item>
 			<Item style={{borderColor:'#727272',backgroundColor:'#fff',marginTop:18,width:328,height:55}}>

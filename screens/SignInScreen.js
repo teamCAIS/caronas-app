@@ -26,12 +26,12 @@ export default class App extends React.Component {
 				  source={require('../assets/logo.png')}
 				/>
 			</Item>
-            <Item style={{borderColor:'#727272',backgroundColor:'#fff',marginTop:18,width:328,height:55}}>   
-			  <Label style={{position:'relative',left:10,fontSize:14,color:'#727272'}}>E-mail </Label>			
+            <Item floatingLabel style={{borderColor:'#727272',backgroundColor:'#fff',marginTop:18,width:328,height:55}}>   
+			  <Label style={{position:'relative',left:10,top:10,fontSize:14,color:'#727272'}}>E-mail </Label>			
               <Input textContentType="emailAddress" keyboardType="email-address" value={this.state.email} onChangeText={text => this.setState({email: text})} />
             </Item>
-            <Item style={{borderColor:'#727272',backgroundColor:'#fff',marginTop:18,width:328,height:55}}>
-              <Label style={{position:'relative',left:10,fontSize:14,color:'#727272'}}>Senha </Label>
+            <Item floatingLabel style={{borderColor:'#727272',backgroundColor:'#fff',marginTop:18,width:328,height:55}}>
+              <Label style={{position:'relative',left:10,top:10,fontSize:14,color:'#727272'}}>Senha </Label>
               <Input textContentType="password" secureTextEntry={true} value={this.state.password} onChangeText={text => this.setState({password: text})} />
             </Item>
 			<Item style={{marginTop:25,width:157.5,height:40}}>
@@ -65,7 +65,7 @@ export default class App extends React.Component {
 			password: this.state.password
     } */
     payload = {
-      email: 'caca@caca.com',
+      email: 'ele@ele.com',
       password: '123456'
     }
 

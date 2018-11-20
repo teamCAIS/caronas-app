@@ -42,8 +42,8 @@ export default class CaronaInfo extends React.Component {
             <Text style={styles.listItem} >{this.props.corrida.pontoEncontro}</Text>
           </View>
 
-          <View style={{top:16.5,marginBottom:40}}>
-            <Text style={{textAlign: "center",fontSize:14,fontWeight:'bold',marginRight:5}} >Vagas:</Text>
+          <View style={{top:16.5,marginBottom:40,marginRight:18,marginLeft:18}}>
+            <Text style={{textAlign: "center",fontSize:14,fontWeight:'bold',marginRight:3}} >Vagas:</Text>
             <View style={styles.vagasContainer}>
                 {this._createVagas()}
             </View>
@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
     },
     vagasContainer: {
         flexDirection: "row",
-        justifyContent: "space-evenly",
+        justifyContent: "space-around",
         marginTop: 16,
         height:95,
     },

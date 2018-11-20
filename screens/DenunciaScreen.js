@@ -96,8 +96,8 @@ class DenunciaScreen extends React.Component {
               </View>
             </View>
 
-            <Item style={{borderColor:'#727272',backgroundColor:'#fff',width:328,height:55,marginTop:16,height: Math.max(55, this.state.height)}}>
-              <Label style={{position:'relative',left:18,fontSize:14,color:'#000'}}>Relato do ocorrido      </Label>
+            <Item floatingLabel style={{borderColor:'#727272',backgroundColor:'#fff',width:328,height:55,marginTop:16,height: Math.max(55, this.state.height)}}>
+              <Label style={{position:'relative',left:18,top:10,fontSize:14,color:'#000'}}>Relato do ocorrido      </Label>
               <Input onContentSizeChange={(event) => {
             this.setState({ height: event.nativeEvent.contentSize.height })
 			}} style={{height: Math.max(55, this.state.height),paddingTop:10,paddingBottom:10}} multiline={true} value={this.state.comentario} onChangeText={text => this.setState({comentario: text})} />
@@ -252,7 +252,7 @@ const styles = StyleSheet.create({
     backgroundColor:'#fff',
     position:'absolute',
     zIndex:99,
-	right:-150,
+	right:-135,
     borderBottomWidth:1,
     borderLeftWidth:1,
     borderRightWidth:1,

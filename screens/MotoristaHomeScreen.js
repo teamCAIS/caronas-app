@@ -82,7 +82,7 @@ export default class MotoristaHomeScreen extends React.Component {
         />
 
       );
-
+	
   }
 
   _verificaCarona = () => {
@@ -106,9 +106,12 @@ export default class MotoristaHomeScreen extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#fff',
+    flex:1,
+	padding:0,
+	flexDirection: 'column',
+    backgroundColor: '#f5f5f6',
     alignItems: 'center',
     justifyContent: 'center',
+    color: '#000'
   },
 });

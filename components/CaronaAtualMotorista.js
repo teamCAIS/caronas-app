@@ -42,14 +42,14 @@ export default class CaronaAtualMotorista extends React.Component {
             <Text style={styles.listItem} >{this.props.corrida.pontoEncontro}</Text>
           </View>
 
-          <View style={{top:16.5,marginBottom:40}}>
-            <Text style={{textAlign: "center",fontSize:14,fontWeight:'bold'}} >Vagas disponíveis:</Text>
+          <View style={{top:16.5,marginBottom:40,marginRight:18,marginLeft:18}}>
+            <Text style={{textAlign: "center",fontSize:14,fontWeight:'bold',marginRight:3}} >Vagas:</Text>
             <View style={styles.vagasContainer}>
                 {this._createVagas()}
             </View>
           </View>
 
-          <View style={{flexDirection: "row", marginRight:17,marginLeft:17, justifyContent: "space-evenly"}}>
+          <View style={{flexDirection: "row", marginRight:18,marginLeft:18, justifyContent: "space-around"}}>
               <Button style={{borderColor:'#000',width:158,height:40,marginRight:5}} bordered onPress={() => this.props.excluiCarona()}>
                   <Text uppercase={false} style={{color:'black',width:170,marginLeft:5,height:27,fontSize:18}}>Excluir carona</Text>
               </Button>
@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
   },
   vagasContainer: {
       flexDirection: "row",
-      justifyContent: "space-evenly",
+      justifyContent: "space-around",
       marginTop: 16,
 	  height:95,
   },

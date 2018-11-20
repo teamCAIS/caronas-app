@@ -42,8 +42,8 @@ export default class AdicionarCaronaScreen extends React.Component {
 				  <Picker.Item label="Mister Hull" value="Mister Hull" />
 				</Picker>
 			</Item>
-			<Item style={{borderColor:'#727272',backgroundColor:'#fff',marginTop:18,width:328,height:55}}>   
-			  <Label style={{position:'relative',left:18,fontSize:14,color:'#000'}}>Ponto de Encontro     </Label>			
+			<Item floatingLabel style={{borderColor:'#727272',backgroundColor:'#fff',marginTop:18,width:328,height:55}}>   
+			  <Label style={{position:'relative',left:18,top:10,fontSize:14,color:'#000'}}>Ponto de Encontro     </Label>			
               <Input value={this.state.pontoEncontro} onChangeText={text => this.setState({pontoEncontro: text})} />
             </Item>
 			<Item style={{borderColor:'#727272',backgroundColor:'#fff',marginTop:18,width:328,height:55}}>
