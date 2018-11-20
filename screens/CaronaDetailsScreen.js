@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import CaronaInfo from '../components/CaronaInfo';
-import { Button, Text, Container } from 'native-base';
+import { Button, Text, Container, Spinner } from 'native-base';
 import { entraCorrida, sairCorrida } from '../services/ApiService';
 
 export default class CaronaDetailsScreen extends React.Component {
@@ -11,7 +11,7 @@ export default class CaronaDetailsScreen extends React.Component {
     super(props);
     const corrida = this.props.navigation.getParam('corrida');
     const token = this.props.navigation.getParam('token');
-    this.state = {token, corrida}
+    this.state = {token, corrida, loading:false}
   }
 
   static navigationOptions = ({ navigation }) => {
@@ -25,6 +25,11 @@ export default class CaronaDetailsScreen extends React.Component {
   }
 
   render() {
+
+    if(this.state.loading)
+      return (
+        <Spinner color='#ffca28'/>
+      );
 
     let ButtonComponent = (
       <Button style={styles.button} onPress={() => this._entrarCarona()}>
@@ -48,19 +53,25 @@ export default class CaronaDetailsScreen extends React.Component {
     );
   }
   _entrarCarona = async () => {
+    this.setState({loading:true});
     const id_corrida = this.state.corrida.id;
     const result = await entraCorrida(this.state.token, {id_corrida});
     if(result == "success")
       this.props.navigation.navigate('PassageiroHome', { caronaAtual: this.state.corrida });
-    else
+    else {
+      this.setState({loading:false});
       alert(result);
+    }
   }
   _desistirCarona = async () => {
+    this.setState({loading:true});
     const result = await sairCorrida(this.state.token);
     if(result == 'success')
       this.props.navigation.navigate('PassageiroHome', { caronaAtual: null });
-    else
+    else {
+      this.setState({loading:false});
       alert(result);
+    }
   }
 }
 

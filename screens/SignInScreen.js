@@ -16,6 +16,11 @@ export default class App extends React.Component {
 
   render() {
 
+    if(this.state.loading)
+      return (
+        <Spinner color='#ffca28'/>
+      );
+
     return (
       <Container style={{margin:0,backgroundColor:'#f5f5f6'}}>
         <Content style={{margin:0,marginTop:100}}>
@@ -60,40 +65,39 @@ export default class App extends React.Component {
 
   _handleLoginPress = async () => {
     this.setState({loading:true});
-    /* payload = {
-      email: this.state.email,
-			password: this.state.password
-    } */
     payload = {
-<<<<<<< HEAD
-      email: 'ela@eu.br',
-      password: '1234'
-=======
-      email: 'ela@eu.br',
-      password: '1234'
->>>>>>> cbf1182d317096390f921b64ab4408aedbfe8545
+      email: this.state.email,
+      password: this.state.password
     }
-
+    
     const token = await login(payload);
 
     //salvar o token na AsyncStorage
-    this._storeToken(token);
+    await this._storeToken(token);
 
     const info = await getUserInfo(token);
 
     const tipo = info[0].tipo;
 
-    this._storeUser(info[0]);
+    await this._storeUser(info[0]);
     //ir para a tela do tipo certo
-    if(tipo == 0)
+    if(tipo == 0) {
       this.props.navigation.navigate('Codigo');
-    else if(tipo == 1)
+      return;
+    }
+    else if(tipo == 1) {
       this.props.navigation.navigate('PassageiroApp');
-    else if(tipo == 2)
+      return;
+    }
+    else if(tipo == 2) {
       this.props.navigation.navigate('MotoristaApp');
-    else
+      return;
+    }
+    else {
       alert("Erro ao logar");
-
+    }
+    this.setState({loading:false})
+      
   }
   
   _handleCadastroPress = () => {

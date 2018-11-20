@@ -1,13 +1,13 @@
 import React from 'react';
 import { StyleSheet, AsyncStorage, View } from 'react-native';
-import { Container, Content, Button, Picker, Text, Item, Label, Input } from 'native-base';
+import { Container, Content, Button, Picker, Text, Item, Label, Input, Spinner } from 'native-base';
 import { criarCorrida, getCorridaAtual } from '../services/ApiService';
 
 export default class AdicionarCaronaScreen extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {saida: '', pontoEncontro: '', horario: '', vagas: ''}
+        this.state = {saida: '', pontoEncontro: '', horario: '', vagas: '', loading: false}
       }
 
   static navigationOptions = ({ navigation }) => {
@@ -20,6 +20,11 @@ export default class AdicionarCaronaScreen extends React.Component {
   }
 
   render() {
+
+		if(this.state.loading)
+      return (
+        <Spinner color='#ffca28'/>
+      );
 
     let isDisabled = !(this.state.saida && this.state.horario && this.state.pontoEncontro && this.state.vagas);
 
@@ -113,8 +118,15 @@ export default class AdicionarCaronaScreen extends React.Component {
 	  }
   }
   _handleSubmit = async () => {
+		this.setState({loading:true});
 
-    const payload = this.state;
+		const payload = {
+			saida: this.state.saida,
+			pontoEncontro: this.state.pontoEncontro,
+			horario: this.state.horario,
+			vagas: this.state.vagas,
+		}
+
     const token = await AsyncStorage.getItem('userToken');
 
     const result = await criarCorrida(token, payload);
@@ -124,8 +136,10 @@ export default class AdicionarCaronaScreen extends React.Component {
       const novaCarona = resp[0];
       this.props.navigation.navigate('MotoristaHome', { novaCarona });
     }
-    else
-      alert("Não foi possível publicar uma nova carona");
+    else {
+			this.setState({loading:false});
+			alert("Não foi possível publicar uma nova carona");
+		}
 
   }
 

@@ -8,7 +8,6 @@ export default class CaronaAtualMotorista extends React.Component {
   constructor(props) {
     super(props);
   }
-  //url_foto = para a foto do motorista
 
   render() {
 
@@ -20,13 +19,9 @@ export default class CaronaAtualMotorista extends React.Component {
             <View style={styles.fotoMotoristaContainer}>
                 <Image
                     style={ styles.fotoMotorista }
-                    source={{
-                        uri: "https://static1.squarespace.com/static/51435924e4b02285c8b9c92d/t/558c96c3e4b03457461d0f2e/1508845725260/caiobraga-perfil.jpg"
-                    }}
+                    source={this.props.corrida.url_foto ? {uri: this.props.corrida.url_foto} : require('../assets/motorista.png')}
                 />
-                <View style={{flexDirection:"row", alignItems:"center",top:13}}>
-                    <Text>{this.props.corrida.nota} </Text><MaterialIcons size={18} name="star" />
-                </View>
+                {this._showNota()}
             </View>
             
             <Text style={styles.label}>Motorista:</Text>
@@ -80,6 +75,15 @@ export default class CaronaAtualMotorista extends React.Component {
       }
       return vagas;
   }
+  _showNota = () => {
+    if(this.props.corrida.nota > 0)
+        return (
+            <View style={{flexDirection:"row", alignItems:"center",top:13}}>
+                <Text>{this.props.corrida.nota} </Text><MaterialIcons size={18} name="star" />
+            </View>
+        )
+  }
+
 }
 
 const Vaga = (props) => (

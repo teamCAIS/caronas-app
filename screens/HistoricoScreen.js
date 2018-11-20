@@ -1,21 +1,25 @@
 import React from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
+import { createStackNavigator } from 'react-navigation';
 
-export default class HistoricoScreen extends React.Component {
+class HistoricoScreen extends React.Component {
 
   static navigationOptions = ({ navigation }) => {
     return {
-      title: 'Ver histórico',
+      title: 'Histórico',
       headerTitle: 'Histórico',
       headerLeft: (
         <MaterialIcons
+          style={{marginLeft: 12}}
           name="menu"
           size={32}
           onPress={() => navigation.openDrawer()}
-          color="#000"
+          color="#fff"
         />
       ),
+	  headerStyle: {backgroundColor: '#263238', height:57.5},
+	  headerTintColor: '#fff',
     }
   }
 
@@ -36,3 +40,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
+
+export default HistoricoNav = createStackNavigator({
+  Historico: HistoricoScreen,
+})

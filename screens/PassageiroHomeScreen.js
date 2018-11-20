@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, View, Image, AsyncStorage, TouchableHighlight } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
-import { Container, Content, Card, CardItem, Body, Text, Right, Button } from 'native-base';
+import { Container, Content, Card, CardItem, Body, Text, Right, Button, Spinner } from 'native-base';
 import CardCarona from '../components/CardCarona';
 import { mostraFeed, avaliaCorrida } from '../services/ApiService';
 import { NavigationEvents } from 'react-navigation';
@@ -11,16 +11,8 @@ export default class PassageiroHomeScreen extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { corridas: [], caronaAtual: null, avaliacao: {avaliar:false}, token: '', nota: 0 }
+    this.state = { corridas: [], caronaAtual: null, avaliacao: {avaliar:false}, token: '', nota: 0, loading: true }
   }
-
-  /* 
-  avaliar: true
-  data_hora: "2018-11-15 19:30:00"
-  id: 12
-  nome: "eu"
-   */
-
 
   async componentDidMount() {
     
@@ -30,27 +22,33 @@ export default class PassageiroHomeScreen extends React.Component {
     let avaliacao = false;
     let caronaAtual = null;
 
-    if(res[0].avaliar) {
-      avaliacao = res.shift();
-      if(!res.length) {
-        this.setState({token, avaliacao});
-        return;
+    if(res.length) {
+      if(res[0].avaliar) {
+        avaliacao = res.shift();
+        if(!res.length) {
+          this.setState({token, avaliacao, loading:false});
+          return;
+        }
+          
+      }
+  
+      if(res[0].atual) {
+        caronaAtual = res.shift();
+        if(!res.length) {
+          this.setState({token, caronaAtual, avaliacao, loading:false});
+          return;
+        }
       }
         
-    }
-
-    if(res[0].atual) {
-      caronaAtual = res.shift();
-      if(!res.length) {
-        this.setState({token, caronaAtual, avaliacao});
-        return;
+      if(res != 'Falha na conexão')
+        this.setState({token, corridas: res, caronaAtual, avaliacao, loading:false});
+      else {
+        this.setState({token, loading:false});
+        alert('Houve um problema com a conexão');
       }
     }
+    this.setState({loading:false});
       
-    if(res != 'Falha na conexão')
-      this.setState({token, corridas: res, caronaAtual, avaliacao});
-    else
-      alert('Houve um problema com a conexão');
   }
 
   static navigationOptions = ({ navigation }) => {
@@ -71,6 +69,11 @@ export default class PassageiroHomeScreen extends React.Component {
   }
 
   render() {
+
+    if(this.state.loading)
+      return (
+        <Spinner color='#ffca28'/>
+      );
 
     let caronaAtualComponent = null;
     if(this.state.caronaAtual)

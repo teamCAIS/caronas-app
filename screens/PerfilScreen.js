@@ -17,9 +17,11 @@ class PerfilScreen extends React.Component {
           name="menu"
           size={32}
           onPress={() => navigation.openDrawer()}
-          color="#000"
+          color="#fff"
         />
       ),
+      headerStyle: {backgroundColor: '#263238', height:57.5},
+	    headerTintColor: '#fff',
     }
   }
 
