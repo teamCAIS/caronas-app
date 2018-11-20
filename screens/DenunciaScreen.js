@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, View, Image, AsyncStorage } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { createStackNavigator } from 'react-navigation';
-import { Container, Content, Form, Button, Picker, Text, Input, Item, Label, Left, Body, Icon, List, ListItem, Thumbnail } from 'native-base';
+import { Container, Content, Form, Button, Picker, Text, Input, Item, Label, Left, Body, Icon, List, ListItem, Thumbnail, Spinner } from 'native-base';
 import { postBuscaUsuario, denuncia } from '../services/ApiService';
 
 class DenunciaScreen extends React.Component {
@@ -17,7 +17,8 @@ class DenunciaScreen extends React.Component {
       timeId: null,
       usuariosBuscados: [], 
       usuarios: [], 
-	    height:55,
+      height:55,
+      loading: false,
     }
   }
 
@@ -45,6 +46,11 @@ class DenunciaScreen extends React.Component {
   }
 
   render() {
+
+    if(this.state.loading)
+      return (
+        <Spinner color='#ffca28'/>
+      );
 
     let lista = null;
     if(this.state.usuariosBuscados.length)
@@ -170,6 +176,7 @@ _clickBuscado = (usuario) => {
 }
 
   _handleSubmit = async () => {
+    this.setState({loading:true});
 
     const ids = this.state.usuarios.map(usuario => usuario.id);
 
@@ -182,10 +189,13 @@ _clickBuscado = (usuario) => {
     const result = await denuncia(this.state.token, payload);
     if(result == 'success') {
       alert("Sua denúncia foi encaminhada para análise");
-      this.setState({tipo:'',usuarios:[],comentario:''});
+      this.setState({tipo:'',usuarios:[],comentario:'',loading:false});
     }
-    else
+    else {
+      this.setState({loading:false});
       alert(result);
+    }
+      
 
   }
 

@@ -3,17 +3,22 @@ const baseUrl = 'http://192.168.15.7/backend/public/api';
 const msgErro = 'Erro ao conectar com o servidor';
 
 export async function login(payload) {
-    let response = await fetch(baseUrl, {
-        method: 'post',
-        body: JSON.stringify(payload),
-        headers: {
-            "Content-Type": "application/json"
-        }
-    })
+    try {
+        let response = await fetch(baseUrl, {
+            method: 'post',
+            body: JSON.stringify(payload),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
 
-    let result = await response.json();
-    let token = result.data.token;
-    return token;
+        let result = await response.json();
+        let token = result.data.token;
+        return token;
+    }
+    catch(error) {
+        return {status: 'error',message: 'Erro ao tentar conectar'}
+    }
 }
 
 export async function getUserInfo(token) {

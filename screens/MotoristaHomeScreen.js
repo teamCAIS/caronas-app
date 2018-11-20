@@ -50,9 +50,9 @@ export default class MotoristaHomeScreen extends React.Component {
   render() {
 
     if(this.state.loading)
-    return (
-      <Spinner color='#ffca28'/>
-    );
+      return (
+        <Spinner color='#ffca28'/>
+      );
 
     if(!this.state.corrida)
       return (
