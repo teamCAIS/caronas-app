@@ -19,14 +19,9 @@ export default class CaronaInfo extends React.Component {
             <View style={styles.fotoMotoristaContainer}>
                 <Image
                     style={ styles.fotoMotorista }
-                    source={ require('../assets/motorista.png')
-						/*{
-                        uri: this.props.corrida.url_foto
-                    }*/ }
+                    source={this.props.corrida.url_foto ? {uri: this.props.corrida.url_foto} : require('../assets/motorista.png')}
                 />
-                <View style={{flexDirection:"row", alignItems:"center",top:13}}>
-                    <Text>{this.props.corrida.nota} </Text><MaterialIcons size={18} name="star" />
-                </View>
+                {this._showNota()}
             </View>
             
             <Text style={styles.label}>Motorista:</Text>
@@ -51,6 +46,15 @@ export default class CaronaInfo extends React.Component {
 
         </View>
     );
+  }
+
+  _showNota = () => {
+    if(this.props.corrida.nota > 0)
+        return (
+            <View style={{flexDirection:"row", alignItems:"center",top:13}}>
+                <Text>{this.props.corrida.nota} </Text><MaterialIcons size={18} name="star" />
+            </View>
+        )
   }
 
   _createVagas = () => {

@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import CaronaInfo from '../components/CaronaInfo';
 import { Button, Text, Container } from 'native-base';
-import { entraCorrida } from '../services/ApiService';
+import { entraCorrida, sairCorrida } from '../services/ApiService';
 
 export default class CaronaDetailsScreen extends React.Component {
 
@@ -55,8 +55,12 @@ export default class CaronaDetailsScreen extends React.Component {
     else
       alert(result);
   }
-  _desistirCarona = () => {
-    this.props.navigation.navigate('PassageiroHome', { caronaAtual: null });
+  _desistirCarona = async () => {
+    const result = await sairCorrida(this.state.token);
+    if(result == 'success')
+      this.props.navigation.navigate('PassageiroHome', { caronaAtual: null });
+    else
+      alert(result);
   }
 }
 

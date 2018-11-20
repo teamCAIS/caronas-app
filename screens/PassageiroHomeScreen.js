@@ -3,7 +3,7 @@ import { StyleSheet, View, Image, AsyncStorage, TouchableHighlight } from 'react
 import { MaterialIcons } from '@expo/vector-icons';
 import { Container, Content, Card, CardItem, Body, Text, Right, Button } from 'native-base';
 import CardCarona from '../components/CardCarona';
-import { mostraFeed } from '../services/ApiService';
+import { mostraFeed, avaliaCorrida } from '../services/ApiService';
 import { NavigationEvents } from 'react-navigation';
 import Modal from "react-native-modal";
 
@@ -127,16 +127,16 @@ export default class PassageiroHomeScreen extends React.Component {
               <View style={[styles.starsContainer, styles.modalItem]}>
                 {this._createStars()}
               </View>
-			  <View style={{flexDirection: "row", justifyContent: "space-evenly"}}>
-				  <Button style={{borderColor:'#000',width:140,height:40,marginRight:5,marginTop:8}} bordered onPress={() => this.props.excluiCarona()}>
-					  <Text uppercase={false} style={{color:'black',width:150,marginLeft:-3,height:27,fontSize:18}}>Não, obrigado</Text>
-				  </Button>
-				  <Button style={[{alignSelf:'center',width:140,height:40,backgroundColor:'#ffca28',color:'#000',elevation:0}, styles.modalItem]} onPress={() => this._avaliaCorrida()}>
-					<Text uppercase={false} style={{color:'black',fontWeight:'bold',textAlign:'center',width:137,height:27,fontSize:18}}>
-					  Avaliar
-					</Text>
-				  </Button>
-			  </View>
+            <View style={{flexDirection: "row", justifyContent: "space-evenly"}}>
+              <Button style={{borderColor:'#000',width:140,height:40,marginRight:5,marginTop:8}} bordered onPress={() => this._skipAvaliacao()}>
+                <Text uppercase={false} style={{color:'black',width:150,marginLeft:-3,height:27,fontSize:18}}>Não, obrigado</Text>
+              </Button>
+              <Button style={[{alignSelf:'center',width:140,height:40,backgroundColor:'#ffca28',color:'#000',elevation:0}, styles.modalItem]} onPress={() => this._avaliaCorrida()}>
+              <Text uppercase={false} style={{color:'black',fontWeight:'bold',textAlign:'center',width:137,height:27,fontSize:18}}>
+                Avaliar
+              </Text>
+              </Button>
+            </View>
             </View>
           </Modal>
  
@@ -169,19 +169,26 @@ export default class PassageiroHomeScreen extends React.Component {
       this.setState({ caronaAtual });
   }
 
-  _avaliaCorrida = () => {
-    //avaliacao passando:
-    //avaliacao.id como id_corrida
-    //status_nota: 1
-    //nota de 1 a 5 (ver quantas estrelas estao selecionadas)
-    this.setState({ avaliacao:{avaliar: false} });
+  _avaliaCorrida = async () => {
+    const payload = {
+      id_corrida: this.state.avaliacao.id,
+      status_nota: 1,
+      nota: this.state.nota
+    }
+    result = await avaliaCorrida(this.state.token, payload);
+    if(result == 'success')
+      this.setState({ avaliacao:{avaliar: false} });
+    else
+      alert(result);
   }
 
-  _skipAvaliacao = () => {
-    //avaliacao passando:
-    //avaliacao.id como id_corrida
-    //status_nota: 2
-    //nota: ''
+  _skipAvaliacao = async () => {
+    const payload = {
+      id_corrida: this.state.avaliacao.id,
+      status_nota: 2,
+      nota: ''
+    }
+    result = await avaliaCorrida(this.state.token, payload);
     this.setState({ avaliacao:{avaliar: false} });
   }
 }
