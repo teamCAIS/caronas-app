@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, AsyncStorage, Image, View } from 'react-native';
 import { login, getUserInfo } from '../services/ApiService';
 import { Container, Text, Content, Button, Input, Item, Label, Spinner } from 'native-base';
-
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 export default class App extends React.Component {
 
   constructor(props) {
@@ -23,7 +23,7 @@ export default class App extends React.Component {
 
     return (
       <Container style={{margin:0,backgroundColor:'#f5f5f6'}}>
-        <Content style={{margin:0,marginTop:100}}>
+        <Content keyboardDismissMode={'on-drag'} style={{margin:0}}>
           <View style={styles.container}>
 			<Item style={{borderColor:'transparent'}}>
 				<Image
@@ -124,6 +124,7 @@ export default class App extends React.Component {
 const styles = StyleSheet.create({
   container: {
 	flex:1,
+	marginTop:80,
 	marginRight:17,
 	marginLeft:17,
 	padding:0,

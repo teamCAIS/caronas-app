@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Image, AsyncStorage, TouchableHighlight } from 'react-native';
+import { StyleSheet, View, Image, AsyncStorage, TouchableHighlight,RefreshControl } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Container, Content, Card, CardItem, Body, Text, Right, Button, Spinner } from 'native-base';
 import CardCarona from '../components/CardCarona';
@@ -11,7 +11,7 @@ export default class PassageiroHomeScreen extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { corridas: [], caronaAtual: null, avaliacao: {avaliar:false}, token: '', nota: 0, loading: true }
+    this.state = { corridas: [], caronaAtual: null, avaliacao: {avaliar:false}, token: '', nota: 0, loading: true, refreshing:false}
   }
 
   async componentDidMount() {
@@ -21,7 +21,6 @@ export default class PassageiroHomeScreen extends React.Component {
 
     let avaliacao = false;
     let caronaAtual = null;
-
     if(res.length) {
       if(res[0].avaliar) {
         avaliacao = res.shift();
@@ -50,7 +49,12 @@ export default class PassageiroHomeScreen extends React.Component {
     this.setState({loading:false});
       
   }
-
+	 _onRefresh = () => {
+		this.setState({refreshing: true});
+		this.componentDidMount().then(() => {
+		  this.setState({refreshing: false});
+		});
+	  }
   static navigationOptions = ({ navigation }) => {
     return {
       title: 'Caronas disponíveis',
@@ -63,7 +67,7 @@ export default class PassageiroHomeScreen extends React.Component {
           onPress={() => navigation.openDrawer()}
           color="#fff"
         />),
-      headerStyle: {backgroundColor: '#263238', height:57.5},
+      headerStyle: {backgroundColor: '#263238', height:47.5,paddingBottom:20},
 	  headerTintColor: '#fff',
     }
   }
@@ -98,8 +102,8 @@ export default class PassageiroHomeScreen extends React.Component {
       );
 
     return (
-      
-        <Content style={{paddingLeft:8,paddingRight:8,paddingTop:18,paddingBottom:18}}>
+        <Content refreshControl={
+          <RefreshControl refreshing={this.state.refreshing} onRefresh={this._onRefresh}/>} style={{marginRight:8,marginLeft:8,marginTop:18,marginBottom:18}} >
           <NavigationEvents 
             onWillFocus={payload => this._verificaCaronaAtual()}
           />

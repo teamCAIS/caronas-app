@@ -19,7 +19,7 @@ class SobreScreen extends React.Component {
           color="#fff"
         />
       ),
-	  headerStyle: {backgroundColor: '#263238', height:57.5},
+	  headerStyle: {backgroundColor: '#263238', height:47.5,paddingBottom:20},
 	  headerTintColor: '#fff',
     }
   }

@@ -16,7 +16,7 @@ export default class CadastroFinalScreen extends React.Component {
 
   static navigationOptions = {
     title: 'Escolha de perfil',
-	headerStyle: {backgroundColor: '#263238', height:57.5},
+	headerStyle: {backgroundColor: '#263238', height:47.5,paddingBottom:20},
     headerTintColor: '#fff',
 	headerLeft:null
   }

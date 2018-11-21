@@ -6,7 +6,7 @@ export default class CadastroScreen extends React.Component {
 
   static navigationOptions = {
     title: 'Pré-cadastro',
-    headerStyle: {backgroundColor: '#263238', height:57.5},
+    headerStyle: {backgroundColor: '#263238', height:47.5,paddingBottom:20},
     headerTintColor: '#fff'
   }
 	constructor(props) {

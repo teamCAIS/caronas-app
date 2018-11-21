@@ -19,7 +19,7 @@ export default class CaronaDetailsScreen extends React.Component {
     return {
       title: `Detalhes da carona ${atual}`,
       headerTitle: `Detalhes da carona ${atual}`,
-	  headerStyle: {backgroundColor: '#263238', height:57.5},
+	  headerStyle: {backgroundColor: '#263238', height:47.5,paddingBottom:20},
 	  headerTintColor: '#fff',
     }
   }
