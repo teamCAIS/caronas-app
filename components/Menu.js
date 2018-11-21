@@ -29,7 +29,7 @@ export default class Menu extends React.Component {
       <Container style={{backgroundColor:colors.primary}}>
         <Content style={{ marginLeft: 16 }}>
           <View style={styles.menuHeader}>
-            <Text style={{fontSize: 24,color:colors.white}}>Menu</Text>
+            <Text style={{fontSize: 20,fontWeight:'bold',marginTop:-15,color:colors.white}}>Menu</Text>
             <Image
               style={styles.avatar}
               source={this.state.user.url_foto ? {uri:this.state.user.url_foto} : require('../assets/perfil.png')}

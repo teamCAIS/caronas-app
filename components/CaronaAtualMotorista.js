@@ -7,15 +7,20 @@ export default class CaronaAtualMotorista extends React.Component {
 
   constructor(props) {
     super(props);
+	this.state = {refreshing:false}
   }
-
+_onRefresh = () => {
+		this.setState({refreshing: true});
+		this.componentDidMount().then(() => {
+		  this.setState({refreshing: false});
+		});
+	  }
   render() {
 
     return (
       <Container style={{margin:0,backgroundColor:'#f5f5f6'}}>
-        <Content>
+        <Content refreshControl={<RefreshControl refreshing={this.state.refreshing} onRefresh={this._onRefresh}/>} >>
           <View style={styles.header}>
-
             <View style={styles.fotoMotoristaContainer}>
                 <Image
                     style={ styles.fotoMotorista }
