@@ -169,3 +169,33 @@ export async function sairCorrida(token) {
     const data = await response.json();
     return data;
 }
+
+export async function getHistoricoMotorista(token) {
+    const response = await fetch(baseUrl+'/historicoMotorista', {
+        method: 'get',
+        headers: {
+            "Authorization": "bearer "+token
+        }
+    })
+
+    if(!response.ok)
+        return 'Falha na conexão';
+
+    const data = await response.json();
+    return data;
+}
+
+export async function getHistoricoPassageiro(token) {
+    const response = await fetch(baseUrl+'/historicoPassageiro', {
+        method: 'get',
+        headers: {
+            "Authorization": "bearer "+token
+        }
+    })
+
+    if(!response.ok)
+        return 'Falha na conexão';
+
+    const data = await response.json();
+    return data;
+}

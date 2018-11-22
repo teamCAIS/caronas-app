@@ -49,8 +49,8 @@ export default class MotoristaHomeScreen extends React.Component {
           </View>
         </TouchableNativeFeedback>
       ),
-	  headerStyle: {backgroundColor: '#263238', height:47.5,paddingBottom:20},
-	  headerTintColor: '#fff'
+      headerStyle: {backgroundColor: '#263238', height:47.5,paddingBottom:20},
+      headerTintColor: '#fff'
     }
   }
 
