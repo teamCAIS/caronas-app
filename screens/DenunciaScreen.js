@@ -16,9 +16,11 @@ class DenunciaScreen extends React.Component {
       busca: '',
       timeId: null,
       usuariosBuscados: [], 
-      usuarios: [], 
+      usuarios: [],
+      usuariosIds: [],
       height:55,
       loading: false,
+      clickedUsuario: false,
     }
   }
 
@@ -96,7 +98,7 @@ class DenunciaScreen extends React.Component {
 
             <View style={[styles.denunciadosSection]}>
 
-            <Text style={{position:'relative',left:62,fontSize:14,color:'#000'}}>Usuários à serem denunciados</Text>
+            <Text style={{position:'relative',left:62,fontSize:14,color:'#000'}}>Usuários a serem denunciados</Text>
               <View style={[styles.denunciadosContainer]}>
                 {this.state.usuarios.map((usuario,i) => <UsuarioDenunciado key={i} usuario={usuario}/>)}
               </View>
@@ -142,14 +144,17 @@ getEstadoLabelBotao(estado){
 }
 _buscarUsuarios = (text) => {
   clearTimeout(this.state.timeId);
+  this.setState({clickedUsuario: false});
 
-  if(!text.length)
-    this.setState({usuariosBuscados: []});
-  
+  if(!text.length) {
+    this.setState({busca: text,usuariosBuscados: []});
+    return;
+  }
+
   let timeId = setTimeout(async () => {
     if(text) {
       const buscados = await postBuscaUsuario(this.state.token, {nome: text});
-      if(buscados === undefined)
+      if(buscados === undefined || this.state.clickedUsuario)
         return;
       this.setState({usuariosBuscados: buscados});
     }
@@ -160,16 +165,23 @@ _buscarUsuarios = (text) => {
 }
 
 _clickBuscado = (usuario) => {
+  clearTimeout(this.state.timeId);
   this.setState((prevState) => {
     if(prevState.usuarios.length >= 4)
       return;
-    if(prevState.usuarios.includes(usuario))
-      return;
+    
+    if(prevState.usuariosIds.includes(usuario.id))
+      return {
+        usuariosBuscados: [],
+        busca: '',
+    };
 
     return {
       usuarios: [...prevState.usuarios, usuario],
+      usuariosIds: [...prevState.usuariosIds, usuario.id],
       usuariosBuscados: [],
-      busca: ''
+      busca: '',
+      clickedUsuario: true,
     }
     
   });
@@ -178,12 +190,10 @@ _clickBuscado = (usuario) => {
   _handleSubmit = async () => {
     this.setState({loading:true});
 
-    const ids = this.state.usuarios.map(usuario => usuario.id);
-
     const payload = {
       comentario: this.state.comentario,
       tipo: this.state.tipo,
-      id_denunciado: ids
+      id_denunciado: this.state.usuariosIds
     }
 
     const result = await denuncia(this.state.token, payload);

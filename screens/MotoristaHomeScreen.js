@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, AsyncStorage, RefreshControl } from 'react-native';
+import { StyleSheet, View, AsyncStorage, RefreshControl, TouchableNativeFeedback } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Button, Text, Container, Spinner,Content } from 'native-base';
 import { NavigationEvents } from 'react-navigation';
@@ -39,13 +39,15 @@ export default class MotoristaHomeScreen extends React.Component {
       title: 'Início',
       headerTitle: 'Sua carona',
       headerLeft: (
-        <MaterialIcons
-          style={{marginLeft: 12}}
-          name="menu"
-          size={32}
-          onPress={() => navigation.openDrawer()}
-          color="#fff"
-        />
+        <TouchableNativeFeedback onPress={() => navigation.openDrawer()}>
+          <View style={{padding:12}}>
+            <MaterialIcons
+              name="menu"
+              size={32}
+              color="#fff"
+            />
+          </View>
+        </TouchableNativeFeedback>
       ),
 	  headerStyle: {backgroundColor: '#263238', height:47.5,paddingBottom:20},
 	  headerTintColor: '#fff'
