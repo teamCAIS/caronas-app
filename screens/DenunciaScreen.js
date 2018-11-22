@@ -215,12 +215,12 @@ const UsuarioBuscado = (props) => (
 );
 
 const UsuarioDenunciado = (props) => (
-  <View style={{alignItems: "center", marginRight:12,marginLeft:6}}>
+  <View style={{alignItems: "center", marginRight:6,marginLeft:6}}>
       <Image
           style={ styles.foto }
           source={props.usuario.foto ? {uri: props.usuario.foro} : require('../assets/passageiro.png')}
       />
-      <Text>{props.usuario.nome}</Text>
+      <Text style={{width:65,height:30,fontSize:13,textAlign:'center',lineHeight:15}}>{props.usuario.nome}</Text>
   </View>
 );
 
@@ -248,16 +248,14 @@ const styles = StyleSheet.create({
     height: 60,
     width: 60,
     borderRadius: 30,
-    backgroundColor: '#050505'
   },
   denunciadosSection: {
-    borderWidth: 1,
-    borderColor: '#727272',
+    borderColor: 'transparent',
 	backgroundColor:'#fff',
 	width:328,
     padding: 6,
 	marginTop:16,
-    minHeight: 96,
+    minHeight: 120,
   },
   denunciadosContainer: {
     flexDirection: "row",

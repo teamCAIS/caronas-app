@@ -1,7 +1,7 @@
 import React from 'react';
-import { StyleSheet, View, AsyncStorage } from 'react-native';
+import { StyleSheet, View, AsyncStorage, RefreshControl } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
-import { Button, Text, Container, Spinner } from 'native-base';
+import { Button, Text, Container, Spinner,Content } from 'native-base';
 import { NavigationEvents } from 'react-navigation';
 import { getCorridaAtual, concluirCorrida } from '../services/ApiService'
 import CaronaAtualMotorista from '../components/CaronaAtualMotorista';
@@ -10,9 +10,14 @@ export default class MotoristaHomeScreen extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { token: '', corrida: null, loading: true }
+    this.state = { token: '', corrida: null, loading: true, refreshing:false}
   }
-
+ _onRefresh = () => {
+		this.setState({refreshing: true});
+		this.componentDidMount().then(() => {
+		  this.setState({refreshing: false});
+		});
+	  }
   async componentDidMount() {
     const token = await AsyncStorage.getItem('userToken');
     
@@ -57,7 +62,8 @@ export default class MotoristaHomeScreen extends React.Component {
     if(!this.state.corrida)
       return (
         
-        <Container style={styles.container}>
+        <Content refreshControl={
+          <RefreshControl refreshing={this.state.refreshing} onRefresh={this._onRefresh}/>} contentContainerStyle={styles.container}>
           <NavigationEvents 
             onWillFocus={payload => this._verificaCarona()}
           />
@@ -69,24 +75,26 @@ export default class MotoristaHomeScreen extends React.Component {
           >
           <Text style={{color:'black',fontWeight:'bold'}}>Criar uma carona</Text>
           </Button>
-        </Container>
+        </Content>
       
       );
     
       return (
-
-        <CaronaAtualMotorista 
-          corrida={this.state.corrida} 
-          excluiCarona={() => this._excluiCarona()} 
-          concluiCarona={() => this._concluiCarona()}
-        />
-
+		<Content refreshControl={
+			  <RefreshControl refreshing={this.state.refreshing} onRefresh={this._onRefresh}/>}>
+			<CaronaAtualMotorista 
+			  corrida={this.state.corrida} 
+			  excluiCarona={() => this._excluiCarona()} 
+			  concluiCarona={() => this._concluiCarona()}
+			/>
+        </Content>
       );
 	
   }
 
   _verificaCarona = () => {
     const novaCarona = this.props.navigation.getParam('novaCarona', this.state.corrida);    
+	this._onRefresh();
     this.setState({ corrida: novaCarona });
   }
 
