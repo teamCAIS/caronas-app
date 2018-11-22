@@ -1,4 +1,4 @@
-const baseUrl = 'http://192.168.15.4/backend/public/api';
+const baseUrl = 'http://192.168.11.12/teste/backend/public/api';
 
 const msgErro = 'Erro ao conectar com o servidor';
 

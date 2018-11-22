@@ -66,6 +66,14 @@ export default class PassageiroHomeScreen extends React.Component {
           onPress={() => navigation.openDrawer()}
           color="#fff"
         />),
+	  headerRight: (
+        <MaterialIcons
+          style={{marginRight: 12}}
+          name="filter-list"
+          size={32}
+          onPress={() => navigation.openDrawer()}
+          color="#fff"
+        />),
       headerStyle: {backgroundColor: '#263238', height:47.5,paddingBottom:20},
 	  headerTintColor: '#fff',
     }

@@ -10,12 +10,27 @@ export default class CardCarona extends React.Component {
           <Card>
             <CardItem>
               <Body>
-                <Text style={[styles.label, {marginTop:0}]}>Motorista:</Text>
-                <Text style={styles.listItem} >{this.props.corrida.nome}</Text>
-                <Text style={styles.label}>Destino:</Text>
-                <Text style={styles.listItem} >{this.props.corrida.saida}</Text>
-                <Text style={styles.label}>Horário:</Text>
-                <Text style={styles.listItem} >{this.props.corrida.hora}</Text>
+				<View style={{flexDirection:'row'}}>
+					<MaterialIcons name="person"  size={24} style={{marginTop:5}} color="#000"  />
+					<View style={{marginLeft:5}}>
+						<Text style={[styles.label, {marginTop:0}]}>Motorista:</Text>
+						<Text style={styles.listItem} >{this.props.corrida.nome}</Text>
+					</View>
+				</View>
+				<View style={{flexDirection:'row'}}>
+					<MaterialIcons name="room"  size={24} style={{marginTop:12}} color="#000"  />
+					<View style={{marginLeft:5}}>
+						<Text style={styles.label}>Destino:</Text>
+						<Text style={styles.listItem} >{this.props.corrida.saida}</Text>
+					</View>
+				</View>
+				<View style={{flexDirection:'row'}}>
+					<MaterialIcons name="query-builder"  size={24} style={{marginTop:12}}  color="#000"  />
+					<View style={{marginLeft:5}}>
+						<Text style={styles.label}>Horário:</Text>
+						<Text style={styles.listItem} >{this.props.corrida.hora}</Text>
+					</View>
+				</View>
               </Body>
               <Right>
                 <View style={styles.fotoMotoristaContainer}>

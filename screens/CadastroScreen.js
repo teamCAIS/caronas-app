@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import { MaterialIcons } from '@expo/vector-icons';
+import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 import { Container, Text, Content, Button, Input, Item, Label, Picker, DatePicker} from 'native-base';
 export default class CadastroScreen extends React.Component {
 
@@ -45,6 +45,7 @@ export default class CadastroScreen extends React.Component {
             </Item>
 			<Item style={{borderColor:'#727272',backgroundColor:'#fff',marginTop:18,width:328,height:55}}>
 				 <Label style={{position:'relative',left:10,fontSize:14,color:'#727272'}}>Data de aniversário    </Label>
+				 <MaterialIcons name="date-range" style={{position:'absolute', left:288,color:'black'}} size={32} />
 				 <DatePicker
 					defaultDate={new Date(2005, 1, 30)}
 					minimumDate={new Date(1950, 1, 1)}
@@ -54,12 +55,11 @@ export default class CadastroScreen extends React.Component {
 					modalTransparent={false}
 					animationType={"fade"}
 					androidMode={"default"}
-					placeHolderText="Selecione uma data"
-					textStyle={{ color: "black"}}
-					placeHolderTextStyle={{ color: "#727272", fontSize:12 }}
+					placeHolderText={<MaterialIcons name="date-range" style={{color:'black'}} size={32} />}
+					textStyle={{ color: "black", left:20}}
+					placeHolderTextStyle={{ color: "#000", fontSize:12, left:140}}
 					onDateChange={this.setDate}
 					/>
-				<MaterialIcons name="date-range" style={{position:'absolute', left:290}} size={32} />
 			</Item>
 			<Item style={{borderColor:'#727272',backgroundColor:'#fff',marginTop:18,width:328,height:55}}>
 				<Picker
@@ -78,10 +78,9 @@ export default class CadastroScreen extends React.Component {
 				  <Picker.Item label="Prefiro não especificar" value="2" />
 				</Picker>
 			</Item>
-			<Item style={{borderColor:'#727272',marginTop:18}}>
-				<Button iconRight style={{backgroundColor:'transparent',width:328,height:57.5}}>
-					<Text uppercase={false} style={{color:'black', textAlign:'center',fontSize:14 , width:320}}>Adicionar atestado de matrícula</Text>
-				</Button>
+			<Item style={{borderColor:'#727272',backgroundColor:'#fff',marginTop:18,width:328,height:55}}>
+				<Label style={{position:'relative',left:10,fontSize:14,color:'#727272'}}>Adicionar atestado de matrícula</Label>
+				<MaterialCommunityIcons size={32} style={{position:'absolute', left:290}} onPress={() => alert("Ainda vai rolar")} name="paperclip" />
 			</Item>
 			<Item style={{marginTop:18,marginBottom:18}}>
 				<Button style={{backgroundColor:'#ffca28',width:157.5,height:40, elevation:0}}>
