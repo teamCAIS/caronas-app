@@ -153,7 +153,7 @@ _buscarUsuarios = (text) => {
         return;
       this.setState({usuariosBuscados: buscados});
     }
-  }, 700);
+  }, 300);
 
   this.setState({busca:text, timeId});
 

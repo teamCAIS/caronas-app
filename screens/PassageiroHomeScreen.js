@@ -13,7 +13,6 @@ export default class PassageiroHomeScreen extends React.Component {
     super(props);
     this.state = { corridas: [], caronaAtual: null, avaliacao: {avaliar:false}, token: '', nota: 0, loading: true, refreshing:false}
   }
-
   async componentDidMount() {
     
     const token = await AsyncStorage.getItem('userToken');
@@ -172,6 +171,7 @@ export default class PassageiroHomeScreen extends React.Component {
 
   _verificaCaronaAtual = () => {
     const caronaAtual = this.props.navigation.getParam('caronaAtual', false);
+	this._onRefresh();
     if(caronaAtual !== false)
       this.setState({ caronaAtual });
   }
