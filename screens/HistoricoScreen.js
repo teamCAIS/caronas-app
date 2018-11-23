@@ -65,21 +65,41 @@ class HistoricoScreen extends React.Component {
         <Spinner color='#ffca28'/>
       );
 
+    let dias = [];
+
     return (
-      <Content>
-        {this.state.lista.map((corrida, i) => (
-            <TouchableHighlight 
-              key={i} 
-              underlayColor='#eee9' 
-              onPress={() => this.props.navigation.navigate('Details', {corrida, token: this.state.token})}
-            >
-              <CardCarona 
-                corrida={corrida}
-              />
-            </TouchableHighlight>
-          ))}
+      <Content style={{paddingRight:8,paddingLeft:8,marginTop:18,marginBottom:18}}>
+        {this.state.lista.map((corrida, i) => {
+
+          let dataText = null;
+          const data = this._convertData(corrida.data);
+          if(!dias.includes(data)) {
+            dias.push(data);
+            dataText = (<Text style={{textAlign:'center'}}>Dia {data}</Text>);
+          }
+          
+          return (
+            <View key={i} >
+              {dataText}
+              <TouchableHighlight 
+                underlayColor='#eee9' 
+                onPress={() => this.props.navigation.navigate('Details', {corrida, historico:true})}
+              >
+                <CardCarona 
+                  corrida={corrida}
+                />
+              </TouchableHighlight>
+            </View>
+          )})}
       </Content>
     );
+  }
+
+  _convertData = (data) => {
+    let arrayData = data.split('-');
+    arrayData.reverse();
+    let string = arrayData.join('/');
+    return string;
   }
 }
 

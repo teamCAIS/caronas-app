@@ -44,6 +44,9 @@ export default class CaronaDetailsScreen extends React.Component {
         </Button>
       );
 
+    if(this.props.navigation.getParam('historico', false))
+      ButtonComponent = null;
+
     return (
       <Container style={{backgroundColor:'#f5f5f6'}}>
         <CaronaInfo corrida={this.state.corrida}/>

@@ -28,7 +28,7 @@ export default class CaronaAtualMotorista extends React.Component {
             <Text style={[styles.listItem]} >{this.props.corrida.modelo}, {this.props.corrida.corCarro}</Text>
             <Text style={[styles.listItem, {marginTop: 2}]}>{this.props.corrida.placa}</Text>
             <Text style={styles.label}>Horário:</Text>
-            <Text style={styles.listItem} >{this.props.corrida.hora}</Text>
+            <Text style={styles.listItem} >{this.props.corrida.hora.substring(0,5)}</Text>
             <Text style={styles.label}>Destino:</Text>
             <Text style={styles.listItem} >{this.props.corrida.saida}</Text>
             <Text style={styles.label}>Ponto de encontro:</Text>

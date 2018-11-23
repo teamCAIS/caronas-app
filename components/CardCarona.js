@@ -28,7 +28,7 @@ export default class CardCarona extends React.Component {
 					<MaterialIcons name="query-builder"  size={24} style={{marginTop:12}}  color="#000"  />
 					<View style={{marginLeft:5}}>
 						<Text style={styles.label}>Horário:</Text>
-						<Text style={styles.listItem} >{this.props.corrida.hora}</Text>
+						<Text style={styles.listItem} >{this.props.corrida.hora.substring(0,5)}</Text>
 					</View>
 				</View>
               </Body>
