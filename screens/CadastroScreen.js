@@ -12,7 +12,7 @@ export default class CadastroScreen extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {nome:'',email: '',password: '',cpassword:'',dataNasc: new Date(),genero: '3',doc:''}
-		 this.setDate = this.setDate.bind(this);
+		this.setDate = this.setDate.bind(this);
 	}
 	onValueChange(value) {
 		this.setState({

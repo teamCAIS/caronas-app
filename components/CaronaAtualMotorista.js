@@ -72,7 +72,7 @@ export default class CaronaAtualMotorista extends React.Component {
                   <Text uppercase={false} style={{color:'black',width:170,marginLeft:5,height:27,fontSize:18}}>Excluir carona</Text>
               </Button>
               <Button style={{backgroundColor:'#ffca28',width:158,height:40,marginLeft:5,elevation:0}} onPress={() => this.props.concluiCarona()}>
-                  <Text uppercase={false} style={{color:'black',fontWeight:'bold',width:168,height:27,fontSize:18}}>Concluir carona</Text>
+                  <Text uppercase={false} style={{color:'black',fontWeight:'bold',width:168,height:27,fontSize:18}}>Encerrar carona</Text>
               </Button>
           </View>
           <Text style={{fontSize:12, textAlign: "center", marginTop:25}}>

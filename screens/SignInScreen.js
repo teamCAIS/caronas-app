@@ -1,19 +1,31 @@
 import React from 'react';
 import { StyleSheet, AsyncStorage, Image, View } from 'react-native';
 import { login, getUserInfo } from '../services/ApiService';
-import { Container, Text, Content, Button, Input, Item, Label, Spinner } from 'native-base';
+import { Container, Text, Content, Button, Input, Item, Label, Spinner,Right } from 'native-base';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 export default class App extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {email: '', password: '', loading: false}
+    this.state = {email: '', password: '', ver:true, loading: false,nomeIcone:"eye"}
   }
 
   static navigationOptions = {
     header: null,
   };
-
+	onValueChange(value) {
+		if(value==true)
+			this.setState({
+			  ver: false,
+			  nomeIcone:"eye-off"
+			});
+		else
+			this.setState({
+			  ver: true,
+			  nomeIcone:"eye"
+			});
+	  }
   render() {
 
     if(this.state.loading)
@@ -37,8 +49,11 @@ export default class App extends React.Component {
             </Item>
             <Item floatingLabel style={{borderColor:'#727272',backgroundColor:'#fff',marginTop:18,width:328,height:55}}>
               <Label style={{position:'relative',left:10,top:10,fontSize:14,color:'#727272'}}>Senha </Label>
-              <Input textContentType="password" secureTextEntry={true} value={this.state.password} onChangeText={text => this.setState({password: text})} />
+              <Input textContentType="password" secureTextEntry={this.state.ver} value={this.state.password} onChangeText={text => this.setState({password: text})} />
             </Item>
+			<Item style={{position:'absolute',borderColor:'transparent',marginTop:12,left:280,width:35,height:55}}>
+				<MaterialCommunityIcons name={this.state.nomeIcone}  size={32} onPress={() => this.onValueChange(this.state.ver)} style={{position:'absolute'}} color="#000"  />
+			</Item>
 			<Item style={{marginTop:25,width:157.5,height:40}}>
 				<Button style={{backgroundColor:'#ffca28',width:157.5,height:40,elevation:0, justifyContent:'space-evenly'}} onPress={this._handleLoginPress}>
 					<Text uppercase={false} style={{color:'black',fontSize:18,textAlign:'center',width:150,height:25}}>Entrar</Text>
@@ -66,7 +81,7 @@ export default class App extends React.Component {
   _handleLoginPress = async () => {
     this.setState({loading:true});
     payload = {
-      email: this.state.email,
+      email: this.state.email.toLowerCase(),
       password: this.state.password
     }
     
