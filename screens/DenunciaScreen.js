@@ -215,7 +215,7 @@ const UsuarioBuscado = (props) => (
   <ListItem avatar onPress={() => {props.handleClick(props.usuario)}}>
     <Left>
     <Thumbnail
-      source={props.usuario.foto ? {uri: props.usuario.foro} : require('../assets/passageiro.png')}
+      source={props.usuario.url_foto ? {uri: props.usuario.url_foto} : require('../assets/passageiro.png')}
     />
     </Left>
     <Body>
@@ -228,7 +228,7 @@ const UsuarioDenunciado = (props) => (
   <View style={{alignItems: "center", marginRight:6,marginLeft:6}}>
       <Image
           style={ styles.foto }
-          source={props.usuario.foto ? {uri: props.usuario.foro} : require('../assets/passageiro.png')}
+          source={props.usuario.url_foto ? {uri: props.usuario.url_foto} : require('../assets/passageiro.png')}
       />
       <Text style={{width:65,height:30,fontSize:13,textAlign:'center',lineHeight:15}}>{props.usuario.nome}</Text>
   </View>

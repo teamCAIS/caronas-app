@@ -22,17 +22,42 @@ export default class CaronaAtualMotorista extends React.Component {
                 {this._showNota()}
             </View>
             
-            <Text style={styles.label}>Motorista:</Text>
-            <Text style={styles.listItem} >{this.props.corrida.nome}</Text>
-            <Text style={styles.label}>Carro e placa:</Text>
-            <Text style={[styles.listItem]} >{this.props.corrida.modelo}, {this.props.corrida.corCarro}</Text>
-            <Text style={[styles.listItem, {marginTop: 2}]}>{this.props.corrida.placa}</Text>
-            <Text style={styles.label}>Horário:</Text>
-            <Text style={styles.listItem} >{this.props.corrida.hora.substring(0,5)}</Text>
-            <Text style={styles.label}>Destino:</Text>
-            <Text style={styles.listItem} >{this.props.corrida.saida}</Text>
-            <Text style={styles.label}>Ponto de encontro:</Text>
-            <Text style={styles.listItem} >{this.props.corrida.pontoEncontro}</Text>
+            <View style={{flexDirection:'row'}}>
+				<MaterialIcons name="person"  size={24} style={{marginTop:20}} color="#000"  />
+				<View style={{marginLeft:5}}>
+					<Text style={styles.label}>Motorista:</Text>
+					<Text style={styles.listItem} >{this.props.corrida.nome}</Text>
+				</View>
+			</View>
+			<View style={{flexDirection:'row'}}>
+				<MaterialIcons name="directions-car"  size={24} style={{marginTop:30}} color="#000"  />
+				<View style={{marginLeft:5}}>
+					<Text style={styles.label}>Carro e placa:</Text>
+					<Text style={[styles.listItem]} >{this.props.corrida.modelo}, {this.props.corrida.corCarro}</Text>
+					<Text style={[styles.listItem, {marginTop: 2}]}>{this.props.corrida.placa}</Text>
+				</View>
+			</View>
+			<View style={{flexDirection:'row'}}>
+				<MaterialIcons name="query-builder"  size={24} style={{marginTop:20}} color="#000"  />
+				<View style={{marginLeft:5}}>
+					<Text style={styles.label}>Horário:</Text>
+					<Text style={styles.listItem} >{this.props.corrida.hora.substring(0,5)}</Text>
+				</View>
+			</View>
+			<View style={{flexDirection:'row'}}>
+				<MaterialIcons name="room"  size={24} style={{marginTop:20}} color="#000"  />
+				<View style={{marginLeft:5}}>
+					<Text style={styles.label}>Destino:</Text>
+					<Text style={styles.listItem} >{this.props.corrida.saida}</Text>
+				</View>
+			</View>
+			<View style={{flexDirection:'row'}}>
+				<MaterialIcons name="radio-button-unchecked"  size={24} style={{marginTop:20}} color="#000"  />
+				<View style={{marginLeft:5}}>
+					<Text style={styles.label}>Ponto de encontro:</Text>
+					<Text style={styles.listItem} >{this.props.corrida.pontoEncontro}</Text>
+				</View>
+			</View>
           </View>
 
           <View style={{top:16.5,marginBottom:40,marginRight:18,marginLeft:18}}>

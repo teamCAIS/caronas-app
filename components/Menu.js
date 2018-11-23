@@ -3,7 +3,7 @@ import { Image, AsyncStorage, StyleSheet, TouchableNativeFeedback } from "react-
 import { Container, Content, Text,  View,  } from "native-base";
 import { MaterialIcons } from '@expo/vector-icons';
 import { colors } from '../constants/styles';
-
+import { getUserInfo } from '../services/ApiService';
 export default class Menu extends React.Component {
 
   constructor(props) {
