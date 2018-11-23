@@ -1,19 +1,30 @@
 import React from 'react';
-import { StyleSheet, View, Image, AsyncStorage, TouchableHighlight,RefreshControl } from 'react-native';
+import { StyleSheet, View, Image, AsyncStorage, TouchableHighlight,RefreshControl, Dimensions } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Container, Content, Card, CardItem, Body, Text, Right, Button, Spinner } from 'native-base';
 import CardCarona from '../components/CardCarona';
 import { mostraFeed, avaliaCorrida } from '../services/ApiService';
 import { NavigationEvents } from 'react-navigation';
 import Modal from "react-native-modal";
+import Filtro from '../components/Filtro';
 
 export default class PassageiroHomeScreen extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { corridas: [], caronaAtual: null, avaliacao: {avaliar:false}, token: '', nota: 0, loading: true, refreshing:false}
+    this.state = { corridas: [],
+      caronaAtual: null, 
+      avaliacao: {avaliar:false}, 
+      token: '', 
+      nota: 0, 
+      loading: true, 
+      refreshing:false,
+      filterVisibility: false,
+    }
   }
   async componentDidMount() {
+
+    this.props.navigation.setParams({abreFiltro: this._openFilter});
     
     const token = await AsyncStorage.getItem('userToken');
     const res = await mostraFeed(token,{filtroGenero: 3, filtroSaida: '', filtroHora: ''});
@@ -48,6 +59,7 @@ export default class PassageiroHomeScreen extends React.Component {
     this.setState({loading:false});
       
   }
+  
 	 _onRefresh = () => {
 		this.setState({refreshing: true});
 		this.componentDidMount().then(() => {
@@ -55,6 +67,7 @@ export default class PassageiroHomeScreen extends React.Component {
 		});
 	  }
   static navigationOptions = ({ navigation }) => {
+    
     return {
       title: 'Caronas disponíveis',
       headerTitle: 'Caronas disponíveis',
@@ -66,16 +79,16 @@ export default class PassageiroHomeScreen extends React.Component {
           onPress={() => navigation.openDrawer()}
           color="#fff"
         />),
-	  headerRight: (
+      headerRight: (
         <MaterialIcons
           style={{marginRight: 12}}
           name="filter-list"
           size={32}
-          onPress={() => navigation.openDrawer()}
+          onPress={navigation.getParam('abreFiltro')}
           color="#fff"
         />),
       headerStyle: {backgroundColor: '#263238', height:47.5,paddingBottom:20},
-	  headerTintColor: '#fff',
+	    headerTintColor: '#fff',
     }
   }
 
@@ -153,10 +166,31 @@ export default class PassageiroHomeScreen extends React.Component {
             </View>
             </View>
           </Modal>
+
+          <Modal
+            isVisible={this.state.filterVisibility}
+            onBackdropPress={() => this._closeFilter()}
+            animationIn="slideInRight"
+            animationOut="slideOutRight"
+          >
+            <View style={styles.filterContent}>
+
+              <Filtro />
+              
+            </View>
+
+          </Modal>
  
         </Content>
-      
+          
     );
+  }
+
+  _openFilter = () => {
+    this.setState({filterVisibility:true});
+  }
+  _closeFilter = () => {
+    this.setState({filterVisibility:false});
   }
 
   _createStars = () => {
@@ -208,6 +242,8 @@ export default class PassageiroHomeScreen extends React.Component {
   }
 }
 
+let {height, width} = Dimensions.get('window');
+
 const styles = StyleSheet.create({
   fotoMotorista: {
     height: 80, 
@@ -247,5 +283,13 @@ const styles = StyleSheet.create({
     alignSelf:'stretch',
     justifyContent:'space-between',
     margin:12,
+  },
+  filterContent: {
+    width:270,
+    position:"absolute",
+    right:-18,
+    top:-18,
+    backgroundColor:'#fff',
+    height:height,
   }
 });

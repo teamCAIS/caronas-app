@@ -21,43 +21,37 @@ export default class Filtro extends React.Component {
     return (
       <Container style={{backgroundColor:colors.primary}}>
         <Content style={{ marginLeft: 16 }}>
-          <TouchableNativeFeedback onPress={() => this.props.navigation.navigate('Caronas')}>
-            <View style={[styles.listItem, {borderTopColor: colors.white, borderTopWidth: 1, paddingTop: 12}]}>
-			  <ListItem>
-				<Left>
-				  <Text>Todos</Text>
-				</Left>
-				<Right>
-				  <Radio selected={true} />
-				</Right>
-			  </ListItem>
-			  <ListItem>
-				<Left>
-				  <Text>Apenas Mulheres</Text>
-				</Left>
-				<Right>
-				  <Radio selected={false} />
-				</Right>
-			  </ListItem>
-			  <ListItem>
-				<Left>
-				  <Text>Apenas Homens</Text>
-				</Left>
-				<Right>
-				  <Radio selected={false} />
-				</Right>
-			  </ListItem>
+            <View >
+              <ListItem>
+              <Left>
+                <Text>Todos</Text>
+              </Left>
+              <Right>
+                <Radio selected={true} />
+              </Right>
+              </ListItem>
+              <ListItem>
+              <Left>
+                <Text>Apenas Mulheres</Text>
+              </Left>
+              <Right>
+                <Radio selected={false} />
+              </Right>
+              </ListItem>
+              <ListItem>
+              <Left>
+                <Text>Apenas Homens</Text>
+              </Left>
+              <Right>
+                <Radio selected={false} />
+              </Right>
+              </ListItem>
             </View>
-          </TouchableNativeFeedback>
         </Content>
       </Container>
     );
   }
 
-  _deslogar = () => {
-    AsyncStorage.removeItem('userToken');
-    this.props.navigation.navigate('Auth');
-  }
 }
 
 const styles = StyleSheet.create({
