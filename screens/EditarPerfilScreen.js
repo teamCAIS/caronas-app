@@ -18,7 +18,7 @@ export default class EditarPerfilScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
     return {
       title: 'Editar perfil',
-      headerTitle: 'Editar Perfil',
+      headerTitle: 'Editar perfil',
       headerStyle: {backgroundColor: '#263238', height:47.5,paddingBottom:20},
 	  headerTintColor: '#fff',
 	}

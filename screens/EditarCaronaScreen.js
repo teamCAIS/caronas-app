@@ -1,38 +1,39 @@
 import React from 'react';
-import { StyleSheet, AsyncStorage, View } from 'react-native';
-import { Container, Content, Button, Picker, Text, Item, Label, Input, Spinner } from 'native-base';
-import { criarCorrida, getCorridaAtual } from '../services/ApiService';
+import { StyleSheet, AsyncStorage,View,Image,TouchableHighlight } from 'react-native';
+import { Container, Content,Text,  Button, Item, Label, Input,Picker, Spinner} from 'native-base';
+import { MaterialIcons } from '@expo/vector-icons';
+import { getUserInfo } from '../services/ApiService';
 
-export default class AdicionarCaronaScreen extends React.Component {
+export default class EditarCaronaScreen extends React.Component {
 
-    constructor(props) {
-        super(props);
-        this.state = {saida: '', pontoEncontro: '', horario: '', vagas: '', loading: false}
-      }
+	constructor(props){
+		super(props);
+		this.state = {saida: '', pontoEncontro: '', horario: '', vagas: '', loading: false}
+	}
 
   static navigationOptions = ({ navigation }) => {
     return {
-      title: 'Criar carona',
-      headerTitle: 'Criar carona',
-	  headerStyle: {backgroundColor: '#263238', height:47.5,paddingBottom:20},
-      headerTintColor: '#fff',
+      title: 'Editar carona',
+      headerTitle: 'Editar carona',
+      headerStyle: {backgroundColor: '#263238', height:47.5,paddingBottom:20},
+	  headerTintColor: '#fff',
 	}
   }
-
+	async componentDidMount() {
+		
+	}
   render() {
-
-	if(this.state.loading)
+	  if(this.state.loading)
       return (
         <Spinner color='#ffca28'/>
       );
 
     let isDisabled = !(this.state.saida && this.state.horario && this.state.pontoEncontro && this.state.vagas);
-
     return (
       <Container style={{margin:0,backgroundColor:'#f5f5f6'}}>
-        <Content style={{margin:0,marginTop:18}}>
-          <View style={styles.container}>
-			<Item style={{borderColor:'#727272',backgroundColor:'#fff',width:328,height:55}}>
+		<Content>
+			<View style={styles.container}>
+				<Item style={{borderColor:'#727272',backgroundColor:'#fff',width:328,height:55}}>
 				<Picker
 				  placeholder="Destino"
 				  mode="dropdown"
@@ -90,12 +91,12 @@ export default class AdicionarCaronaScreen extends React.Component {
 				  style={this.getEstadoBotao(isDisabled)}
 				  onPress={this._handleSubmit}
 				>
-				  <Text uppercase={false} style={this.getEstadoTextoBotao(isDisabled)}>Publicar</Text>
+				  <Text uppercase={false} style={this.getEstadoTextoBotao(isDisabled)}>Salvar edições</Text>
 				</Button>
 			</Item>
 			</View>
 		</Content>
-      </Container>
+	  </Container>
     );
   }
   getEstadoBotao(estado){
@@ -112,47 +113,22 @@ export default class AdicionarCaronaScreen extends React.Component {
   getEstadoTextoBotao(estado){
 	  if(estado==true){
 		  return {
-			  fontSize:18,textAlign:'center',width:153,height:25
+			  fontSize:18,textAlign:'center',width:157,height:25
 		  }
 	  }else{
 		  return {
-			  fontSize:18,textAlign:'center',width:153,height:25,color:'#000'
+			  fontSize:18,textAlign:'center',width:157,height:25,color:'#000'
 		  }
 	  }
   }
-  _handleSubmit = async () => {
-		this.setState({loading:true});
-
-		const payload = {
-			saida: this.state.saida,
-			pontoEncontro: this.state.pontoEncontro,
-			horario: this.state.horario,
-			vagas: this.state.vagas,
-		}
-
-    const token = await AsyncStorage.getItem('userToken');
-
-    const result = await criarCorrida(token, payload);
-    
-    if(result == "success") {
-      const resp = await getCorridaAtual(token);
-      const novaCarona = resp[0];
-      this.props.navigation.navigate('MotoristaHome', { novaCarona });
-    }
-    else {
-			this.setState({loading:false});
-			alert("Não foi possível publicar uma nova carona");
-		}
-
-  }
-
 }
 
 const styles = StyleSheet.create({
   container: {
     flex:1,
-    marginRight:17,
-	marginLeft:17,
+    marginRight:18,
+	marginLeft:18,
+	marginTop:18,
 	padding:0,
 	flexDirection: 'column',
     backgroundColor: '#f5f5f6',
@@ -160,12 +136,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     color: '#000'
   },
-  picker: {
-    marginBottom: 16,
-	right:12,
-	top:8,
-	width: 360,
-	height:55, 
-	transform: [{ scaleX: 0.87 },{ scaleY: 0.87 }],
+  fotoPerfil:{
+	  width:125,
+	  height:125,
+	  borderRadius:60
   }
 });

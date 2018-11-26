@@ -2,7 +2,7 @@ import React from "react";
 import { Image, StyleSheet } from "react-native";
 import { Container, Content, Text,  View, Button } from "native-base";
 import { MaterialIcons } from '@expo/vector-icons';
-
+import EditarCaronaScreen from '../screens/EditarCaronaScreen';
 export default class CaronaAtualMotorista extends React.Component {
 
   constructor(props) {
@@ -52,7 +52,7 @@ export default class CaronaAtualMotorista extends React.Component {
 				</View>
 			</View>
 			<View style={{flexDirection:'row'}}>
-				<MaterialIcons name="radio-button-unchecked"  size={24} style={{marginTop:20}} color="#000"  />
+				<MaterialIcons name="person-pin"  size={24} style={{marginTop:20}} color="#000"  />
 				<View style={{marginLeft:5}}>
 					<Text style={styles.label}>Ponto de encontro:</Text>
 					<Text style={styles.listItem} >{this.props.corrida.pontoEncontro}</Text>
@@ -75,10 +75,6 @@ export default class CaronaAtualMotorista extends React.Component {
                   <Text uppercase={false} style={{color:'black',fontWeight:'bold',width:168,height:27,fontSize:18}}>Encerrar carona</Text>
               </Button>
           </View>
-          <Text style={{fontSize:12, textAlign: "center", marginTop:25}}>
-            Para editar alguma informação da carona 
-                <Text style={{color: '#000', fontWeight: 'bold',fontSize:13}}> clique aqui</Text>
-            </Text>
         </Content>
       </Container>
     );

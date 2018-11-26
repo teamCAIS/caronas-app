@@ -9,6 +9,7 @@ import MotoristaHomeScreen from '../screens/MotoristaHomeScreen';
 import HistoricoScreen from '../screens/HistoricoScreen';
 import PerfilScreen from '../screens/PerfilScreen';
 import Menu from '../components/Menu';
+import EditarCaronaScreen from '../screens/EditarCaronaScreen';
 import CodigoScreen from '../screens/CodigoScreen';
 import CadastroFinalScreen from '../screens/CadastroFinalScreen';
 import DenunciaScreen from '../screens/DenunciaScreen';
@@ -20,6 +21,7 @@ const MotoristaAppStack = createStackNavigator(
   {
     MotoristaHome: MotoristaHomeScreen,
     AdicionarCarona: AdicionarCaronaScreen,
+	EditarCarona: EditarCaronaScreen,
   },
   {
     initialRouteName: 'MotoristaHome'

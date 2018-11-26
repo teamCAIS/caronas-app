@@ -33,7 +33,7 @@ export default class CaronaDetailsScreen extends React.Component {
 
     let ButtonComponent = (
       <Button style={styles.button} onPress={() => this._entrarCarona()}>
-        <Text uppercase={false} style={{color:'black',fontWeight:'bold',textAlign:'center',width:155,height:27,fontSize:18}}>Aceitar</Text>
+        <Text uppercase={false} style={{color:'black',fontWeight:'bold',textAlign:'center',width:155,height:27,fontSize:18}}>Solicitar</Text>
       </Button>
     );
 

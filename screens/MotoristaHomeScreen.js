@@ -82,13 +82,17 @@ export default class MotoristaHomeScreen extends React.Component {
       );
     
       return (
-		<Content refreshControl={
+		<Content style={{backgroundColor:'#f5f5f6'}} refreshControl={
 			  <RefreshControl refreshing={this.state.refreshing} onRefresh={this._onRefresh}/>}>
 			<CaronaAtualMotorista 
 			  corrida={this.state.corrida} 
 			  excluiCarona={() => this._excluiCarona()} 
 			  concluiCarona={() => this._concluiCarona()}
 			/>
+			<Text style={{fontSize:13, textAlign: "center",marginTop:-160}}>
+            Para editar alguma informação da carona 
+                <Text style={{color: '#000', fontWeight: 'bold',fontSize:14}} onPress={() => {this.props.navigation.navigate('EditarCarona')}}> clique aqui</Text>
+            </Text>
         </Content>
       );
 	
