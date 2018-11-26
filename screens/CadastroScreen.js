@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 import { Container, Text, Content, Button, Input, Item, Label, Picker, DatePicker} from 'native-base';
+import { DocumentPicker, ImagePicker } from 'expo';
 export default class CadastroScreen extends React.Component {
 
   static navigationOptions = {
@@ -11,7 +12,7 @@ export default class CadastroScreen extends React.Component {
   }
 	constructor(props) {
 		super(props);
-		this.state = {nome:'',email: '',password: '',cpassword:'',dataNasc: new Date(),genero: '3',doc:''}
+		this.state = {nome:'',email: '',password: '',cpassword:'',dataNasc: new Date(),genero: '3',documentoURL:null,documentoNOME:null,documentoTIPO:null}
 		this.setDate = this.setDate.bind(this);
 	}
 	onValueChange(value) {
@@ -80,7 +81,7 @@ export default class CadastroScreen extends React.Component {
 			</Item>
 			<Item style={{borderColor:'#727272',backgroundColor:'#fff',marginTop:18,width:328,height:55}}>
 				<Label style={{position:'relative',left:10,fontSize:14,color:'#727272'}}>Adicionar atestado de matrícula</Label>
-				<MaterialCommunityIcons size={32} style={{position:'absolute', left:290}} onPress={() => alert("Ainda vai rolar")} name="paperclip" />
+				<MaterialCommunityIcons size={32} style={{position:'absolute', left:290}} onPress={this._pickDocument} name="paperclip" />
 			</Item>
 			<Item style={{marginTop:18,marginBottom:18}}>
 				<Button style={{backgroundColor:'#ffca28',width:157.5,height:40, elevation:0}}>
@@ -92,6 +93,18 @@ export default class CadastroScreen extends React.Component {
 	  </Container>
     );
   }
+  _pickDocument = async () => {
+	  let result = await DocumentPicker.getDocumentAsync({type:"application/pdf"});
+	  if (result.cancelled) {
+		return;
+	  }
+	  this.setState({
+		  documentoURL:result.uri,
+		  documentoTIPO:"application/pdf"
+	  });
+	  this.setState({documentoNOME:this.state.documentoURL.split('/').pop(),});
+	  alert(this.state.documentoNOME)
+	}
 }
 
 const styles = StyleSheet.create({
