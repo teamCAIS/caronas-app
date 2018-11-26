@@ -1,5 +1,5 @@
 import React from "react";
-import { Image, StyleSheet } from "react-native";
+import { Image, StyleSheet, TouchableWithoutFeedback } from "react-native";
 import { Container, Content, Text,  View, Button } from "native-base";
 import { MaterialIcons } from '@expo/vector-icons';
 import EditarCaronaScreen from '../screens/EditarCaronaScreen';
@@ -75,6 +75,14 @@ export default class CaronaAtualMotorista extends React.Component {
                   <Text uppercase={false} style={{color:'black',fontWeight:'bold',width:168,height:27,fontSize:18}}>Encerrar carona</Text>
               </Button>
           </View>
+          <Text style={{fontSize:13, textAlign: "center", marginTop:16}}>
+            Para editar alguma informação da carona
+            <TouchableWithoutFeedback onPress={() => this.props.editarCarona()}>
+                <Text style={{color: '#000', fontWeight: 'bold',fontSize:14}}>
+                    clique aqui
+                </Text>
+            </TouchableWithoutFeedback>
+          </Text>
         </Content>
       </Container>
     );

@@ -1,4 +1,4 @@
-const baseUrl = 'http://192.168.11.11/backend/public/api';
+const baseUrl = 'http://192.168.15.5/backend/public/api';
 
 const msgErro = 'Erro ao conectar com o servidor';
 
@@ -76,6 +76,22 @@ export async function criarCorrida(token, payload) {
 
 export async function concluirCorrida(token) {
     const response = await fetch(baseUrl+'/concluirCorridaMotorista', {
+        method: 'get',
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": "bearer "+token
+        }
+    })
+
+    if(!response.ok)
+        return 'Falha na conexão'
+    
+    const data = await response.json();
+    return data;
+}
+
+export async function cancelarCorrida(token) {
+    const response = await fetch(baseUrl+'/cancelarCorridaMotorista', {
         method: 'get',
         headers: {
             "Content-Type": "application/json",

@@ -3,21 +3,22 @@ import { StyleSheet, View, AsyncStorage, RefreshControl, TouchableNativeFeedback
 import { MaterialIcons } from '@expo/vector-icons';
 import { Button, Text, Container, Spinner,Content } from 'native-base';
 import { NavigationEvents } from 'react-navigation';
-import { getCorridaAtual, concluirCorrida } from '../services/ApiService'
+import { getCorridaAtual, concluirCorrida, cancelarCorrida } from '../services/ApiService'
 import CaronaAtualMotorista from '../components/CaronaAtualMotorista';
+import Modal from 'react-native-modal';
 
 export default class MotoristaHomeScreen extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { token: '', corrida: null, loading: true, refreshing:false}
+    this.state = { token: '', corrida: null, loading: true, refreshing:false, modalVisibility:false}
   }
- _onRefresh = () => {
+  _onRefresh = () => {
 		this.setState({refreshing: true});
 		this.componentDidMount().then(() => {
 		  this.setState({refreshing: false});
 		});
-	  }
+	}
   async componentDidMount() {
     const token = await AsyncStorage.getItem('userToken');
     
@@ -82,30 +83,48 @@ export default class MotoristaHomeScreen extends React.Component {
       );
     
       return (
-		<Content style={{backgroundColor:'#f5f5f6'}} refreshControl={
-			  <RefreshControl refreshing={this.state.refreshing} onRefresh={this._onRefresh}/>}>
-			<CaronaAtualMotorista 
-			  corrida={this.state.corrida} 
-			  excluiCarona={() => this._excluiCarona()} 
-			  concluiCarona={() => this._concluiCarona()}
-			/>
-			<Text style={{fontSize:13, textAlign: "center",marginTop:-160}}>
-            Para editar alguma informação da carona 
-                <Text style={{color: '#000', fontWeight: 'bold',fontSize:14}} onPress={() => {this.props.navigation.navigate('EditarCarona')}}> clique aqui</Text>
-            </Text>
+        <Content style={{backgroundColor:'#f5f5f6'}} refreshControl={
+            <RefreshControl refreshing={this.state.refreshing} onRefresh={this._onRefresh}/>}>
+          <CaronaAtualMotorista 
+            corrida={this.state.corrida} 
+            excluiCarona={() => this._excluiCarona()} 
+            concluiCarona={() => this._concluiCarona()}
+            editarCarona={() => {this.props.navigation.navigate('EditarCarona')}}
+          />
+
+          <Modal
+            isVisible={this.state.modalVisibility}
+          >
+            <View style={styles.modalContent}>
+              <Text>Você publicou uma carona com sucesso!</Text>
+              <Text>Você pode encerrar a carona após ter deixado os passageiros</Text>
+              <Button onPress={() => this.setState({modalVisibility:false})}
+                style={{backgroundColor:'#ffca28'}}
+              >
+                <Text>Ok</Text>
+              </Button>
+            </View>
+          </Modal>
+          
         </Content>
       );
 	
   }
 
   _verificaCarona = () => {
-    const novaCarona = this.props.navigation.getParam('novaCarona', this.state.corrida);    
-	this._onRefresh();
-    this.setState({ corrida: novaCarona });
+    const novaCarona = this.props.navigation.getParam('novaCarona', this.state.corrida);
+    if(novaCarona)
+      this.setState({ modalVisibility:true, loading:true });
+    this._onRefresh();
+    
   }
 
-  _excluiCarona = () => {
-    this.setState({corrida: null});
+  _excluiCarona = async () => {
+    const result = await cancelarCorrida(this.state.token);
+    if(result.status == 'success')
+      this.setState({corrida: null});
+    else
+      alert('Não foi possível excluir a corrida');
   }
 
   _concluiCarona = async () => {
@@ -121,11 +140,17 @@ export default class MotoristaHomeScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex:1,
-	padding:0,
-	flexDirection: 'column',
+    padding:0,
+    flexDirection: 'column',
     backgroundColor: '#f5f5f6',
     alignItems: 'center',
     justifyContent: 'center',
     color: '#000'
+  },
+  modalContent: {
+    height:270,
+    backgroundColor:'#fff',
+    padding:16,
+    borderRadius: 5,
   },
 });
