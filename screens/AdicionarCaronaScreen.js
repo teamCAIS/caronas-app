@@ -2,12 +2,13 @@ import React from 'react';
 import { StyleSheet, AsyncStorage, View } from 'react-native';
 import { Container, Content, Button, Picker, Text, Item, Label, Input, Spinner } from 'native-base';
 import { criarCorrida, getCorridaAtual } from '../services/ApiService';
+import Modal from 'react-native-modal';
 
 export default class AdicionarCaronaScreen extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {saida: '', pontoEncontro: '', horario: '', vagas: '', loading: false}
+        this.state = {saida: '', pontoEncontro: '', horario: '', vagas: '', loading: false, }
       }
 
   static navigationOptions = ({ navigation }) => {
@@ -95,7 +96,9 @@ export default class AdicionarCaronaScreen extends React.Component {
 			</Item>
 			</View>
 		</Content>
-      </Container>
+
+			
+    </Container>
     );
   }
   getEstadoBotao(estado){
@@ -130,21 +133,26 @@ export default class AdicionarCaronaScreen extends React.Component {
 			vagas: this.state.vagas,
 		}
 
-    const token = await AsyncStorage.getItem('userToken');
+		const token = await AsyncStorage.getItem('userToken');
+		this.setState({token});
 
     const result = await criarCorrida(token, payload);
     
     if(result == "success") {
-      const resp = await getCorridaAtual(token);
-      const novaCarona = resp[0];
-      this.props.navigation.navigate('MotoristaHome', { novaCarona });
+			this.props.navigation.navigate('MotoristaHome', {novaCarona:true});
     }
     else {
 			this.setState({loading:false});
 			alert("Não foi possível publicar uma nova carona");
 		}
-
-  }
+	}
+	
+	_navigateSuccess = async () => {
+		//this.setState({modalVisibility:false, loading:true});
+		//const resp = await getCorridaAtual(this.state.token);
+		//const novaCarona = resp[0];
+		//this.props.navigation.navigate('MotoristaHome');
+	}
 
 }
 
@@ -152,9 +160,9 @@ const styles = StyleSheet.create({
   container: {
     flex:1,
     marginRight:17,
-	marginLeft:17,
-	padding:0,
-	flexDirection: 'column',
+		marginLeft:17,
+		padding:0,
+		flexDirection: 'column',
     backgroundColor: '#f5f5f6',
     alignItems: 'center',
     justifyContent: 'center',
@@ -162,10 +170,10 @@ const styles = StyleSheet.create({
   },
   picker: {
     marginBottom: 16,
-	right:12,
-	top:8,
-	width: 360,
-	height:55, 
-	transform: [{ scaleX: 0.87 },{ scaleY: 0.87 }],
-  }
+		right:12,
+		top:8,
+		width: 360,
+		height:55, 
+		transform: [{ scaleX: 0.87 },{ scaleY: 0.87 }],
+	},
 });
