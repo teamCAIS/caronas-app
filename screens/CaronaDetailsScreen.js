@@ -4,6 +4,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import CaronaInfo from '../components/CaronaInfo';
 import { Button, Text, Container, Spinner } from 'native-base';
 import { entraCorrida, sairCorrida } from '../services/ApiService';
+import ModalConfirmacao from '../components/ModalConfirmacao';
 
 export default class CaronaDetailsScreen extends React.Component {
 
@@ -11,7 +12,7 @@ export default class CaronaDetailsScreen extends React.Component {
     super(props);
     const corrida = this.props.navigation.getParam('corrida');
     const token = this.props.navigation.getParam('token');
-    this.state = {token, corrida, loading:false}
+    this.state = {token, corrida, loading:false, modalVisible: false}
   }
 
   static navigationOptions = ({ navigation }) => {
@@ -39,7 +40,7 @@ export default class CaronaDetailsScreen extends React.Component {
 
     if(this.props.navigation.getParam('atual', ''))
       ButtonComponent = (
-        <Button style={styles.button} onPress={() => this._desistirCarona()}>
+        <Button style={styles.button} onPress={() => this.setState({modalVisible:true})}>
           <Text uppercase={false} style={{color:'black',fontWeight:'bold',textAlign:'center',width:157,height:27,fontSize:18}}>Sair da carona</Text>
         </Button>
       );
@@ -51,6 +52,13 @@ export default class CaronaDetailsScreen extends React.Component {
       <Container style={{backgroundColor:'#f5f5f6'}}>
         <CaronaInfo corrida={this.state.corrida}/>
         {ButtonComponent}
+        <ModalConfirmacao
+          visibility={this.state.modalVisible}
+          dismiss={() => this.setState({modalVisible:false})}
+          confirm={() => this._desistirCarona()}
+        >
+          Você realmente deseja desistir dessa carona?
+        </ModalConfirmacao>
       </Container>
       
     );
@@ -69,11 +77,11 @@ export default class CaronaDetailsScreen extends React.Component {
   _desistirCarona = async () => {
     this.setState({loading:true});
     const result = await sairCorrida(this.state.token);
-    if(result == 'success')
+    if(result.status == 'success')
       this.props.navigation.navigate('PassageiroHome', { caronaAtual: null });
     else {
       this.setState({loading:false});
-      alert(result);
+      alert(result.message);
     }
   }
 }

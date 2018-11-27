@@ -65,6 +65,14 @@ class HistoricoScreen extends React.Component {
         <Spinner color='#ffca28'/>
       );
 
+
+    if(this.state.lista.status == 'error')
+      return (
+        <Content style={{paddingRight:8,paddingLeft:8,marginTop:18,marginBottom:18}}>
+            <Text>{this.state.lista.message}</Text>
+        </Content>
+      );
+
     let dias = [];
 
     return (

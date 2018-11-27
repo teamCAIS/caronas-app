@@ -5,24 +5,22 @@ import Modal from "react-native-modal";
 
 export default class ModalConfirmacao extends React.Component {
 
-  constructor(props) {
-    super(props);
-  }
-
   render() {
 
     return (
       <Modal
         isVisible={this.props.visibility}
       >
-        <View>
+        <View style={styles.modalContent}>
           <Text>{this.props.children}</Text>
-          <Button onPress={this.props.dismiss}>
-            <Text>Não</Text>
-          </Button>
-          <Button onPress={this.props.confirm}>
-            <Text>Sim</Text>
-          </Button>
+          <View style={styles.buttonContainer}>
+            <Button onPress={this.props.dismiss}>
+              <Text>Não</Text>
+            </Button>
+            <Button onPress={this.props.confirm}>
+              <Text>Sim</Text>
+            </Button>
+          </View>
         </View>
       </Modal>
     );
@@ -32,9 +30,14 @@ export default class ModalConfirmacao extends React.Component {
 
 const styles = StyleSheet.create({
   modalContent: {
-    height:180,
+    height:150,
     backgroundColor:'#fff',
     padding:16,
     borderRadius: 5,
+    justifyContent:'space-evenly',
+  },
+  buttonContainer: {
+    flexDirection:'row',
+    justifyContent:'space-evenly',
   },
 })

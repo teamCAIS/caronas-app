@@ -6,12 +6,21 @@ import { NavigationEvents } from 'react-navigation';
 import { getCorridaAtual, concluirCorrida, cancelarCorrida } from '../services/ApiService'
 import CaronaAtualMotorista from '../components/CaronaAtualMotorista';
 import Modal from 'react-native-modal';
+import ModalConfirmacao from '../components/ModalConfirmacao';
 
 export default class MotoristaHomeScreen extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { token: '', corrida: null, loading: true, refreshing:false, modalVisibility:false}
+    this.state = { 
+      token: '', 
+      corrida: null, 
+      loading: true, 
+      refreshing:false, 
+      modalVisibility:false,
+      concluindoCarona: false,
+      cancelandoCarona: false,
+    }
   }
   _onRefresh = () => {
 		this.setState({refreshing: true});
@@ -87,8 +96,8 @@ export default class MotoristaHomeScreen extends React.Component {
             <RefreshControl refreshing={this.state.refreshing} onRefresh={this._onRefresh}/>}>
           <CaronaAtualMotorista 
             corrida={this.state.corrida} 
-            excluiCarona={() => this._excluiCarona()} 
-            concluiCarona={() => this._concluiCarona()}
+            excluiCarona={() => this.setState({cancelandoCarona:true})} 
+            concluiCarona={() => this.setState({concluindoCarona:true})}
             editarCarona={() => {this.props.navigation.navigate('EditarCarona')}}
           />
 
@@ -105,6 +114,22 @@ export default class MotoristaHomeScreen extends React.Component {
               </Button>
             </View>
           </Modal>
+
+          <ModalConfirmacao
+            visibility={this.state.cancelandoCarona}
+            confirm={this._excluiCarona}
+            dismiss={() => this.setState({cancelandoCarona:false})}
+          >
+            Você deseja realmente cancelar essa carona?
+          </ModalConfirmacao>
+
+          <ModalConfirmacao
+            visibility={this.state.concluindoCarona}
+            confirm={this._concluiCarona}
+            dismiss={() => this.setState({concluindoCarona:false})}
+          >
+            Você deixou seus passageiros e já vai encerrar a carona?
+          </ModalConfirmacao>
           
         </Content>
       );
@@ -122,7 +147,7 @@ export default class MotoristaHomeScreen extends React.Component {
   _excluiCarona = async () => {
     const result = await cancelarCorrida(this.state.token);
     if(result.status == 'success')
-      this.setState({corrida: null});
+      this.setState({corrida: null,cancelandoCarona:false});
     else
       alert('Não foi possível excluir a corrida');
   }
@@ -130,7 +155,7 @@ export default class MotoristaHomeScreen extends React.Component {
   _concluiCarona = async () => {
     const result = await concluirCorrida(this.state.token);
     if(result.status == 'success')
-      this.setState({corrida: null});
+      this.setState({corrida: null, concluindoCarona:false});
     else
       alert('Não foi possível concluir a corrida');
   }
