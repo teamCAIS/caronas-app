@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Image, AsyncStorage } from 'react-native';
+import { StyleSheet, View, Image, AsyncStorage, TouchableHighlight } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { createStackNavigator } from 'react-navigation';
 import { Container, Content, Form, Button, Picker, Text, Input, Item, Label, Left, Body, Icon, List, ListItem, Thumbnail, Spinner } from 'native-base';
@@ -100,7 +100,11 @@ class DenunciaScreen extends React.Component {
 
             <Text style={{position:'relative',left:62,fontSize:14,color:'#000'}}>Usuários a serem denunciados</Text>
               <View style={[styles.denunciadosContainer]}>
-                {this.state.usuarios.map((usuario,i) => <UsuarioDenunciado key={i} usuario={usuario}/>)}
+                {this.state.usuarios.map((usuario,i) => <UsuarioDenunciado 
+                  handleClick={() => this._removeDenunciado(usuario)} 
+                  key={i} 
+                  usuario={usuario}
+                />)}
               </View>
             </View>
 
@@ -142,6 +146,15 @@ getEstadoLabelBotao(estado){
 		  }
 	  }
 }
+
+_removeDenunciado = (usuario) => {
+  let usuarios = this.state.usuarios;
+  let usuariosIds = this.state.usuariosIds;
+  usuarios = usuarios.filter((atual) => atual.id != usuario.id);
+  usuariosIds = usuariosIds.filter((atual) => atual != usuario.id);
+  this.setState({usuarios, usuariosIds});
+}
+
 _buscarUsuarios = (text) => {
   clearTimeout(this.state.timeId);
   this.setState({clickedUsuario: false});
@@ -199,7 +212,7 @@ _clickBuscado = (usuario) => {
     const result = await denuncia(this.state.token, payload);
     if(result == 'success') {
       alert("Sua denúncia foi encaminhada para análise");
-      this.setState({tipo:'',usuarios:[],comentario:'',loading:false});
+      this.setState({tipo:'',usuarios:[],comentario:'',loading:false, usuariosIds:[]});
     }
     else {
       this.setState({loading:false});
@@ -225,13 +238,16 @@ const UsuarioBuscado = (props) => (
 );
 
 const UsuarioDenunciado = (props) => (
-  <View style={{alignItems: "center", marginRight:6,marginLeft:6}}>
+  <TouchableHighlight onPress={() => props.handleClick()} underlayColor='#eee9' >
+  <View style={{alignItems: "center", marginRight:6,marginLeft:6, marginTop:12}}>
       <Image
           style={ styles.foto }
           source={props.usuario.url_foto ? {uri: props.usuario.url_foto} : require('../assets/passageiro.png')}
       />
       <Text style={{width:65,height:30,fontSize:13,textAlign:'center',lineHeight:15}}>{props.usuario.nome}</Text>
+      <MaterialIcons name='close' size={24} style={{position:'absolute', right:-12, top: -12}} />
   </View>
+  </TouchableHighlight>
 );
 
 const styles = StyleSheet.create({
