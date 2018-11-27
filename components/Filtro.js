@@ -22,29 +22,23 @@ export default class Filtro extends React.Component {
       <Container style={{backgroundColor:colors.primary}}>
         <Content style={{ marginLeft: 16 }}>
             <View >
-              <ListItem>
+              <ListItem style={styles.listItem}>
               <Left>
-                <Text>Todos</Text>
-              </Left>
-              <Right>
                 <Radio selected={true} />
-              </Right>
-              </ListItem>
-              <ListItem>
-              <Left>
-                <Text>Apenas Mulheres</Text>
               </Left>
-              <Right>
-                <Radio selected={false} />
-              </Right>
+              <Text style={styles.labels}>Todos</Text>
               </ListItem>
-              <ListItem>
+              <ListItem style={styles.listItem}>
               <Left>
-                <Text>Apenas Homens</Text>
-              </Left>
-              <Right>
                 <Radio selected={false} />
-              </Right>
+              </Left>
+              <Text style={styles.labels}>Apenas Mulheres</Text>
+              </ListItem>
+              <ListItem style={styles.listItem}>
+              <Left>
+                <Radio selected={false} />
+              </Left>
+              <Text style={styles.labels}>Apenas Homens</Text>
               </ListItem>
             </View>
         </Content>
@@ -58,8 +52,11 @@ const styles = StyleSheet.create({
   listItem: {
     flexDirection: "row",
     alignItems: "center",
-    paddingTop: 6,
-    paddingBottom: 6,
+	borderColor:'transparent',
+  },
+  labels:{
+	  color:'white',
+	  fontSize:14,
   },
   item: {
     color:colors.white,

@@ -21,10 +21,9 @@ export default class PassageiroHomeScreen extends React.Component {
       refreshing:false,
       filterVisibility: false,
     }
+	this.props.navigation.setParams({abreFiltro: this._openFilter});
   }
   async componentDidMount() {
-
-    //this.props.navigation.setParams({abreFiltro: this._openFilter});
     
     const token = await AsyncStorage.getItem('userToken');
     const res = await mostraFeed(token,{filtroGenero: 3, filtroSaida: '', filtroHora: ''});
@@ -166,26 +165,23 @@ export default class PassageiroHomeScreen extends React.Component {
             </View>
             </View>
           </Modal>
-			
+			<Modal
+		isVisible={this.state.filterVisibility}
+		onBackdropPress={() => this._closeFilter()}
+		animationIn="slideInRight"
+		animationOut="slideOutRight"
+		>
+		<View style={styles.filterContent}>
+
+		  <Filtro />
+		  
+		</View>
+
+		</Modal>
         </Content>
-          
     );
   }
-/*
-<Modal
-isVisible={this.state.filterVisibility}
-onBackdropPress={() => this._closeFilter()}
-animationIn="slideInRight"
-animationOut="slideOutRight"
->
-<View style={styles.filterContent}>
 
-  <Filtro />
-  
-</View>
-
-</Modal>
-*/	
   _openFilter = () => {
     this.setState({filterVisibility:true});
   }
