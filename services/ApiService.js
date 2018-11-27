@@ -215,3 +215,30 @@ export async function getHistoricoPassageiro(token) {
     const data = await response.json();
     return data;
 }
+
+export async function preCadastrar(infos) {
+    let formData = new FormData();
+
+    formData.append('documento', {uri:infos.documentoURL, name:infos.documentoNOME, type:infos.documentoTIPO});
+
+    formData.append('nascimento', infos.dataNasc);
+    formData.append('nome', infos.nome);
+    formData.append('email', infos.email);
+    formData.append('password', infos.password);
+    formData.append('genero', infos.genero);
+
+    const response = await fetch(baseUrl+'/preCadastro', {
+        method: 'post',
+        body: formData,
+        headers: {
+            'content-type': 'multipart/form-data'
+        }
+    })
+
+    if(!response.ok)
+        return 'Falha na conexão';
+
+    const data = await response.json();
+    return data;
+
+}

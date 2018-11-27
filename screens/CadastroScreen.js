@@ -3,6 +3,9 @@ import { StyleSheet, View } from 'react-native';
 import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 import { Container, Text, Content, Button, Input, Item, Label, Picker, DatePicker} from 'native-base';
 import { DocumentPicker, ImagePicker } from 'expo';
+import { preCadastrar } from '../services/ApiService';
+
+
 export default class CadastroScreen extends React.Component {
 
   static navigationOptions = {
@@ -12,18 +15,35 @@ export default class CadastroScreen extends React.Component {
   }
 	constructor(props) {
 		super(props);
-		this.state = {nome:'',email: '',password: '',cpassword:'',dataNasc: new Date(),genero: '3',documentoURL:null,documentoNOME:null,documentoTIPO:null}
+		this.state = {
+			nome:'',
+			email: '',
+			password: '',
+			cpassword:'',
+			dataNasc: new Date(),
+			genero: '3',
+			documentoURL:null,
+			documentoNOME:null,
+			documentoTIPO:null
+		}
 		this.setDate = this.setDate.bind(this);
 	}
 	onValueChange(value) {
 		this.setState({
 		  genero: value
 		});
-	  }
-   setDate(newDate) {
-	this.setState({ dataNasc: newDate });
 	}
+
+  setDate(newDate) {
+		let date = newDate.toISOString();
+		date = date.slice(0,10);
+		this.setState({ dataNasc: date });
+	}
+
   render() {
+
+		let isDisabled = !(this.state.nome && this.state.email && this.state.password && this.state.documentoURL);
+
     return (
       <Container style={{margin:0,backgroundColor:'#f5f5f6'}}>
         <Content style={{margin:0,marginTop:18}}>
@@ -84,36 +104,73 @@ export default class CadastroScreen extends React.Component {
 				<MaterialCommunityIcons size={32} style={{position:'absolute', left:290}} onPress={this._pickDocument} name="paperclip" />
 			</Item>
 			<Item style={{marginTop:18,marginBottom:18}}>
-				<Button style={{backgroundColor:'#ffca28',width:157.5,height:40, elevation:0}}>
-					<Text uppercase={false} style={{color:'black',fontSize:18,textAlign:'center',width:153,height:27}}>Concluir</Text>
+				<Button disabled={isDisabled} onPress={() => this._concluiCarona()} style={this.getEstadoBotao(isDisabled)}>
+					<Text uppercase={false} style={this.getEstadoTextoBotao(isDisabled)}>Concluir</Text>
 				</Button>
 			</Item>
 		  </View>
 		</Content>
 	  </Container>
     );
-  }
+	}
+	
+	_concluiCarona = async () => {
+		
+		if(this.state.password != this.state.cpassword) {
+			alert('Verifique se a senha foi digitada corretamente');
+			return;
+		}
+
+		const infos = this.state;
+		const result = await preCadastrar(infos);
+		if(result.status == 'success')
+			alert('Um código de confirmação será enviado ao seu email');
+		else
+			alert('Não foi possível concluir o pré-cadastro');
+	}
+
   _pickDocument = async () => {
 	  let result = await DocumentPicker.getDocumentAsync({type:"application/pdf"});
 	  if (result.cancelled) {
-		return;
+			return;
 	  }
 	  this.setState({
 		  documentoURL:result.uri,
 		  documentoTIPO:"application/pdf"
 	  });
-	  this.setState({documentoNOME:this.state.documentoURL.split('/').pop(),});
-	  alert(this.state.documentoNOME)
+		this.setState({documentoNOME:result.uri.split('/').pop(),});
 	}
+	getEstadoBotao(estado){
+	  if(estado==true){
+		  return {
+			  alignSelf: "center",width:157.5,height:40
+		  }
+	  }else{
+		  return {
+			  alignSelf: "center",width:157.5,height:40,backgroundColor:'#ffca28',color:'#000'
+		  }
+	  }
+  }
+  getEstadoTextoBotao(estado){
+	  if(estado==true){
+		  return {
+			  fontSize:18,textAlign:'center',width:153,height:25
+		  }
+	  }else{
+		  return {
+			  fontSize:18,textAlign:'center',width:153,height:25,color:'#000'
+		  }
+	  }
+  }
 }
 
 const styles = StyleSheet.create({
   container: {
-	flex:1,
+		flex:1,
     marginRight:16,
-	marginLeft:16,
-	padding:0,
-	flexDirection: 'column',
+		marginLeft:16,
+		padding:0,
+		flexDirection: 'column',
     backgroundColor: '#f5f5f6',
     alignItems: 'center',
     justifyContent: 'center',
