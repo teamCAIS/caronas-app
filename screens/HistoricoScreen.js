@@ -11,7 +11,7 @@ class HistoricoScreen extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {lista: [], token:'', loading: true};
+    this.state = {lista: [], token:'', loading: true, mensagem:''};
   }
 
   async componentDidMount() {
@@ -27,20 +27,25 @@ class HistoricoScreen extends React.Component {
     if(tipo == 2)
       res = await getHistoricoMotorista(token);
 
-        
-    if(res != 'Falha na conexão')
-      this.setState({token, lista: res, loading:false});
-    else {
-      this.setState({token, loading:false});
-      alert('Houve um problema com a conexão');
+    if(res.status == 'error') {
+      this.setState({mensagem:res.message, loading:false, token});
+      return
     }
+    if(res != 'Falha na conexão') {
+      this.setState({token, lista: res, loading:false});
+      return;
+    }
+    
+    this.setState({token, loading:false});
+    alert('Houve um problema com a conexão');
+    
       
   }
 
 
   static navigationOptions = ({ navigation }) => {
     return {
-      title: 'HIstórico',
+      title: 'Histórico',
       headerTitle: 'Histórico',
       headerLeft: (
         <TouchableNativeFeedback onPress={() => navigation.openDrawer()}>
@@ -66,10 +71,10 @@ class HistoricoScreen extends React.Component {
       );
 
 
-    if(this.state.lista.status == 'error')
+    if(this.state.mensagem)
       return (
         <Content style={{paddingRight:8,paddingLeft:8,marginTop:18,marginBottom:18}}>
-            <Text>{this.state.lista.message}</Text>
+            <Text>{this.state.mensagem}</Text>
         </Content>
       );
 
