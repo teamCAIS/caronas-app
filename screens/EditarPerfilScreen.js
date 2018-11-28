@@ -2,13 +2,14 @@ import React from 'react';
 import { StyleSheet, AsyncStorage,View,Image,TouchableHighlight } from 'react-native';
 import { Container, Content,Text,  Button, Item, Label, Input,Picker} from 'native-base';
 import { MaterialIcons } from '@expo/vector-icons';
+import { ImagePicker } from 'expo';
 import { getUserInfo } from '../services/ApiService';
 
 export default class EditarPerfilScreen extends React.Component {
 
 	constructor(props){
 		super(props);
-		this.state = {user: { nome: 'não foi', email: '', genero: 2, tipo:1},nome:'',email: '',password: '',cpassword:'',genero: '3'}
+		this.state = {user: { nome: 'não foi', email: '', genero: 2, tipo:1},nome:'',email: '',password: '',cpassword:'',genero: '3',fotoURL:null,fotoNOME:null,fotoTIPO:null}
 	}
 	onValueChange(value) {
 		this.setState({
@@ -34,7 +35,7 @@ export default class EditarPerfilScreen extends React.Component {
 		<Content>
 			<View style={styles.container}>
 				<Item style={{borderColor:'transparent', flexDirection:'column'}}>
-					<TouchableHighlight style={{borderRadius:80}} onPress={() => {}}>
+					<TouchableHighlight style={{borderRadius:80}} onPress={() => {this._pickImage()}}>
 						<Image style={styles.fotoPerfil} source={{uri:this.state.user.url_foto}}/>
 					</TouchableHighlight> 
 					<Text style={{marginTop:5,fontSize:14,fontWeight:'bold',textAlign:'center'}}>Alterar Foto</Text>
@@ -82,6 +83,24 @@ export default class EditarPerfilScreen extends React.Component {
 	  </Container>
     );
   }
+  _pickImage = async () => {
+		let result = await ImagePicker.launchImageLibraryAsync({
+		  allowsEditing: true,
+		  aspect: [1,1],
+		});
+		this.setState({
+		    fotoURL:result.uri,
+		});
+		this.state.user.url_foto= result.uri;
+		this.setState({
+			fotoNOME:result.uri.split('/').pop(),
+		});
+		let match = /\.(\w+)$/.exec(this.state.fotoNOME);
+		this.setState({
+			fotoTIPO: match ? `image/${match[1]}` : `image`			
+		});
+		alert(this.state.fotoTIPO);
+	}
 }
 
 const styles = StyleSheet.create({
