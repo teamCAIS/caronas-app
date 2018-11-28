@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View,Image} from 'react-native';
+import { StyleSheet, View, Image, TouchableNativeFeedback} from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Container, Content, Text,Item } from 'native-base';
 import { createStackNavigator } from 'react-navigation';
@@ -11,13 +11,15 @@ class SobreScreen extends React.Component {
       title: 'Sobre',
       headerTitle: 'Sobre',
       headerLeft: (
-        <MaterialIcons
-          style={{marginLeft: 12}}
-          name="menu"
-          size={32}
-          onPress={() => navigation.openDrawer()}
-          color="#fff"
-        />
+        <TouchableNativeFeedback onPress={() => navigation.openDrawer()}>
+          <View style={{padding:12}}>
+            <MaterialIcons
+              name="menu"
+              size={32}
+              color="#fff"
+            />
+          </View>
+        </TouchableNativeFeedback>
       ),
 	  headerStyle: {backgroundColor: '#263238', height:47.5,paddingBottom:20},
 	  headerTintColor: '#fff',

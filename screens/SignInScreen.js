@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, AsyncStorage, Image, View } from 'react-native';
+import { StyleSheet, AsyncStorage, Image, View, TouchableOpacity, TouchableWithoutFeedback } from 'react-native';
 import { login, getUserInfo } from '../services/ApiService';
 import { Container, Text, Content, Button, Input, Item, Label, Spinner,Right } from 'native-base';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -64,14 +64,17 @@ export default class App extends React.Component {
 					Esqueceu a senha?
 				</Text>
 			</Item>
-			<Item style={{marginTop:80,width:130,borderColor:'transparent'}}>
-				<Text uppercase={false} style={{color: '#000',fontSize:14,width:130,textAlign:'center'}}>
-					Ainda não é usuario?{"\n"}
-					<Text uppercase={false} style={{color: '#000',fontSize:14,fontWeight:'bold'}} onPress={this._handleCadastroPress}>
-						Cadastre-se
-					</Text>
-				</Text>
-			</Item>
+			<View style={{marginTop:80,width:130,borderColor:'transparent'}}>
+				<Text  style={{color: '#000',fontSize:14,width:130,textAlign:'center'}}>
+          Ainda não é usuario?
+        </Text>
+        <TouchableOpacity activeOpacity={0.5} style={{paddingBottom:6,}} onPress={() => this._handleCadastroPress()}>
+          <Text style={{color: '#000',fontSize:14,fontWeight:'bold', alignSelf:'center'}} >
+            Cadastre-se
+          </Text>
+        </TouchableOpacity>
+				
+			</View>
           </View>
         </Content>
       </Container>
