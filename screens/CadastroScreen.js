@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 import { Container, Text, Content, Button, Input, Item, Label, Picker, DatePicker} from 'native-base';
-import { DocumentPicker, ImagePicker } from 'expo';
+import { DocumentPicker } from 'expo';
 import { preCadastrar } from '../services/ApiService';
 
 
