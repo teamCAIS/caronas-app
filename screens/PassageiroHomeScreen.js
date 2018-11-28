@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Image, AsyncStorage, TouchableHighlight,RefreshControl, Dimensions } from 'react-native';
+import { StyleSheet, View, Image, AsyncStorage, TouchableHighlight,RefreshControl, Dimensions, TouchableNativeFeedback } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Container, Content, Card, CardItem, Body, Text, Right, Button, Spinner } from 'native-base';
 import CardCarona from '../components/CardCarona';
@@ -72,21 +72,26 @@ export default class PassageiroHomeScreen extends React.Component {
       title: 'Caronas disponíveis',
       headerTitle: 'Caronas disponíveis',
       headerLeft: (
-        <MaterialIcons
-          style={{marginLeft: 12}}
-          name="menu"
-          size={32}
-          onPress={() => navigation.openDrawer()}
-          color="#fff"
-        />),
+        <TouchableNativeFeedback onPress={() => navigation.openDrawer()}>
+          <View style={{padding:12}}>
+            <MaterialIcons
+              name="menu"
+              size={32}
+              color="#fff"
+            />
+          </View>
+        </TouchableNativeFeedback>),
       headerRight: (
-        <MaterialIcons
-          style={{marginRight: 12}}
-          name="filter-list"
-          size={32}
-          onPress={navigation.getParam('abreFiltro')}
-          color="#fff"
-        />),
+          <TouchableNativeFeedback onPress={navigation.getParam('abreFiltro')}>
+            <View style={{padding:12}}>
+              <MaterialIcons
+                name="filter-list"
+                size={32}
+                color="#fff"
+              />
+            </View>
+          </TouchableNativeFeedback>
+        ),
       headerStyle: {backgroundColor: '#263238', height:47.5,paddingBottom:20},
 	    headerTintColor: '#fff',
     }

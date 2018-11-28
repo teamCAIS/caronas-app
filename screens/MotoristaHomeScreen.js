@@ -98,7 +98,7 @@ export default class MotoristaHomeScreen extends React.Component {
             corrida={this.state.corrida} 
             excluiCarona={() => this.setState({cancelandoCarona:true})} 
             concluiCarona={() => this.setState({concluindoCarona:true})}
-            editarCarona={() => {this.props.navigation.navigate('EditarCarona')}}
+            editarCarona={() => {this.props.navigation.navigate('EditarCarona', {'carona':this.state.corrida})}}
           />
 
           <Modal

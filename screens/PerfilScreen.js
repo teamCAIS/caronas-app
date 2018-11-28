@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet,AsyncStorage, View, Image, TouchableHighlight } from 'react-native';
+import { StyleSheet,AsyncStorage, View, Image, TouchableHighlight, TouchableNativeFeedback } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Container, Content, Button, Text, Item, Label, Spinner } from 'native-base';
 import { createStackNavigator } from 'react-navigation';
@@ -16,13 +16,15 @@ class PerfilScreen extends React.Component {
       headerTitle: 'Perfil',
       drawerLabel: 'Seu perfil',
       headerLeft: (
-        <MaterialIcons
-          style={{marginLeft: 12}}
-          name="menu"
-          size={32}
-          onPress={() => navigation.openDrawer()}
-          color="#fff"
-        />
+        <TouchableNativeFeedback onPress={() => navigation.openDrawer()}>
+          <View style={{padding:12}}>
+            <MaterialIcons
+              name="menu"
+              size={32}
+              color="#fff"
+            />
+          </View>
+        </TouchableNativeFeedback>
       ),
       headerStyle: {backgroundColor: '#263238', height:47.5,paddingBottom:20},
 	  headerTintColor: '#fff',

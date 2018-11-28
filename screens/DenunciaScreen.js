@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Image, AsyncStorage, TouchableHighlight } from 'react-native';
+import { StyleSheet, View, Image, AsyncStorage, TouchableHighlight, TouchableNativeFeedback } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { createStackNavigator } from 'react-navigation';
 import { Container, Content, Form, Button, Picker, Text, Input, Item, Label, Left, Body, Icon, List, ListItem, Thumbnail, Spinner } from 'native-base';
@@ -34,13 +34,15 @@ class DenunciaScreen extends React.Component {
       title: 'Fazer denúncia',
       headerTitle: 'Fazer denúncia',
       headerLeft: (
-        <MaterialIcons
-          style={{marginLeft: 12}}
-          name="menu"
-          size={32}
-          onPress={() => navigation.openDrawer()}
-          color="#fff"
-        />
+        <TouchableNativeFeedback onPress={() => navigation.openDrawer()}>
+          <View style={{padding:12}}>
+            <MaterialIcons
+              name="menu"
+              size={32}
+              color="#fff"
+            />
+          </View>
+        </TouchableNativeFeedback>
       ),
 	  headerStyle: {backgroundColor: '#263238', height:47.5,paddingBottom:20},
 	  headerTintColor: '#fff',
