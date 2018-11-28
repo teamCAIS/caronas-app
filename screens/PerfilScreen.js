@@ -8,7 +8,11 @@ import { getUserInfo } from '../services/ApiService';
 class PerfilScreen extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = { user: { nome: 'não foi', email: '', genero: 2, tipo:1}, imagemPassageiro:true,imageMotorista:false}
+		this.state = { user: { nome: 'não foi', email: '', genero: 2, tipo:1}, 
+			imagemPassageiro:true,
+			imageMotorista:false,
+			token: '',
+		}
 	}
   static navigationOptions = ({ navigation }) => {
     return {
@@ -31,18 +35,17 @@ class PerfilScreen extends React.Component {
     }
   }
 	async componentDidMount() {
+		const token = await AsyncStorage.getItem('userToken');
 		let user = await AsyncStorage.getItem('user');
 		userObj = JSON.parse(user);
 		if(userObj.tipo==1){
-			this.state.imagemPassageiro=true,
-			this.state.imagemMotorista=false
+			this.setState({imagemMotorista:false, imagemPassageiro:true});
 		}else{
 			if(userObj.tipo==2){
-				this.state.imagemPassageiro=false,
-				this.state.imagemMotorista=true
+				this.setState({imagemMotorista:true, imagemPassageiro:false});
 			}
 		}
-		this.setState({user: userObj});
+		this.setState({user: userObj, token});
 	}
   render() {
     return (
@@ -61,7 +64,10 @@ class PerfilScreen extends React.Component {
 					<Text style={styles.label}>E-mail:</Text>
 					<Text style={[styles.listItem]} >{this.state.user.email}</Text>
 				</View>
-				<Button style={{marginTop:16,backgroundColor:'#ffca28',width:158,height:40,elevation:0}} onPress={() => {this.props.navigation.navigate('Editar')}}>
+				<Button 
+					style={{marginTop:16,backgroundColor:'#ffca28',width:158,height:40,elevation:0}} 
+					onPress={() => {this.props.navigation.navigate('Editar', {'user': this.state.user, 'token': this.state.token})}}
+				>
 					<Text uppercase={false} style={{fontSize:16,textAlign:'center',width:157,height:25,color:'#000'}}>Editar perfil</Text>
 				</Button>
           </View>

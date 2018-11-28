@@ -280,3 +280,38 @@ export async function preCadastrar(infos) {
     return data;
 
 }
+
+export async function editarPerfil(token, infos) {
+    let formData = new FormData();
+
+    formData.append('image', {uri:infos.fotoURL, name:infos.fotoNOME, type:infos.fotoTIPO});
+
+    formData.append('nome', infos.user.nome);
+    formData.append('email', infos.user.email);
+    formData.append('password', infos.password);
+    formData.append('genero', infos.user.genero);
+
+    formData.append('modeloCarro', '');
+    formData.append('placaCarro', '');
+    formData.append('corCarro', '');
+    
+
+    const response = await fetch(baseUrl+'/editarUsuario', {
+        method: 'post',
+        body: formData,
+        headers: {
+            'content-type': 'multipart/form-data',
+            "Authorization": "bearer "+token
+        }
+    })
+
+    if(response.status == 401)
+        return 401;
+
+    if(!response.ok)
+        return 'Falha na conexão';
+
+    const data = await response.json();
+    return data;
+
+}
