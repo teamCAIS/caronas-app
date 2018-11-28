@@ -30,6 +30,9 @@ export async function getUserInfo(token) {
         }
     })
 
+    if(response.status == 401)
+        return 401;
+
     if(!response.ok)
         return 'Falha na conexão'
     
@@ -47,6 +50,11 @@ export async function cadastroFinal(token, payload) {
     return result;
 }
 
+export async function editarCorrida(token, payload) {
+    const result = await post(token, payload, '/editarCorridaMotorista');
+    return result;
+}
+
 async function post(token, payload, rota) {
     const response = await fetch(baseUrl+rota, {
         method: 'post',
@@ -56,6 +64,9 @@ async function post(token, payload, rota) {
             "Authorization": "bearer "+token
         }
     });
+
+    if(response.status == 401)
+        return 401;
 
     if(!response.ok)
         return 'Falha na conexão';
@@ -83,6 +94,9 @@ export async function concluirCorrida(token) {
         }
     })
 
+    if(response.status == 401)
+        return 401;
+
     if(!response.ok)
         return 'Falha na conexão'
     
@@ -99,6 +113,9 @@ export async function cancelarCorrida(token) {
         }
     })
 
+    if(response.status == 401)
+        return 401;
+
     if(!response.ok)
         return 'Falha na conexão'
     
@@ -113,6 +130,9 @@ export async function getCorridaAtual(token) {
             "Authorization": "bearer "+token
         }
     })
+
+    if(response.status == 401)
+        return 401;
 
     if(!response.ok)
         return 'Falha na conexão';
@@ -131,6 +151,9 @@ export async function postBuscaUsuario(token, payload) {
         }
     })
 
+    if(response.status == 401)
+        return 401;
+
     if(!response.ok)
         return 'Falha na conexão';
 
@@ -147,6 +170,9 @@ export async function mostraFeed(token, payload) {
             "Authorization": "bearer "+token
         }
     })
+
+    if(response.status == 401)
+        return 401;
 
     if(!response.ok)
         return 'Falha na conexão';
@@ -179,6 +205,9 @@ export async function sairCorrida(token) {
         }
     })
 
+    if(response.status == 401)
+        return 401;
+
     if(!response.ok)
         return 'Falha na conexão'
     
@@ -194,6 +223,9 @@ export async function getHistoricoMotorista(token) {
         }
     })
 
+    if(response.status == 401)
+        return 401;
+
     if(!response.ok)
         return 'Falha na conexão';
 
@@ -208,6 +240,9 @@ export async function getHistoricoPassageiro(token) {
             "Authorization": "bearer "+token
         }
     })
+
+    if(response.status == 401)
+        return 401;
 
     if(!response.ok)
         return 'Falha na conexão';
@@ -234,6 +269,9 @@ export async function preCadastrar(infos) {
             'content-type': 'multipart/form-data'
         }
     })
+
+    if(response.status == 401)
+        return 401;
 
     if(!response.ok)
         return 'Falha na conexão';

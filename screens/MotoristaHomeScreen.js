@@ -34,6 +34,12 @@ export default class MotoristaHomeScreen extends React.Component {
 
     //chamar função que verifica se já tem carona
     const res = await getCorridaAtual(token);
+
+    if(res === 401) {
+      this.props.navigation.navigate('Auth');
+      return;
+    }
+
     const corrida = res[0];
 
     if(res != 'Falha na conexão') {
@@ -94,11 +100,15 @@ export default class MotoristaHomeScreen extends React.Component {
       return (
         <Content style={{backgroundColor:'#f5f5f6'}} refreshControl={
             <RefreshControl refreshing={this.state.refreshing} onRefresh={this._onRefresh}/>}>
+            <NavigationEvents 
+              onWillFocus={payload => this._verificaCarona()}
+            />
           <CaronaAtualMotorista 
             corrida={this.state.corrida} 
             excluiCarona={() => this.setState({cancelandoCarona:true})} 
             concluiCarona={() => this.setState({concluindoCarona:true})}
-            editarCarona={() => {this.props.navigation.navigate('EditarCarona', {'carona':this.state.corrida})}}
+            editarCarona={() => 
+              {this.props.navigation.navigate('EditarCarona', {'carona':this.state.corrida, 'token': this.state.token})}}
           />
 
           <Modal
@@ -137,7 +147,7 @@ export default class MotoristaHomeScreen extends React.Component {
   }
 
   _verificaCarona = () => {
-    const novaCarona = this.props.navigation.getParam('novaCarona', this.state.corrida);
+    const novaCarona = this.props.navigation.getParam('novaCarona', false);
     if(novaCarona)
       this.setState({ modalVisibility:true, loading:true });
     this._onRefresh();

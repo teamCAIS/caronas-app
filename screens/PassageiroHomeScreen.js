@@ -28,6 +28,11 @@ export default class PassageiroHomeScreen extends React.Component {
     const token = await AsyncStorage.getItem('userToken');
     const res = await mostraFeed(token,{filtroGenero: 3, filtroSaida: '', filtroHora: ''});
 
+    if(res === 401) {
+      this.props.navigation.navigate('Auth');
+      return;
+    }
+
     let avaliacao = false;
     let caronaAtual = null;
     if(res.length) {

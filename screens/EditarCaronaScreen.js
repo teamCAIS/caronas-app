@@ -2,13 +2,13 @@ import React from 'react';
 import { StyleSheet, AsyncStorage,View,Image,TouchableHighlight } from 'react-native';
 import { Container, Content,Text,  Button, Item, Label, Input,Picker, Spinner} from 'native-base';
 import { MaterialIcons } from '@expo/vector-icons';
-import { getUserInfo } from '../services/ApiService';
+import { getUserInfo, editarCorrida } from '../services/ApiService';
 
 export default class EditarCaronaScreen extends React.Component {
 
 	constructor(props){
 		super(props);
-		this.state = {saida: '', pontoEncontro: '', horario: '', vagas: '', loading: false}
+		this.state = {saida: '', pontoEncontro: '', horario: '', vagas: '', loading: false, token: null}
 	}
 
   static navigationOptions = ({ navigation }) => {
@@ -16,12 +16,23 @@ export default class EditarCaronaScreen extends React.Component {
       title: 'Editar carona',
       headerTitle: 'Editar carona',
       headerStyle: {backgroundColor: '#263238', height:47.5,paddingBottom:20},
-	  headerTintColor: '#fff',
-	}
+			headerTintColor: '#fff',
+		}
   }
-	async componentDidMount() {
-		
+	componentDidMount() {
+		const carona = this.props.navigation.getParam('carona', false);
+		const token = this.props.navigation.getParam('token', null);
+		if(carona) {
+			this.setState({saida:carona.saida, 
+				pontoEncontro:carona.pontoEncontro, 
+				horario:carona.hora, 
+				vagas:`${carona.vagas}`,
+				token,
+			})
+		}
+
 	}
+
   render() {
 	  if(this.state.loading)
       return (
@@ -120,17 +131,43 @@ export default class EditarCaronaScreen extends React.Component {
 			  fontSize:18,textAlign:'center',width:157,height:25,color:'#000'
 		  }
 	  }
-  }
+	}
+	_handleSubmit = async () => {
+		this.setState({loading:true});
+		const payload = {
+			saida: this.state.saida,
+			pontoEncontro: this.state.pontoEncontro,
+			vagas: this.state.vagas,
+			horario: this.state.horario
+		}
+
+		const result = await editarCorrida(this.state.token, payload);
+
+		if(result === 401) {
+			this.props.navigation.navigate('Auth');
+			return;
+		}
+
+		if(result == "success") {
+			this.props.navigation.navigate('MotoristaHome');
+			return;
+    }
+    else {
+			this.setState({loading:false});
+			alert("Não foi possível editar sua carona");
+		}
+	}
+
 }
 
 const styles = StyleSheet.create({
   container: {
     flex:1,
     marginRight:18,
-	marginLeft:18,
-	marginTop:18,
-	padding:0,
-	flexDirection: 'column',
+		marginLeft:18,
+		marginTop:18,
+		padding:0,
+		flexDirection: 'column',
     backgroundColor: '#f5f5f6',
     alignItems: 'center',
     justifyContent: 'center',
