@@ -1,4 +1,4 @@
-const baseUrl = 'http://192.168.15.5/backend/public/api';
+const baseUrl = 'http://smdcarpool.herokuapp.com/api';
 
 const msgErro = 'Erro ao conectar com o servidor';
 
