@@ -10,4 +10,19 @@ export default class UserContainer extends Container {
         this.setState({user});
     }
 
+    updateTipo = tipo => {
+        this.setState({user: {...this.state.user, tipo}});
+    }
+
+    updateCarro = (modelo, corCarro, placa) => {
+        this.setState({
+            user: {
+                ...this.state.user,
+                modelo,
+                corCarro,
+                placa,
+            }
+        })
+    }
+
 }

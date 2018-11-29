@@ -100,6 +100,12 @@ export default class App extends React.Component {
     
     const token = await login(payload);
 
+    if(token.status == 'error') {
+      alert(token.message);
+      this.setState({loading:false});
+      return;
+    }
+
     //salvar o token na AsyncStorage
     await this._storeToken(token);
 
