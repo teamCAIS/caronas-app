@@ -4,6 +4,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { Container, Content, Button, Text, Item, Label, Spinner } from 'native-base';
 import { createStackNavigator } from 'react-navigation';
 import EditarPerfilScreen from './EditarPerfilScreen';
+import InfoMotoristaScreen from './InfoMotoristaScreen';
 import { getUserInfo } from '../services/ApiService';
 class PerfilScreen extends React.Component {
 	constructor(props) {
@@ -92,6 +93,9 @@ class PerfilScreen extends React.Component {
     );
   }
   mudarTipo(tipo){
+	  if(tipo==2){
+		  this.props.navigation.navigate('InserirInfos');
+	  }
 	  this.componentDidMount();
   }
   getEstilo(estado){
@@ -153,6 +157,7 @@ export default createStackNavigator(
     {
         Perfil: PerfilScreen,
         Editar: EditarPerfilScreen,
+		InserirInfos: InfoMotoristaScreen,
     },
     {
         initialRouteName: 'Perfil',

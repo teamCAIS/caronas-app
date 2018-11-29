@@ -6,6 +6,7 @@ import { ImagePicker } from 'expo';
 import { getUserInfo, editarPerfil } from '../services/ApiService';
 import { Subscribe } from 'unstated';
 import UserContainer from '../stores/UserContainer';
+import ModalAlert from '../components/ModalAlert';
 
 export default class EditarPerfilScreen extends React.Component {
 
@@ -20,6 +21,7 @@ export default class EditarPerfilScreen extends React.Component {
 			fotoTIPO:'',
 			token: '',
 			loading:false,
+			concluirUpdate:false,
 		}
 	}
 	onValueChange(value) {
@@ -173,6 +175,12 @@ export default class EditarPerfilScreen extends React.Component {
 						</Subscribe>
 					</Item>
 				</View>
+					<ModalAlert
+            visibility={this.state.concluirUpdate}
+            dismiss={() => this.setState({concluirUpdate:false})}
+          >
+            Suas informações foram alteradas :)
+          </ModalAlert>
 			</Content>
 	  </Container>
     );
@@ -191,6 +199,9 @@ export default class EditarPerfilScreen extends React.Component {
 
 		if(result.status == 'success') {
 			updateUser(this.state.user);
+			this.setState({
+				concluirUpdate:true
+			});
 		} else {
 			alert('Não foi possível editar seu perfil');
 		}

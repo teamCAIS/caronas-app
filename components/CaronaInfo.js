@@ -53,7 +53,7 @@ export default class CaronaInfo extends React.Component {
 				</View>
 			</View>
 			<View style={{flexDirection:'row'}}>
-				<MaterialIcons name="radio-button-unchecked"  size={24} style={{marginTop:20}} color="#000"  />
+				<MaterialIcons name="person-pin"  size={24} style={{marginTop:20}} color="#000"  />
 				<View style={{marginLeft:5}}>
 					<Text style={styles.label}>Ponto de encontro:</Text>
 					<Text style={styles.listItem} >{this.props.corrida.pontoEncontro}</Text>
