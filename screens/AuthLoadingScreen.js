@@ -2,6 +2,8 @@ import React from 'react';
 import { AsyncStorage } from 'react-native';
 import { AppLoading, Asset, Font, Icon } from 'expo';
 import { getUserInfo } from '../services/ApiService';
+import { Subscribe } from 'unstated';
+import UserContainer from '../stores/UserContainer';
 
 export default class AuthLoadingScreen extends React.Component {
   constructor(props) {
@@ -20,47 +22,51 @@ export default class AuthLoadingScreen extends React.Component {
     console.warn(error);
   };
 
-  _handleFinishLoading = async () => {
+  _handleFinishLoading = async (updateUser) => {
 
     const userToken = await AsyncStorage.getItem('userToken');
 
-    if(!userToken)
+    if(!userToken) {
       this.props.navigation.navigate('Auth');
-    else {
-
-      let userString = await AsyncStorage.getItem('user');
-      let user = JSON.parse(userString);
-      
-      if(!user) {
-        const data = await getUserInfo(userToken);
-        user = data[0];
-        await AsyncStorage.setItem('user', JSON.stringify(user));
-      }
-
-      const type = user.tipo;
-
-      if(type == 1)
-        this.props.navigation.navigate('PassageiroApp');
-      else if(type == 2)
-        this.props.navigation.navigate('MotoristaApp');
-      else {
-        this.props.navigation.navigate('Auth');
-      }
-      
+      return;
     }
 
+    const data = await getUserInfo(userToken);
+
+    if(data==401) {
+      this.props.navigation.navigate('Auth');
+      return;
+    }
     
+    user = data[0];
+    updateUser(user);
+    await AsyncStorage.setItem('user', JSON.stringify(user));
+
+    const type = user.tipo;
+
+    if(type == 1)
+      this.props.navigation.navigate('PassageiroApp');
+    else if(type == 2)
+      this.props.navigation.navigate('MotoristaApp');
+    else {
+      this.props.navigation.navigate('Auth');
+    }
+      
     
   }
 
   // Render any loading content that you like here
   render() {
     return (
-      <AppLoading
-        startAsync={this._loadResourcesAsync}
-        onError={this._handleLoadingError}
-        onFinish={this._handleFinishLoading}
-      />
+      <Subscribe to={[UserContainer]}>
+        {container => (
+          <AppLoading
+            startAsync={this._loadResourcesAsync}
+            onError={this._handleLoadingError}
+            onFinish={()=> this._handleFinishLoading(container.updateUser)}
+          />
+        )}
+      </Subscribe>
     );
   }
 }

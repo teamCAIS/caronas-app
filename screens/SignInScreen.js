@@ -4,6 +4,9 @@ import { login, getUserInfo } from '../services/ApiService';
 import { Container, Text, Content, Button, Input, Item, Label, Spinner,Right } from 'native-base';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { Subscribe } from 'unstated';
+import UserContainer from '../stores/UserContainer'
+
 export default class App extends React.Component {
 
   constructor(props) {
@@ -55,9 +58,16 @@ export default class App extends React.Component {
 				<MaterialCommunityIcons name={this.state.nomeIcone}  size={32} onPress={() => this.onValueChange(this.state.ver)} style={{position:'absolute'}} color="#000"  />
 			</Item>
 			<Item style={{marginTop:25,width:157.5,height:40}}>
-				<Button style={{backgroundColor:'#ffca28',width:157.5,height:40,elevation:0, justifyContent:'space-evenly'}} onPress={this._handleLoginPress}>
-					<Text uppercase={false} style={{color:'black',fontSize:18,textAlign:'center',width:150,height:25}}>Entrar</Text>
-				</Button>
+        <Subscribe to={[UserContainer]}>
+        {UserContainer => (
+          <Button 
+            style={{backgroundColor:'#ffca28',width:157.5,height:40,elevation:0, justifyContent:'space-evenly'}} 
+            onPress={() => this._handleLoginPress(UserContainer.updateUser)}
+          >
+            <Text uppercase={false} style={{color:'black',fontSize:18,textAlign:'center',width:150,height:25}}>Entrar</Text>
+          </Button>
+        )}
+        </Subscribe>
 			</Item>
 			<Item style={{marginTop:16,borderColor:'transparent'}}>
 				<Text uppercase={false} style={{color: '#000',fontSize:14,fontWeight:'bold'}}>
@@ -81,7 +91,7 @@ export default class App extends React.Component {
     );
   }
 
-  _handleLoginPress = async () => {
+  _handleLoginPress = async (updateUser) => {
     this.setState({loading:true});
     payload = {
       email: this.state.email.toLowerCase(),
@@ -98,6 +108,7 @@ export default class App extends React.Component {
     const tipo = info[0].tipo;
 
     await this._storeUser(info[0]);
+    updateUser(info[0]);
     //ir para a tela do tipo certo
     if(tipo == 0) {
       this.props.navigation.navigate('Codigo');

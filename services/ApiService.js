@@ -1,4 +1,4 @@
-const baseUrl = 'http://smdcarpool.herokuapp.com/api';
+const baseUrl = 'http://192.168.15.14/backend/public/api';
 
 const msgErro = 'Erro ao conectar com o servidor';
 
@@ -291,9 +291,15 @@ export async function editarPerfil(token, infos) {
     formData.append('password', infos.password);
     formData.append('genero', infos.user.genero);
 
-    formData.append('modeloCarro', infos.modeloCarro);
-    formData.append('placaCarro', infos.placaCarro);
-    formData.append('corCarro', infos.corCarro);
+    if(infos.user.tipo == 2) {
+        formData.append('modeloCarro', infos.user.modelo);
+        formData.append('placaCarro', infos.user.placa);
+        formData.append('corCarro', infos.user.corCarro);
+    } else {
+        formData.append('modeloCarro', '');
+        formData.append('placaCarro', '');
+        formData.append('corCarro', '');
+    }
     
 
     const response = await fetch(baseUrl+'/editarUsuario', {

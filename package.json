@@ -18,7 +18,8 @@
     "react-native-datepicker": "^1.7.2",
     "react-native-keyboard-aware-scroll-view": "^0.7.4",
     "react-native-modal": "^7.0.0",
-    "react-navigation": "^2.18.2"
+    "react-navigation": "^2.18.2",
+    "unstated": "^2.1.1"
   },
   "devDependencies": {
     "babel-preset-expo": "^5.0.0"

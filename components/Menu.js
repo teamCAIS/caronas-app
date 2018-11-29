@@ -4,6 +4,8 @@ import { Container, Content, Text,  View,  } from "native-base";
 import { MaterialIcons } from '@expo/vector-icons';
 import { colors } from '../constants/styles';
 import { getUserInfo } from '../services/ApiService';
+import { Subscribe } from "unstated";
+import UserContainer from "../stores/UserContainer";
 export default class Menu extends React.Component {
 
   constructor(props) {
@@ -19,23 +21,18 @@ export default class Menu extends React.Component {
 
   render() {
 
-    let letra = 'x';
-    if(this.state.user.genero == 0)
-      letra = 'o';
-    if(this.state.user.genero == 1)
-      letra = 'a';
-
     return (
       <Container style={{backgroundColor:colors.primary}}>
-        <Content style={{ marginLeft: 16 }}>
+      <Subscribe to={[UserContainer]}>
+        {container => (<Content style={{ marginLeft: 16 }}>
           <View style={styles.menuHeader}>
             <Text style={{fontSize: 20,fontWeight:'bold',marginTop:-15,color:colors.white}}>Menu</Text>
             <Image
               style={styles.avatar}
-              source={this.state.user.url_foto ? {uri:this.state.user.url_foto} : require('../assets/perfil.png')}
+              source={container.state.user.url_foto ? {uri:container.state.user.url_foto} : require('../assets/perfil.png')}
             />
-            <Text style={{color:colors.white}}>Bem vind{letra}, {this.state.user.nome}</Text>
-            <Text style={{fontSize: 14,color:colors.white}}>{this.state.user.email}</Text>
+            <Text style={{color:colors.white}}>Bem vind{this.letraGenero(container.state.user.genero)}, {container.state.user.nome}</Text>
+            <Text style={{fontSize: 14,color:colors.white}}>{container.state.user.email}</Text>
           </View>
 
           <TouchableNativeFeedback onPress={() => this.props.navigation.navigate('Caronas')}>
@@ -85,7 +82,8 @@ export default class Menu extends React.Component {
               </Text>
             </View>
           </TouchableNativeFeedback>
-        </Content>
+        </Content>)}
+      </Subscribe>
       </Container>
     );
   }
@@ -93,6 +91,13 @@ export default class Menu extends React.Component {
   _deslogar = () => {
     AsyncStorage.removeItem('userToken');
     this.props.navigation.navigate('Auth');
+  }
+  letraGenero = genero => {
+    if(genero == 0)
+      return 'o';
+    if(genero == 1)
+      return 'a';
+    return 'x';
   }
 }
 
