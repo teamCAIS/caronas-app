@@ -140,11 +140,11 @@ getEstadoBotao(estado){
 getEstadoLabelBotao(estado){
 	if(estado==true){
 		  return {
-			  fontSize:16,textAlign:'center',width:157,height:25
+			  fontSize:18,textAlign:'center',width:160,height:27,right:1
 		  }
 	  }else{
 		  return {
-			  fontSize:16,textAlign:'center',width:157,height:25,color:'#000'
+			  fontSize:18,textAlign:'center',width:160,height:27,color:'#000',right:1
 		  }
 	  }
 }
