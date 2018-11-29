@@ -178,7 +178,6 @@ export default class CadastroFinalScreen extends React.Component {
 	}
 	
 	_enviaCadastroMotorista = async () => {
-		alert(this.state.corCarro);
     payload = {
       tipo: 2,
       codigo_validacao: this.state.codigoValidacao,

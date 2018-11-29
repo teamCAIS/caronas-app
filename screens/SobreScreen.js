@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, View, Image, TouchableNativeFeedback} from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
-import { Container, Content, Text,Item } from 'native-base';
+import { Container, Content, Text,Item,Card, CardItem } from 'native-base';
 import { createStackNavigator } from 'react-navigation';
 
 class SobreScreen extends React.Component {
@@ -31,14 +31,21 @@ class SobreScreen extends React.Component {
       <Container style={{margin:0,backgroundColor:'#f5f5f6'}}>
         <Content style={{margin:0,marginTop:18}}>
           <View style={styles.container}>
-			<Item style={{borderColor:'transparent'}}>
-				<Image
+			<Card>
+            <CardItem>
+				<View style={{flexDirection:'row',width:300}}>
+					<Image
                     style={ styles.logo }
                     source={require('../assets/logo.png')}
-                />
-			</Item>
-			<View style={{width:325,marginTop:18,borderColor:'transparent'}}>
-				<Text style={{fontWeight:'bold',fontSize:12}}>Sobre a aplicação:</Text>
+					/>
+					<View style={{flexDirection:'column',marginLeft:10,marginTop:20}}>
+					<Text style={{color:'black',fontWeight:'bold',fontSize:24}}>SMDcarpool</Text>
+					<Text style={{color:'black',marginTop:5}}>v 1.0</Text>
+					</View>
+                </View>
+            </CardItem>
+          </Card>
+			<View style={{width:325,marginTop:12,marginBottom:12,borderColor:'transparent'}}>
 				<Text style={{fontSize:15}}>A aplicação <Text style={{fontSize:15,fontWeight:'bold'}}>SMD Carpool</Text> foi desenvolvida por</Text>
 				<Text style={{fontSize:15}}>alunos do curso <Text style={{fontSize:15,fontWeight:'bold'}}>Sistemas e Mídias Digitais</Text> com</Text>
 				<Text style={{fontSize:15}}>o propósito de intermediar o contato entre</Text>
@@ -49,15 +56,23 @@ class SobreScreen extends React.Component {
 				<Text style={{fontSize:15}}>a professora <Text style={{fontSize:15,fontWeight:'bold'}}>Mara Bonates</Text> que se viu</Text>
 				<Text style={{fontSize:15}}>preocupada com a segurança e o bem-estar dos</Text>
 				<Text style={{fontSize:15}}>alunos do turno da noite.</Text>
-				<Text style={{fontSize:15}}>{'\n'}</Text>
-				<Text style={{fontWeight:'bold',fontSize:12}}>Desenvolvido por:</Text>
-				<Text style={{fontSize:15}}>Caio Nunes</Text>
-				<Text style={{fontSize:15}}>Lucas Lopes</Text>
-				<Text style={{fontSize:15}}>Samuel Martins</Text>
-				<Text style={{fontSize:15}}>Ulisses Lopes</Text>
 			</View>
-			<Item>
-			</Item>
+			<Card>
+            <CardItem>
+				<View style={{flexDirection:'row',width:300}}>
+					<Image
+					style={ styles.logo }
+					source={require('../assets/logo-cais.png')}
+					/>
+					<View style={{flexDirection:'column',marginLeft:20,marginTop:10}}>
+						<Text style={{fontSize:15}}>Caio Nunes</Text>
+						<Text style={{fontSize:15}}>Lucas Lopes</Text>
+						<Text style={{fontSize:15}}>Samuel Martins</Text>
+						<Text style={{fontSize:15}}>Ulisses Lopes</Text>
+					</View>
+                </View>
+            </CardItem>
+          </Card>
 		  </View>
 		</Content>
 	  </Container>
@@ -78,8 +93,8 @@ const styles = StyleSheet.create({
     color: '#000'
   },
   logo: {
-	width:122.5,
-	height:122.5,
+	width:105,
+	height:105,
 	
   },
 });
