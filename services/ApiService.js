@@ -55,32 +55,6 @@ export async function editarCorrida(token, payload) {
     return result;
 }
 
-export async function inserirInfosMotorista(token, payload) {
-    const result = await post(token, payload, '/inserirInfosMotorista');
-    return result;
-}
-
-export async function mudarPerfil(token, payload) {
-    const response = await fetch(baseUrl+'/mudarTipoPerfilUsuario', {
-        method: 'post',
-        body: JSON.stringify(payload),
-        headers: {
-            "Content-Type": "application/json",
-            "Authorization": "bearer "+token
-        }
-    });
-
-    if(response.status == 401)
-        return 401;
-
-    if(!response.ok)
-        return 'Falha na conexão';
-
-    const result = await response.json();
-
-    return result;
-}
-
 async function post(token, payload, rota) {
     const response = await fetch(baseUrl+rota, {
         method: 'post',
