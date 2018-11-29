@@ -28,6 +28,7 @@ export default class CadastroScreen extends React.Component {
 			concluirCadastro:false,
 			senhaErrada:false,
 			erroCadastro:false,
+			documentoLabel:'Adicionar atestado de matrícula',
 		}
 		this.setDate = this.setDate.bind(this);
 	}
@@ -103,7 +104,7 @@ export default class CadastroScreen extends React.Component {
 				</Picker>
 			</Item>
 			<Item style={{borderColor:'#727272',backgroundColor:'#fff',marginTop:18,width:328,height:55}}>
-				<Label style={{position:'relative',left:10,fontSize:14,color:'#727272'}}>Adicionar atestado de matrícula</Label>
+				<Label style={{position:'relative',left:10,fontSize:14,color:'#727272'}}>{this.state.documentoLabel}</Label>
 				<MaterialCommunityIcons size={32} style={{position:'absolute', left:290}} onPress={this._pickDocument} name="paperclip" />
 			</Item>
 			<Item style={{marginTop:18,marginBottom:18}}>
@@ -165,7 +166,10 @@ export default class CadastroScreen extends React.Component {
 		  documentoURL:result.uri,
 		  documentoTIPO:"application/pdf"
 	  });
-		this.setState({documentoNOME:result.uri.split('/').pop(),});
+		this.setState({
+			documentoNOME:result.uri.split('/').pop(),
+			documentoLabel:result.uri.split('/').pop().substring(0,30),
+			});
 	}
 	getEstadoBotao(estado){
 	  if(estado==true){
