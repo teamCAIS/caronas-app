@@ -4,7 +4,7 @@ import { Container, Content,Text,  Button, Item, Label, Input,Picker} from 'nati
 import { MaterialIcons } from '@expo/vector-icons';
 import { ImagePicker } from 'expo';
 import { getUserInfo, editarPerfil } from '../services/ApiService';
-
+import ModalAlert from '../components/ModalAlert';
 export default class EditarPerfilScreen extends React.Component {
 
 	constructor(props){
@@ -19,7 +19,8 @@ export default class EditarPerfilScreen extends React.Component {
 			token: '',
 			corCarro:'',
 			modeloCarro:'',
-			placaCarro:''
+			placaCarro:'',
+			concluirUpdate:false,
 		}
 	}
 	onValueChange(value) {
@@ -158,6 +159,12 @@ export default class EditarPerfilScreen extends React.Component {
 					</Button>
 				</Item>
 			</View>
+			<ModalAlert
+            visibility={this.state.concluirUpdate}
+            dismiss={() => this.setState({concluirUpdate:false})}
+          >
+            Suas informações foram alteradas :)
+          </ModalAlert>
 		</Content>
 	  </Container>
     );
@@ -167,9 +174,10 @@ export default class EditarPerfilScreen extends React.Component {
 
 		const payload = this.state;
 		const result = await editarPerfil(this.state.token, payload);
-
-		alert(result.status);
-
+		if(result.status == 'success')
+			this.setState({
+				concluirUpdate:true
+			});
 	}
 
   _pickImage = async () => {

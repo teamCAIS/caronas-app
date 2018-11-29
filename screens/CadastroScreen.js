@@ -4,7 +4,7 @@ import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 import { Container, Text, Content, Button, Input, Item, Label, Picker, DatePicker} from 'native-base';
 import { DocumentPicker } from 'expo';
 import { preCadastrar } from '../services/ApiService';
-
+import ModalAlert from '../components/ModalAlert';
 
 export default class CadastroScreen extends React.Component {
 
@@ -24,7 +24,10 @@ export default class CadastroScreen extends React.Component {
 			genero: '3',
 			documentoURL:null,
 			documentoNOME:null,
-			documentoTIPO:null
+			documentoTIPO:null,
+			concluirCadastro:false,
+			senhaErrada:false,
+			erroCadastro:false,
 		}
 		this.setDate = this.setDate.bind(this);
 	}
@@ -104,11 +107,29 @@ export default class CadastroScreen extends React.Component {
 				<MaterialCommunityIcons size={32} style={{position:'absolute', left:290}} onPress={this._pickDocument} name="paperclip" />
 			</Item>
 			<Item style={{marginTop:18,marginBottom:18}}>
-				<Button disabled={isDisabled} onPress={() => this._concluiCarona()} style={this.getEstadoBotao(isDisabled)}>
+				<Button disabled={isDisabled} onPress={this._concluiCarona} style={this.getEstadoBotao(isDisabled)}>
 					<Text uppercase={false} style={this.getEstadoTextoBotao(isDisabled)}>Concluir</Text>
 				</Button>
 			</Item>
 		  </View>
+		  <ModalAlert
+            visibility={this.state.concluirCadastro}
+            dismiss={() => this.setState({concluirCadastro:false})}
+          >
+            Seu cadastro foi recebido! Se estiver tudo certo com seu documento mandaremos um e-mail com seu código de entrada :)
+          </ModalAlert>
+		  <ModalAlert
+            visibility={this.state.erroCadastro}
+            dismiss={() => this.setState({erroCadastro:false})}
+          >
+            Aconteceu algum problema com seu cadastro :( Tente novamente.
+          </ModalAlert>
+		  <ModalAlert
+            visibility={this.state.senhaErrada}
+            dismiss={() => this.setState({senhaErrada:false})}
+          >
+            As senhas digitadas não são iguais. Verifique-as novamente :)
+          </ModalAlert>
 		</Content>
 	  </Container>
     );
@@ -117,16 +138,22 @@ export default class CadastroScreen extends React.Component {
 	_concluiCarona = async () => {
 		
 		if(this.state.password != this.state.cpassword) {
-			alert('Verifique se a senha foi digitada corretamente');
+			this.setState({
+				senhaErrada:true
+			});
 			return;
 		}
 
 		const infos = this.state;
 		const result = await preCadastrar(infos);
 		if(result.status == 'success')
-			alert('Um código de confirmação será enviado ao seu email');
+			this.setState({
+				concluirCadastro:true
+			});
 		else
-			alert('Não foi possível concluir o pré-cadastro');
+			this.setState({
+				erroCadastro:true
+			});
 	}
 
   _pickDocument = async () => {
