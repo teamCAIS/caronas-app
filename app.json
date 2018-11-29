@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "SMD_CARPOOL",
+    "name": "SMDcarpool",
     "description": "This project is really great.",
     "slug": "smd_carpool",
     "privacy": "public",
@@ -14,7 +14,7 @@
     "icon": "./assets/icon.png",
     "splash": {
       "image": "./assets/splash.png",
-      "resizeMode": "contain",
+      "resizeMode": "cover",
       "backgroundColor": "#ffffff"
     },
     "updates": {
