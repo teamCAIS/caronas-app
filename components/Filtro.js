@@ -8,58 +8,59 @@ export default class Filtro extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {saida:null}
+    this.state = {todos:true,masculino:false,feminino:false}
   }
 
   async componentDidMount() {
-    /*let user = await AsyncStorage.getItem('user');
-    userObj = JSON.parse(user);
-    this.setState({user: userObj});*/
   }
 
   render() {
     return (
       <Container style={{backgroundColor:colors.primary}}>
         <Content style={{ marginLeft: 18 }}>
-			<Text style={{fontSize:20,color:'white',fontWeight:'bold',marginTop:21}}>Filtros</Text>
-            <View style={{marginTop:35,right:16}}>
-			  <ListItem style={styles.listItem}>
+          <Text style={{fontSize:20,color:'white',fontWeight:'bold',marginTop:21}}>Filtros</Text>
+          <View style={{marginTop:35,right:16}}>
+            <ListItem style={styles.listItem}>
               <Text style={[styles.labels,{position:'relative',right:10}]}>Gênero do(a) motorista</Text>
               </ListItem>
-              <ListItem style={styles.listItem}>
-              <Radio color='white' selectedColor='white' selected={true} />
-              <Text style={styles.labels}>Todos</Text>
+              <ListItem onPress={() => this._changeRadio('todos')}  style={styles.listItem}>
+                <Radio color='white' selectedColor='white' selected={this.state.todos} />
+                <Text style={styles.labels}>Todos</Text>
               </ListItem>
-              <ListItem style={styles.listItem}>
-              <Radio color='white' selectedColor='white' selected={false} />
-              <Text style={styles.labels}>Apenas masculino</Text>
+              <ListItem onPress={() => this._changeRadio('masculino')}  style={styles.listItem}>
+                <Radio color='white' selectedColor='white' selected={this.state.masculino} />
+                <Text style={styles.labels}>Apenas masculino</Text>
               </ListItem>
-              <ListItem style={styles.listItem}>
-              <Radio color='white' selectedColor='white' selected={false} />
-              <Text style={styles.labels}>Apenas feminino</Text>
-              </ListItem>
-            </View>
-			<Text style={{fontSize:16,color:'white',fontWeight:'bold'}}>Filtrar por</Text>
+              <ListItem onPress={() => this._changeRadio('feminino')}  style={styles.listItem}>
+                <Radio color='white' selectedColor='white' selected={this.state.feminino} />
+                <Text style={styles.labels}>Apenas feminino</Text>
+            </ListItem>
+          </View>
+          <Text style={{fontSize:16,color:'white',fontWeight:'bold'}}>Filtrar por</Text>
+
 			<Item style={{borderColor:'#727272',backgroundColor:'#fff',width:228,height:55,marginTop:18}}>
+
 				<Picker
 				  placeholder="Destino"
 				  mode="dropdown"
 				  style={styles.picker}
-				  selectedValue={this.state.saida}
-				  onValueChange={(value) => this.setState({saida: value})}
+				  selectedValue={this.props.saida}
+				  onValueChange={(value) => this.props.onSaidaChange(value)}
 				>
 				  <Picker.Item enabled={false} label="Destino" value={null}/>
 				  <Picker.Item label="Humberto Monte" value="Humberto Monte" />
 				  <Picker.Item label="Educação Física" value="Educação Física" />
 				  <Picker.Item label="Mister Hull" value="Mister Hull" />
 				</Picker>
+
 			</Item>
+
 			<Item style={{borderColor:'#727272',backgroundColor:'#fff',marginTop:18,width:228,height:55,marginTop:18}}>
 				<Picker
 				  mode="dropdown"
 				  style={styles.picker}
-				  selectedValue={this.state.horario}
-				  onValueChange={(value) => this.setState({horario: value})}
+				  selectedValue={this.props.horario}
+				  onValueChange={(value) => this.props.onHorarioChange(value)}
 				>
 				  <Picker.Item enabled={false} label="Horário de saída" value={null}/>
 				  <Picker.Item label="18:30" value="18:30:00" />
@@ -73,17 +74,39 @@ export default class Filtro extends React.Component {
 				  <Picker.Item label="22:30" value="22:30:00" />
 				</Picker>
 			</Item>
+
 			<View style={{flexDirection: "column", justifyContent: "center",marginTop:25,left:35}}>
-              <Button style={{borderColor:'#fff',width:158,height:40}} bordered onPress={() => {}}>
+              <Button style={{borderColor:'#fff',width:158,height:40}} bordered onPress={this.props.removeFiltro}>
                   <Text uppercase={false} style={{color:'white',width:170,height:27,fontSize:18}}>Remover filtros</Text>
               </Button>
-              <Button style={{backgroundColor:'#ffca28',width:158,height:40,elevation:0,marginTop:12.5}} onPress={() => {}}>
+              <Button 
+                style={{backgroundColor:'#ffca28',width:158,height:40,elevation:0,marginTop:12.5}}
+                onPress={this.props.aplicaFiltro}>
                   <Text uppercase={false} style={{color:'black',fontWeight:'bold',width:168,left:7,height:27,fontSize:18}}>Aplicar filtros</Text>
               </Button>
           </View>
         </Content>
       </Container>
     );
+  }
+
+  _changeRadio = (tipo) => {
+    switch(tipo) {
+      case 'todos':
+        this.setState({todos:true,masculino:false,feminino:false});
+        this.props.onGeneroChange(3);
+        break;
+      
+      case 'masculino':
+        this.setState({todos:false,masculino:true,feminino:false});
+        this.props.onGeneroChange(0);
+        break;
+
+      case 'feminino':
+        this.setState({todos:false,masculino:false,feminino:true});
+        this.props.onGeneroChange(1);
+        break;
+    }
   }
 
 }
