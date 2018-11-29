@@ -6,8 +6,10 @@ import CardCarona from '../components/CardCarona';
 import { getHistoricoMotorista, getHistoricoPassageiro } from '../services/ApiService'
 import { createStackNavigator } from 'react-navigation';
 import CaronaDetailsScreen from '../screens/CaronaDetailsScreen';
+import { Subscribe } from 'unstated';
+import UserContainer from '../stores/UserContainer';
 
-class HistoricoScreen extends React.Component {
+class HistoricoView extends React.Component {
 
   constructor(props) {
     super(props);
@@ -17,9 +19,8 @@ class HistoricoScreen extends React.Component {
   async componentDidMount() {
     
     const token = await AsyncStorage.getItem('userToken');
-    const usuarioString = await AsyncStorage.getItem('user');
-    const usuario = JSON.parse(usuarioString);
-    const tipo = usuario.tipo;
+
+    const tipo = this.props.userContainer.state.user.tipo;
     let res;
     if(tipo == 1) {
       res = await getHistoricoPassageiro(token);
@@ -40,27 +41,6 @@ class HistoricoScreen extends React.Component {
     alert('Houve um problema com a conexão');
     
       
-  }
-
-
-  static navigationOptions = ({ navigation }) => {
-    return {
-      title: 'Histórico',
-      headerTitle: 'Histórico',
-      headerLeft: (
-        <TouchableNativeFeedback onPress={() => navigation.openDrawer()}>
-          <View style={{padding:12}}>
-            <MaterialIcons
-              name="menu"
-              size={32}
-              color="#fff"
-            />
-          </View>
-        </TouchableNativeFeedback>
-      ),
-      headerStyle: {backgroundColor: '#263238', height:47.5,paddingBottom:20},
-      headerTintColor: '#fff'
-    }
   }
 
   render() {
@@ -115,6 +95,49 @@ class HistoricoScreen extends React.Component {
     return string;
   }
 }
+
+
+class HistoricoScreen extends React.Component {
+
+  constructor(props) {
+    super(props);
+  }
+
+  static navigationOptions = ({ navigation }) => {
+    return {
+      title: 'Histórico',
+      headerTitle: 'Histórico',
+      headerLeft: (
+        <TouchableNativeFeedback onPress={() => navigation.openDrawer()}>
+          <View style={{padding:12}}>
+            <MaterialIcons
+              name="menu"
+              size={32}
+              color="#fff"
+            />
+          </View>
+        </TouchableNativeFeedback>
+      ),
+      headerStyle: {backgroundColor: '#263238', height:47.5,paddingBottom:20},
+      headerTintColor: '#fff'
+    }
+  }
+
+  render() {
+    return (
+      <Subscribe to={[UserContainer]}>
+        {userContainer => 
+          (<HistoricoView 
+            userContainer={userContainer} 
+            navigation={this.props.navigation}
+          />)}
+      </Subscribe>
+    );
+  }
+
+
+}
+
 
 const styles = StyleSheet.create({
   

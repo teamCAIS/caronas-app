@@ -113,7 +113,6 @@ export default class App extends React.Component {
 
     const tipo = info[0].tipo;
 
-    await this._storeUser(info[0]);
     updateUser(info[0]);
     //ir para a tela do tipo certo
     if(tipo == 0) {
@@ -144,14 +143,6 @@ export default class App extends React.Component {
       await AsyncStorage.setItem('userToken', token);
     } catch (error) {
       console.log("erro ao salvar o token");
-    }
-  }
-  _storeUser = async (userObj) => {
-    try {
-      const user = JSON.stringify(userObj);
-      await AsyncStorage.setItem('user', user);
-    } catch (error) {
-      console.log(error);
     }
   }
 }

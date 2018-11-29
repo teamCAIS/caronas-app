@@ -12,9 +12,6 @@ export default class MenuMotorista extends React.Component {
     super(props);
   }
 
-  async componentDidMount() {
-  }
-
   render() {
 
     return (

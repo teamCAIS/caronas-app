@@ -13,12 +13,6 @@ export default class Menu extends React.Component {
     this.state = { user: { nome: 'não foi', email: '', genero: 2} }
   }
 
-  async componentDidMount() {
-    let user = await AsyncStorage.getItem('user');
-    userObj = JSON.parse(user);
-    this.setState({user: userObj});
-  }
-
   render() {
 
     return (

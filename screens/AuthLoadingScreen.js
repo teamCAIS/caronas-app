@@ -40,7 +40,6 @@ export default class AuthLoadingScreen extends React.Component {
     
     user = data[0];
     updateUser(user);
-    await AsyncStorage.setItem('user', JSON.stringify(user));
 
     const type = user.tipo;
 
