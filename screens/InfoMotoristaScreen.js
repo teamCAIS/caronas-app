@@ -1,7 +1,9 @@
 import React from 'react';
 import { StyleSheet, View, AsyncStorage, Image, TouchableHighlight } from 'react-native';
 import { Input, Container, Content, Item, Label, Button, Text, Picker } from 'native-base';
-import {  } from '../services/ApiService';
+import { inserirInfosMotorista } from '../services/ApiService';
+import { Subscribe } from 'unstated';
+import UserContainer from '../stores/UserContainer';
 
 export default class InfoMotoristaScreen extends React.Component {
 
@@ -65,9 +67,17 @@ export default class InfoMotoristaScreen extends React.Component {
 					  <Input value={this.state.placaCarro} onChangeText={text => this.setState({placaCarro: text})} />
 					</Item>
 					<Item style={{marginTop:27.5,borderColor:'transparent',width:328,justifyContent:'center'}}>
-						<Button disabled={isDisabled} onPress={this._enviaCadastroMotorista} style={this.getEstadoBotao(isDisabled)}>
-							<Text uppercase={false} style={this.getEstadoTextoBotao(isDisabled)}>Concluir</Text>
-						</Button>
+						<Subscribe to={[UserContainer]}>
+							{container => (
+							<Button 
+								disabled={isDisabled} 
+								onPress={() => this._enviaInfosMotorista(container.updateCarro)} 
+								style={this.getEstadoBotao(isDisabled)}
+							>
+								<Text uppercase={false} style={this.getEstadoTextoBotao(isDisabled)}>Concluir</Text>
+							</Button>
+							)}
+						</Subscribe>
 					</Item>
 			</View>
 		  </View>
@@ -99,18 +109,18 @@ export default class InfoMotoristaScreen extends React.Component {
 	  }
   }
   
-	_enviaInfosMotorista = async () => {
+	_enviaInfosMotorista = async updateCarro => {
     payload = {
-			tipo: 2,
-			modelo: this.state.modeloCarro,
+			modeloCarro: this.state.modeloCarro,
 			corCarro: this.state.corCarro,
-			placa: this.state.placaCarro,
+			placaCarro: this.state.placaCarro,
     }
     const token = await AsyncStorage.getItem('userToken');
-    const result = await cadastroFinal(token, payload);
+    const result = await inserirInfosMotorista(token, payload);
 
     if(result == "success") {
-        this.props.navigation.navigate('MotoristaApp');
+			updateCarro(this.state.modeloCarro, this.state.corCarro, this.state.placaCarro);
+      this.props.navigation.navigate('MotoristaApp');
     }
     else
       alert(result);
