@@ -16,6 +16,7 @@ export default class CadastroFinalScreen extends React.Component {
 			modeloCarro:null,
 			corCarro:null,
 			placaCarro:null,
+			loading:false,
     }
   }
 	onValueChange(value) {
@@ -31,6 +32,12 @@ export default class CadastroFinalScreen extends React.Component {
   }
 
   render() {
+
+	if(this.state.loading)
+		return (
+			<Spinner color='#ffca28'/>
+		);
+
 	let infosMotorista = null;
 	let finalizarPassageiro = null;
 	let isDisabled = !(this.state.modeloCarro && this.state.corCarro && this.state.placaCarro);
@@ -162,6 +169,7 @@ export default class CadastroFinalScreen extends React.Component {
 	  }
   }
   _enviaCadastroPassageiro = async () => {
+		this.setState({loading:true});
     payload = {
       tipo: 1,
       codigo_validacao: this.state.codigoValidacao,
@@ -171,13 +179,18 @@ export default class CadastroFinalScreen extends React.Component {
     const result = await cadastroFinal(token, payload);
 
     if(result == "success") {
-        this.props.navigation.navigate('PassageirosApp');
+				this.props.navigation.navigate('PassageirosApp');
+				return;
     }
-    else
-      alert(result);
+    else {
+			this.setState({loading:false});
+			alert(result);
+		}
+      
 	}
 	
 	_enviaCadastroMotorista = async () => {
+		this.setState({loading:true});
     payload = {
       tipo: 2,
       codigo_validacao: this.state.codigoValidacao,
@@ -190,10 +203,13 @@ export default class CadastroFinalScreen extends React.Component {
     const result = await cadastroFinal(token, payload);
 
     if(result == "success") {
-        this.props.navigation.navigate('MotoristaApp');
+				this.props.navigation.navigate('MotoristaApp');
+				return;
     }
-    else
-      alert(result);
+    else {
+			alert(result);
+			this.setState({loading:false});
+		}
 	}
 
 }

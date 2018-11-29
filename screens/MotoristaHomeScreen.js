@@ -7,6 +7,7 @@ import { getCorridaAtual, concluirCorrida, cancelarCorrida } from '../services/A
 import CaronaAtualMotorista from '../components/CaronaAtualMotorista';
 import Modal from 'react-native-modal';
 import ModalConfirmacao from '../components/ModalConfirmacao';
+import ModalAlert from '../components/ModalAlert';
 
 export default class MotoristaHomeScreen extends React.Component {
 
@@ -111,19 +112,12 @@ export default class MotoristaHomeScreen extends React.Component {
               {this.props.navigation.navigate('EditarCarona', {'carona':this.state.corrida, 'token': this.state.token})}}
           />
 
-          <Modal
-            isVisible={this.state.modalVisibility}
+          <ModalAlert
+            visibility={this.state.modalVisibility}
+            dismiss={() => this.setState({modalVisibility:false})}
           >
-            <View style={styles.modalContent}>
-              <Text>Você publicou uma carona com sucesso!</Text>
-              <Text>Você pode encerrar a carona após ter deixado os passageiros</Text>
-              <Button onPress={() => this.setState({modalVisibility:false})}
-                style={{backgroundColor:'#ffca28'}}
-              >
-                <Text>Ok</Text>
-              </Button>
-            </View>
-          </Modal>
+              Você publicou uma carona com sucesso!
+          </ModalAlert>
 
           <ModalConfirmacao
             visibility={this.state.cancelandoCarona}
@@ -155,19 +149,26 @@ export default class MotoristaHomeScreen extends React.Component {
   }
 
   _excluiCarona = async () => {
+    this.setState({loading:true});
     const result = await cancelarCorrida(this.state.token);
     if(result.status == 'success')
-      this.setState({corrida: null,cancelandoCarona:false});
-    else
+      this.setState({corrida: null,cancelandoCarona:false, loading:false});
+    else {
       alert('Não foi possível excluir a corrida');
+      this.setState({cancelandoCarona:false, loading:false});
+    }
+      
   }
 
   _concluiCarona = async () => {
+    this.setState({loading:true});
     const result = await concluirCorrida(this.state.token);
     if(result.status == 'success')
-      this.setState({corrida: null, concluindoCarona:false});
-    else
+      this.setState({corrida: null, concluindoCarona:false, loading:false});
+    else {
       alert('Não foi possível concluir a corrida');
+      this.setState({concluindoCarona:false, loading:false});
+    }
   }
 
 }

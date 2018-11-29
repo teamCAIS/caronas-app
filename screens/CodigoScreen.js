@@ -7,14 +7,14 @@ export default class CodigoScreen extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { codigoDigitado: '' }
+    this.state = { codigoDigitado: '', loading:false }
   }
 
   static navigationOptions = {
     title: 'Código de acesso',
-	headerStyle: {backgroundColor: '#263238', height:47.5,paddingBottom:20},
+	  headerStyle: {backgroundColor: '#263238', height:47.5,paddingBottom:20},
     headerTintColor: '#fff',
-	headerLeft:null
+	  headerLeft:null
   }
 
   render() {
@@ -38,14 +38,19 @@ export default class CodigoScreen extends React.Component {
   }
 
   _enviaCodigo = async () => {
+    this.setState({loading:true});
     const token = await AsyncStorage.getItem('userToken');
     const payload = {codigo_validacao: this.state.codigoDigitado}
     const result = await checarCodigo(token, payload);
 
-    if(result == "success")
+    if(result == "success") {
       this.props.navigation.navigate('CadastroFinal', { codigoValidacao: this.state.codigoDigitado });
-    else
+      return
+    }
+    else {
+      this.setState({loading:false});
       alert(result);
+    }
       
   }
 }
@@ -53,9 +58,9 @@ export default class CodigoScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     marginRight:17,
-	marginLeft:17,
-	padding:0,
-	flexDirection: 'column',
+    marginLeft:17,
+    padding:0,
+    flexDirection: 'column',
     backgroundColor: '#f5f5f6',
     alignItems: 'center',
     justifyContent: 'center',
