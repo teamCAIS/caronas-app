@@ -20,47 +20,16 @@ export default class PassageiroHomeScreen extends React.Component {
       loading: true, 
       refreshing:false,
       filterVisibility: false,
+      filtroGenero : 3, 
+      filtroSaida : '', 
+      filtroHora : '',
     }
-	this.props.navigation.setParams({abreFiltro: this._openFilter});
+	  this.props.navigation.setParams({abreFiltro: this._openFilter});
   }
   async componentDidMount() {
     
     const token = await AsyncStorage.getItem('userToken');
-    const res = await mostraFeed(token,{filtroGenero: 3, filtroSaida: '', filtroHora: ''});
-
-    if(res === 401) {
-      this.props.navigation.navigate('Auth');
-      return;
-    }
-
-    let avaliacao = false;
-    let caronaAtual = null;
-    if(res.length) {
-      if(res[0].avaliar) {
-        avaliacao = res.shift();
-        if(!res.length) {
-          this.setState({token, avaliacao, loading:false});
-          return;
-        }
-          
-      }
-  
-      if(res[0].atual) {
-        caronaAtual = res.shift();
-        if(!res.length) {
-          this.setState({token, caronaAtual, avaliacao, loading:false});
-          return;
-        }
-      }
-        
-      if(res != 'Falha na conexão')
-        this.setState({token, corridas: res, caronaAtual, avaliacao, loading:false});
-      else {
-        this.setState({token, loading:false});
-        alert('Houve um problema com a conexão');
-      }
-    }
-    this.setState({loading:false});
+    this._atualizaFeed(token);
       
   }
   
@@ -176,20 +145,89 @@ export default class PassageiroHomeScreen extends React.Component {
             </View>
           </Modal>
 			<Modal
-		isVisible={this.state.filterVisibility}
-		onBackdropPress={() => this._closeFilter()}
-		animationIn="slideInRight"
-		animationOut="slideOutRight"
-		>
-		<View style={styles.filterContent}>
+        isVisible={this.state.filterVisibility}
+        onBackdropPress={() => this._closeFilter()}
+        animationIn="slideInRight"
+        animationOut="slideOutRight"
+        >
+        <View style={styles.filterContent}>
 
-		  <Filtro />
-		  
-		</View>
+          <Filtro 
+            aplicaFiltro={this.aplicaFiltro}
+            removeFiltro={this.removeFiltro}
+            genero={this.state.filtroGenero}
+            onGeneroChange={this.onGeneroChange}
+            saida={this.state.filtroSaida}
+            onSaidaChange={this.onSaidaChange}
+            horario={this.state.filtroHora}
+            onHorarioChange={this.onHorarioChange}
+          />
+          
+        </View>
 
-		</Modal>
+      </Modal>
         </Content>
     );
+  }
+
+  aplicaFiltro = () => {
+    this.setState({filterVisibility:false,loading:true});
+    this._atualizaFeed(this.state.token, this.state.filtroGenero, this.state.filtroSaida, this.state.filtroHora);
+  }
+
+  removeFiltro = () => {
+    this.setState({filterVisibility:false,loading:true});
+    this._atualizaFeed(this.state.token);
+  }
+
+  onSaidaChange = (saida) => {
+    this.setState({filtroSaida:saida});
+  }
+
+  onHorarioChange = (horario) => {
+    this.setState({filtroHora:horario})
+  }
+
+  onGeneroChange = (genero) => {
+    this.setState({filtroGenero:genero});
+  }
+
+  _atualizaFeed = async (token, filtroGenero = 3, filtroSaida = '', filtroHora = '') => {
+    const res = await mostraFeed(token,{filtroGenero, filtroSaida , filtroHora});
+
+    if(res === 401) {
+      this.props.navigation.navigate('Auth');
+      return;
+    }
+
+    let avaliacao = false;
+    let caronaAtual = null;
+    if(res.length) {
+      if(res[0].avaliar) {
+        avaliacao = res.shift();
+        if(!res.length) {
+          this.setState({token, avaliacao, loading:false});
+          return;
+        }
+          
+      }
+  
+      if(res[0].atual) {
+        caronaAtual = res.shift();
+        if(!res.length) {
+          this.setState({token, caronaAtual, avaliacao, loading:false});
+          return;
+        }
+      }
+        
+      if(res != 'Falha na conexão')
+        this.setState({token, corridas: res, caronaAtual, avaliacao, loading:false});
+      else {
+        this.setState({token, loading:false});
+        alert('Houve um problema com a conexão');
+      }
+    }
+    this.setState({loading:false});
   }
 
   _openFilter = () => {

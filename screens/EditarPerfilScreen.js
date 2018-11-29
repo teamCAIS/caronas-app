@@ -123,6 +123,11 @@ export default class EditarPerfilScreen extends React.Component {
 	
 	_editarPerfil = async () => {
 
+		if(this.state.password != this.state.cpassword) {
+			alert('Verifique se a senha foi digitada corretamente');
+			return;
+		}
+
 		const payload = this.state;
 		const result = await editarPerfil(this.state.token, payload);
 
