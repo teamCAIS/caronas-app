@@ -283,17 +283,17 @@ export async function preCadastrar(infos) {
 
 export async function editarPerfil(token, infos) {
     let formData = new FormData();
-
-    formData.append('image', {uri:infos.fotoURL, name:infos.fotoNOME, type:infos.fotoTIPO});
-
+	if(infos.fotoURL!=""){
+		formData.append('image', {uri:infos.fotoURL, name:infos.fotoNOME, type:infos.fotoTIPO});
+	}
     formData.append('nome', infos.user.nome);
     formData.append('email', infos.user.email);
     formData.append('password', infos.password);
     formData.append('genero', infos.user.genero);
 
-    formData.append('modeloCarro', '');
-    formData.append('placaCarro', '');
-    formData.append('corCarro', '');
+    formData.append('modeloCarro', infos.modeloCarro);
+    formData.append('placaCarro', infos.placaCarro);
+    formData.append('corCarro', infos.corCarro);
     
 
     const response = await fetch(baseUrl+'/editarUsuario', {

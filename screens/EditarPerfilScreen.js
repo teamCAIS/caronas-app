@@ -17,6 +17,9 @@ export default class EditarPerfilScreen extends React.Component {
 			fotoNOME:'',
 			fotoTIPO:'',
 			token: '',
+			corCarro:'',
+			modeloCarro:'',
+			placaCarro:''
 		}
 	}
 	onValueChange(value) {
@@ -27,6 +30,11 @@ export default class EditarPerfilScreen extends React.Component {
 			}
 		});
 	  }
+	 onCorChange(value){
+		 this.setState({
+				corCarro:value
+		 });
+	 }
   static navigationOptions = ({ navigation }) => {
     return {
       title: 'Editar perfil',
@@ -43,7 +51,41 @@ export default class EditarPerfilScreen extends React.Component {
   render() {
 
 		let disabled = this.state.password == '' || this.state.cpassword == '';
-
+	let componentMotorista = null
+	if(this.state.user.tipo==2){
+		componentMotorista = (
+		<View>
+			<Item floatingLabel style={{borderColor:'#727272',backgroundColor:'#fff',marginTop:18,width:328,height:55}}>
+				  <Label style={{position:'relative',left:10,top:10,fontSize:14,color:'#727272'}}>Modelo do carro </Label>
+				  <Input value={this.state.modeloCarro} onChangeText={text => this.setState({modeloCarro: text})} />
+				</Item>
+				<Item style={{borderColor:'#727272',backgroundColor:'#fff',marginTop:18,width:328,height:55}}>
+				  <Picker
+				  note
+				  mode="dropdown"
+				  style={{ color:'#727272',right:15,width: 360,height:55, transform: [
+					 { scaleX: 0.90 }, 
+					 { scaleY: 0.90 },
+				  ]}}
+				  selectedValue={this.state.corCarro}
+				  onValueChange={this.onCorChange.bind(this)}
+				>
+				  <Picker.Item label="Cor do carro" value={null}/>
+				  <Picker.Item label="Preto" value="Preto" />
+				  <Picker.Item label="Branco" value="Branco" />
+				  <Picker.Item label="Prata" value="Prata" />
+				  <Picker.Item label="Vermelho" value="Vermelho" />
+				  <Picker.Item label="Azul" value="Azul" />
+				  <Picker.Item label="Amarelo" value="Amarelo" />
+				</Picker>
+				</Item>
+				<Item floatingLabel style={{borderColor:'#727272',backgroundColor:'#fff',marginTop:18,width:328,height:55}}>
+				  <Label style={{position:'relative',left:10,top:10,fontSize:14,color:'#727272'}}>Placa do carro </Label>
+				  <Input value={this.state.placaCarro} onChangeText={text => this.setState({placaCarro: text})} />
+				</Item>
+			</View>
+		);
+	}
     return (
       <Container style={{margin:0,backgroundColor:'#f5f5f6'}}>
 		<Content>
@@ -105,7 +147,7 @@ export default class EditarPerfilScreen extends React.Component {
 					  <Picker.Item label="Prefiro não especificar" value="2" />
 					</Picker>
 				</Item>
-
+				{componentMotorista}
 				<Item style={{marginTop:18,marginBottom:18}}>
 					<Button 
 						style={this.getEstadoBotao(disabled)}
