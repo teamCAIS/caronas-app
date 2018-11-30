@@ -46,15 +46,15 @@ export default class App extends React.Component {
 				  source={require('../assets/logo.png')}
 				/>
 			</Item>
-            <Item floatingLabel style={{borderColor:'#727272',backgroundColor:'#fff',marginTop:18,width:328,height:55}}>   
-			  <Label style={{position:'relative',left:10,top:10,fontSize:14,color:'#727272'}}>E-mail </Label>			
+            <Item stackedLabel style={{borderColor:'#727272',backgroundColor:'#fff',marginTop:18,width:328,height:55}}>   
+			  <Label style={{position:'relative',left:10,fontSize:14,color:'#727272'}}>E-mail </Label>			
               <Input textContentType="emailAddress" keyboardType="email-address" value={this.state.email} onChangeText={text => this.setState({email: text})} />
             </Item>
-            <Item floatingLabel style={{borderColor:'#727272',backgroundColor:'#fff',marginTop:18,width:328,height:55}}>
-              <Label style={{position:'relative',left:10,top:10,fontSize:14,color:'#727272'}}>Senha </Label>
+            <Item stackedLabel style={{borderColor:'#727272',backgroundColor:'#fff',marginTop:18,width:328,height:55}}>
+              <Label style={{position:'relative',left:10,fontSize:14,color:'#727272'}}>Senha </Label>
               <Input textContentType="password" secureTextEntry={this.state.ver} value={this.state.password} onChangeText={text => this.setState({password: text})} />
             </Item>
-			<Item style={{position:'absolute',borderColor:'transparent',marginTop:12,left:280,width:35,height:55}}>
+			<Item style={{position:'absolute',borderColor:'transparent',marginTop:-12,left:280,width:35,height:55}}>
 				<MaterialCommunityIcons name={this.state.nomeIcone}  size={32} onPress={() => this.onValueChange(this.state.ver)} style={{position:'absolute'}} color="#000"  />
 			</Item>
 			<Item style={{marginTop:25,width:157.5,height:40}}>
@@ -64,7 +64,7 @@ export default class App extends React.Component {
             style={{backgroundColor:'#ffca28',width:157.5,height:40,elevation:0, justifyContent:'space-evenly'}} 
             onPress={() => this._handleLoginPress(UserContainer.updateUser)}
           >
-            <Text uppercase={false} style={{color:'black',fontSize:18,textAlign:'center',width:150,height:25}}>Entrar</Text>
+            <Text uppercase={false} style={{color:'black',fontSize:20,textAlign:'center',width:150,height:27,top:-1,right:3}}>Entrar</Text>
           </Button>
         )}
         </Subscribe>
@@ -74,7 +74,7 @@ export default class App extends React.Component {
 					Esqueceu a senha?
 				</Text>
 			</Item>
-			<View style={{marginTop:80,width:130,borderColor:'transparent'}}>
+			<View style={{marginTop:65,width:130,borderColor:'transparent'}}>
 				<Text  style={{color: '#000',fontSize:14,width:130,textAlign:'center'}}>
           Ainda não é usuario?
         </Text>
@@ -152,8 +152,9 @@ const styles = StyleSheet.create({
 	flex:1,
 	marginTop:80,
 	marginRight:17,
-	marginLeft:17,
+	marginLeft:16.5,
 	padding:0,
+	paddingBottom:5,
 	flexDirection: 'column',
     backgroundColor: '#f5f5f6',
     alignItems: 'center',

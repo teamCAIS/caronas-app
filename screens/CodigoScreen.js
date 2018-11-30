@@ -22,7 +22,7 @@ export default class CodigoScreen extends React.Component {
 	<Container style={{margin:0,backgroundColor:'#f5f5f6'}}>
         <Content style={{margin:0,marginTop:182.5}}>
           <View style={styles.container}>
-			<Item style={{borderColor:'#727272',backgroundColor:'#fff',width:328,height:55}}>   
+			<Item stackedLabel style={{borderColor:'#727272',backgroundColor:'#fff',width:328,height:55}}>   
 			  <Label style={{position:'relative',left:10,fontSize:14,color:'#727272'}}>Código de acesso </Label>			
               <Input value={this.state.codigoDigitado} onChangeText={text => this.setState({codigoDigitado: text})}/>
             </Item>

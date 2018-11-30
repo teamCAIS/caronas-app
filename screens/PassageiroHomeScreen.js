@@ -81,7 +81,7 @@ export default class PassageiroHomeScreen extends React.Component {
     if(this.state.caronaAtual)
       caronaAtualComponent = (
         <View>
-          <Text style={{textAlign:"center",fontSize:14,fontWeight:'bold',marginBottom:2}}>Carona atual</Text>
+          <Text style={{textAlign:"center",fontSize:14,fontWeight:'bold',marginBottom:2,top:18}}>Carona atual</Text>
           <TouchableHighlight
             underlayColor='#eee9' 
             onPress={() => 
@@ -95,17 +95,17 @@ export default class PassageiroHomeScreen extends React.Component {
               corrida={this.state.caronaAtual}
             />
           </TouchableHighlight>
-          <Text style={{textAlign:"center",fontSize:14,fontWeight:'bold',marginBottom:2,marginTop:2}}>Caronas disponíveis</Text>
+          <Text style={{textAlign:"center",fontSize:14,fontWeight:'bold',marginBottom:2,marginTop:2,top:18}}>Caronas disponíveis</Text>
         </View>
       );
 
     return (
         <Content refreshControl={
-          <RefreshControl refreshing={this.state.refreshing} onRefresh={this._onRefresh}/>} style={{marginRight:8,marginLeft:8,marginTop:18,marginBottom:18}} >
+          <RefreshControl refreshing={this.state.refreshing} onRefresh={this._onRefresh}/>} style={{marginRight:8,marginLeft:8}} >
           <NavigationEvents 
             onWillFocus={payload => this._verificaCaronaAtual()}
           />
-
+			<View style={{paddingBottom:28}}>
           {caronaAtualComponent}
 
           {this.state.corridas.map((corrida, i) => (
@@ -166,6 +166,7 @@ export default class PassageiroHomeScreen extends React.Component {
         </View>
 
       </Modal>
+		</View>
         </Content>
     );
   }

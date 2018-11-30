@@ -7,7 +7,7 @@ export default class CardCarona extends React.Component {
 
   render() {
     return (
-          <Card>
+          <Card style={{top:18}}>
             <CardItem>
               <Body>
 				<View style={{flexDirection:'row'}}>

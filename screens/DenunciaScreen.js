@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, View, Image, AsyncStorage, TouchableHighlight, TouchableNativeFeedback } from 'react-native';
-import { MaterialIcons } from '@expo/vector-icons';
+import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { createStackNavigator } from 'react-navigation';
 import { Container, Content, Form, Button, Picker, Text, Input, Item, Label, Left, Body, Icon, List, ListItem, Thumbnail, Spinner } from 'native-base';
 import { postBuscaUsuario, denuncia } from '../services/ApiService';
@@ -87,11 +87,13 @@ class DenunciaScreen extends React.Component {
 
             
 
-            <Item style={{borderColor:'#727272',backgroundColor:'#fff',width:328,height:55,marginTop:16}}>
+            <Item stackedLabel style={{borderColor:'#727272',backgroundColor:'#fff',width:328,height:55,marginTop:16}}>
               <Label style={{position:'relative',left:18,fontSize:14,color:'#000'}}>Nome do usuário      </Label>
               <Input value={this.state.busca} onChangeText={text => {this._buscarUsuarios(text)}} />
-              <Icon size={14} style={{marginRight:6,color:'#727272',transform:[{ scaleX: 0.65 },{ scaleY: 0.65 }],}} name="search" />
             </Item>
+			<Item style={{position:'absolute',borderColor:'transparent',top:78,left:287,width:35,height:55}}>
+				<MaterialIcons name="search"  size={32}  style={{position:'absolute',transform:[{ scaleX: 0.50 },{ scaleY: 0.50 }],}} color="#727272"  />
+			</Item>
             <View>
 
               {lista}
@@ -110,8 +112,8 @@ class DenunciaScreen extends React.Component {
               </View>
             </View>
 
-            <Item floatingLabel style={{borderColor:'#727272',backgroundColor:'#fff',width:328,height:55,marginTop:16,height: Math.max(55, this.state.height)}}>
-              <Label style={{position:'relative',left:18,top:10,fontSize:14,color:'#000'}}>Relato do ocorrido      </Label>
+            <Item stackedLabel style={{borderColor:'#727272',backgroundColor:'#fff',width:328,height:55,marginTop:16,height: Math.max(55, this.state.height)}}>
+              <Label style={{position:'relative',left:18,fontSize:14,color:'#000'}}>Relato do ocorrido      </Label>
               <Input onContentSizeChange={(event) => {
             this.setState({ height: event.nativeEvent.contentSize.height })
 			}} style={{height: Math.max(55, this.state.height),paddingTop:10,paddingBottom:10}} multiline={true} value={this.state.comentario} onChangeText={text => this.setState({comentario: text})} />
@@ -258,6 +260,8 @@ const styles = StyleSheet.create({
     marginRight:17,
 	marginLeft:17,
 	padding:0,
+	paddingTop:10,
+	paddingBottom:20,
 	flexDirection: 'column',
     backgroundColor: '#f5f5f6',
     alignItems: 'center',

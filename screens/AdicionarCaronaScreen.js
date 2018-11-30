@@ -31,7 +31,7 @@ export default class AdicionarCaronaScreen extends React.Component {
 
     return (
       <Container style={{margin:0,backgroundColor:'#f5f5f6'}}>
-        <Content style={{margin:0,marginTop:18}}>
+        <Content style={{margin:0}}>
           <View style={styles.container}>
 			<Item style={{borderColor:'#727272',backgroundColor:'#fff',width:328,height:55}}>
 				<Picker
@@ -48,8 +48,8 @@ export default class AdicionarCaronaScreen extends React.Component {
 				  <Picker.Item label="Mister Hull" value="Mister Hull" />
 				</Picker>
 			</Item>
-			<Item floatingLabel style={{borderColor:'#727272',backgroundColor:'#fff',marginTop:18,width:328,height:55}}>   
-			  <Label style={{position:'relative',left:18,top:10,fontSize:14,color:'#000'}}>Ponto de Encontro     </Label>			
+			<Item stackedLabel style={{borderColor:'#727272',backgroundColor:'#fff',marginTop:18,width:328,height:55}}>   
+			  <Label style={{position:'relative',left:18,fontSize:14,color:'#000'}}>Ponto de Encontro     </Label>			
               <Input value={this.state.pontoEncontro} onChangeText={text => this.setState({pontoEncontro: text})} />
             </Item>
 			<Item style={{borderColor:'#727272',backgroundColor:'#fff',marginTop:18,width:328,height:55}}>
@@ -162,6 +162,8 @@ const styles = StyleSheet.create({
     marginRight:17,
 		marginLeft:17,
 		padding:0,
+		paddingTop:24,
+		paddingBottom:18,
 		flexDirection: 'column',
     backgroundColor: '#f5f5f6',
     alignItems: 'center',

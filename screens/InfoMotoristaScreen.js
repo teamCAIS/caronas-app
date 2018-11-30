@@ -25,7 +25,8 @@ export default class InfoMotoristaScreen extends React.Component {
       title: 'Informações de motorista',
       headerTitle: 'Informações de motorista',
       headerStyle: {backgroundColor: '#263238', height:47.5,paddingBottom:20},
-			headerTintColor: '#fff',
+	  headerTintColor: '#fff',
+	  headerLeft:null,
 		}
   }
 
@@ -38,8 +39,8 @@ export default class InfoMotoristaScreen extends React.Component {
           <View style={styles.container}>
 				<View style={{justifyContent:'center'}}>
 					<Text style={{fontWeight:'bold'}}>Como é a sua primeira vez mudando de perfil para motorista é necessário que você insira algumas informações para poder criar caronas:</Text>
-					<Item floatingLabel style={{borderColor:'#727272',backgroundColor:'#fff',marginTop:18,width:328,height:55}}>
-					  <Label style={{position:'relative',left:10,top:10,fontSize:14,color:'#727272'}}>Modelo do carro </Label>
+					<Item stackedLabel style={{borderColor:'#727272',backgroundColor:'#fff',marginTop:18,width:328,height:55}}>
+					  <Label style={{position:'relative',left:10,fontSize:14,color:'#727272'}}>Modelo do carro </Label>
 					  <Input value={this.state.modeloCarro} onChangeText={text => this.setState({modeloCarro: text})} />
 					</Item>
 					<Item style={{borderColor:'#727272',backgroundColor:'#fff',marginTop:18,width:328,height:55}}>
@@ -62,8 +63,8 @@ export default class InfoMotoristaScreen extends React.Component {
 					  <Picker.Item label="Amarelo" value="Amarelo" />
 					</Picker>
 					</Item>
-					<Item floatingLabel style={{borderColor:'#727272',backgroundColor:'#fff',marginTop:18,width:328,height:55}}>
-					  <Label style={{position:'relative',left:10,top:10,fontSize:14,color:'#727272'}}>Placa do carro </Label>
+					<Item stackedLabel style={{borderColor:'#727272',backgroundColor:'#fff',marginTop:18,width:328,height:55}}>
+					  <Label style={{position:'relative',left:10,fontSize:14,color:'#727272'}}>Placa do carro </Label>
 					  <Input value={this.state.placaCarro} onChangeText={text => this.setState({placaCarro: text})} />
 					</Item>
 					<Item style={{marginTop:27.5,borderColor:'transparent',width:328,justifyContent:'center'}}>
@@ -134,6 +135,7 @@ const styles = StyleSheet.create({
     marginRight:17,
 	marginLeft:17,
 	padding:0,
+	paddingBottom:18,
 	flexDirection: 'column',
     backgroundColor: '#f5f5f6',
     alignItems: 'center',

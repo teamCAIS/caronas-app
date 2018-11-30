@@ -29,7 +29,7 @@ class SobreScreen extends React.Component {
   render() {
     return (
       <Container style={{margin:0,backgroundColor:'#f5f5f6'}}>
-        <Content style={{margin:0,marginTop:18}}>
+        <Content style={{margin:0}}>
           <View style={styles.container}>
 			<Card>
             <CardItem>
@@ -86,6 +86,8 @@ const styles = StyleSheet.create({
 	marginRight:17,
 	marginLeft:17,
 	padding:0,
+	paddingTop:18,
+	paddingBottom:18,
 	flexDirection: 'column',
     backgroundColor: '#f5f5f6',
     alignItems: 'center',

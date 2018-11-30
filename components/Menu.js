@@ -20,7 +20,7 @@ export default class Menu extends React.Component {
       <Subscribe to={[UserContainer]}>
         {container => (<Content style={{ marginLeft: 16 }}>
           <View style={styles.menuHeader}>
-            <Text style={{fontSize: 20,fontWeight:'bold',marginTop:-15,color:colors.white}}>Menu</Text>
+            <Text style={{fontSize: 20,fontWeight:'bold',marginTop:-5,color:colors.white}}>Menu</Text>
             <Image
               style={styles.avatar}
               source={container.state.user.url_foto ? {uri:container.state.user.url_foto} : require('../assets/perfil.png')}
@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
     color:colors.white,
   },
   menuHeader: {
-    marginTop: 32,
+    marginTop: 10,
     marginBottom: 16,
   },
   icons: {

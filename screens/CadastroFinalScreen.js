@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, View, AsyncStorage, Image, TouchableHighlight } from 'react-native';
-import { Input, Container, Content, Item, Label, Button, Text, Picker } from 'native-base';
+import { Input, Container, Content, Item, Label, Button, Text, Picker,Spinner } from 'native-base';
 import { cadastroFinal } from '../services/ApiService';
 
 export default class CadastroFinalScreen extends React.Component {
@@ -43,9 +43,9 @@ export default class CadastroFinalScreen extends React.Component {
 	let isDisabled = !(this.state.modeloCarro && this.state.corCarro && this.state.placaCarro);
 	if(this.state.imagemMotorista){
 		infosMotorista = (
-			<View style={{justifyContent:'center'}}>
-				<Item floatingLabel style={{borderColor:'#727272',backgroundColor:'#fff',marginTop:18,width:328,height:55}}>
-				  <Label style={{position:'relative',left:10,top:10,fontSize:14,color:'#727272'}}>Modelo do carro </Label>
+			<View style={{justifyContent:'center',paddingBottom:18}}>
+				<Item stackedLabel style={{borderColor:'#727272',backgroundColor:'#fff',marginTop:18,width:328,height:55}}>
+				  <Label style={{position:'relative',left:10,fontSize:14,color:'#727272'}}>Modelo do carro </Label>
 				  <Input value={this.state.modeloCarro} onChangeText={text => this.setState({modeloCarro: text})} />
 				</Item>
 				<Item style={{borderColor:'#727272',backgroundColor:'#fff',marginTop:18,width:328,height:55}}>
@@ -68,8 +68,8 @@ export default class CadastroFinalScreen extends React.Component {
 				  <Picker.Item label="Amarelo" value="Amarelo" />
 				</Picker>
 				</Item>
-				<Item floatingLabel style={{borderColor:'#727272',backgroundColor:'#fff',marginTop:18,width:328,height:55}}>
-				  <Label style={{position:'relative',left:10,top:10,fontSize:14,color:'#727272'}}>Placa do carro </Label>
+				<Item stackedLabel style={{borderColor:'#727272',backgroundColor:'#fff',marginTop:18,width:328,height:55}}>
+				  <Label style={{position:'relative',left:10,fontSize:14,color:'#727272'}}>Placa do carro </Label>
 				  <Input value={this.state.placaCarro} onChangeText={text => this.setState({placaCarro: text})} />
 				</Item>
 				<Item style={{marginTop:27.5,borderColor:'transparent',width:328,justifyContent:'center'}}>
@@ -90,7 +90,7 @@ export default class CadastroFinalScreen extends React.Component {
 	}
     return (
 	<Container style={{margin:0,backgroundColor:'#f5f5f6'}}>
-        <Content style={{margin:0,marginTop:18}}>
+        <Content style={{margin:0}}>
           <View style={styles.container}>
 			<View style={{flexDirection:'row',justifyContent:'space-around'}}>
 				<View style={{marginRight:38}}>
@@ -220,6 +220,7 @@ const styles = StyleSheet.create({
     marginRight:17,
 	marginLeft:17,
 	padding:0,
+	paddingTop:18,
 	flexDirection: 'column',
     backgroundColor: '#f5f5f6',
     alignItems: 'center',

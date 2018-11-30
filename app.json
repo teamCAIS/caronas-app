@@ -6,16 +6,25 @@
     "privacy": "public",
     "sdkVersion": "31.0.0",
     "platforms": [
-      "ios",
       "android"
     ],
-    "version": "1.0.0",
+	"ios": {
+      "bundleIdentifier": "com.teamcais.smdcarpool"
+    },
+    "android": {
+      "package": "com.teamcais.smdcarpool",
+	  "permissions": [
+		  "MANAGE_DOCUMENTS",
+		  "READ_EXTERNAL_STORAGE",
+		  ],
+    },
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
       "image": "./assets/splash.png",
-      "resizeMode": "cover",
-      "backgroundColor": "#ffffff"
+      "resizeMode": "contain",
+      "backgroundColor": "#485b62"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -23,9 +32,6 @@
     "assetBundlePatterns": [
       "**/*"
     ],
-    "ios": {
-      "supportsTablet": true
-    },
     "androidStatusBar": {
       "backgroundColor": "#3f3f3f"
     }

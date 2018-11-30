@@ -65,8 +65,8 @@ export default class EditarPerfilScreen extends React.Component {
 	if(this.state.user.tipo==2){
 		componentMotorista = (
 		<View>
-			<Item floatingLabel style={{borderColor:'#727272',backgroundColor:'#fff',marginTop:18,width:328,height:55}}>
-				<Label style={{position:'relative',left:10,top:10,fontSize:14,color:'#727272'}}>Modelo do carro </Label>
+			<Item stackedLabel style={{borderColor:'#727272',backgroundColor:'#fff',marginTop:18,width:328,height:55}}>
+				<Label style={{position:'relative',left:10,fontSize:14,color:'#727272'}}>Modelo do carro </Label>
 				<Input value={this.state.user.modelo} 
 					onChangeText={text => this.setState({user:{...this.state.user,modelo: text}})} />
 			</Item>
@@ -92,8 +92,8 @@ export default class EditarPerfilScreen extends React.Component {
 				</Picker>
 			</Item>
 
-			<Item floatingLabel style={{borderColor:'#727272',backgroundColor:'#fff',marginTop:18,width:328,height:55}}>
-				<Label style={{position:'relative',left:10,top:10,fontSize:14,color:'#727272'}}>Placa do carro </Label>
+			<Item stackedLabel style={{borderColor:'#727272',backgroundColor:'#fff',marginTop:18,width:328,height:55}}>
+				<Label style={{position:'relative',left:10,fontSize:14,color:'#727272'}}>Placa do carro </Label>
 				<Input value={this.state.user.placa} 
 					onChangeText={text => this.setState({user:{...this.state.user,placa: text}})} />
 			</Item>
@@ -114,13 +114,13 @@ export default class EditarPerfilScreen extends React.Component {
 						<Text style={{marginTop:5,fontSize:14,fontWeight:'bold',textAlign:'center'}}>Alterar Foto</Text>
 					</Item>
 
-					<Item floatingLabel style={{borderColor:'#727272',backgroundColor:'#fff',marginTop:10,width:328,height:55}}>   
-						<Label style={{position:'relative',left:10,top:10,fontSize:14,color:'#727272'}}>Nome </Label>			
+					<Item stackedLabel style={{borderColor:'#727272',backgroundColor:'#fff',marginTop:10,width:328,height:55}}>   
+						<Label style={{position:'relative',left:10,fontSize:14,color:'#727272'}}>Nome </Label>			
 						<Input value={this.state.user.nome} onChangeText={text => this.setState({user: {...this.state.user,nome: text}})} />
 					</Item>
 
-					<Item floatingLabel style={{borderColor:'#727272',backgroundColor:'#fff',marginTop:18,width:328,height:55}}>   
-						<Label style={{position:'relative',left:10,top:10,fontSize:14,color:'#727272'}}>E-mail </Label>			
+					<Item stackedLabel style={{borderColor:'#727272',backgroundColor:'#fff',marginTop:18,width:328,height:55}}>   
+						<Label style={{position:'relative',left:10,fontSize:14,color:'#727272'}}>E-mail </Label>			
 						<Input 
 							textContentType="emailAddress" 
 							keyboardType="email-address" 
@@ -129,8 +129,8 @@ export default class EditarPerfilScreen extends React.Component {
 						/>
 					</Item>
 
-					<Item floatingLabel style={{borderColor:'#727272',backgroundColor:'#fff',marginTop:18,width:328,height:55}}>
-						<Label style={{position:'relative',left:10,top:10,fontSize:14,color:'#727272'}}>Senha </Label>
+					<Item stackedLabel style={{borderColor:'#727272',backgroundColor:'#fff',marginTop:18,width:328,height:55}}>
+						<Label style={{position:'relative',left:10,fontSize:14,color:'#727272'}}>Senha </Label>
 						<Input 
 							textContentType="password" 
 							secureTextEntry={true} 
@@ -139,8 +139,8 @@ export default class EditarPerfilScreen extends React.Component {
 						/>
 					</Item>
 
-					<Item floatingLabel style={{borderColor:'#727272',backgroundColor:'#fff',marginTop:18,width:328,height:55}}>
-						<Label style={{position:'relative',left:10,top:10,fontSize:14,color:'#727272'}}>Confirmar senha </Label>
+					<Item stackedLabel style={{borderColor:'#727272',backgroundColor:'#fff',marginTop:18,width:328,height:55}}>
+						<Label style={{position:'relative',left:10,fontSize:14,color:'#727272'}}>Confirmar senha </Label>
 						<Input textContentType="password" secureTextEntry={true} value={this.state.cpassword} onChangeText={text => this.setState({cpassword: text})} />
 					</Item>
 
@@ -258,6 +258,8 @@ const styles = StyleSheet.create({
 		marginLeft:18,
 		marginTop:18,
 		padding:0,
+		paddingTop:18,
+		paddingBottom:18,
 		flexDirection: 'column',
     backgroundColor: '#f5f5f6',
     alignItems: 'center',

@@ -61,14 +61,15 @@ class HistoricoView extends React.Component {
     let dias = [];
 
     return (
-      <Content style={{paddingRight:8,paddingLeft:8,marginTop:18,marginBottom:18}}>
+      <Content style={{paddingRight:8,paddingLeft:8}}>
+	  <View style={{paddingBottom:24}}>
         {this.state.lista.map((corrida, i) => {
 
           let dataText = null;
           const data = this._convertData(corrida.data);
           if(!dias.includes(data)) {
             dias.push(data);
-            dataText = (<Text style={{textAlign:'center'}}>Dia {data}</Text>);
+            dataText = (<Text style={{textAlign:'center',top:18}}>Dia {data}</Text>);
           }
           
           return (
@@ -84,6 +85,7 @@ class HistoricoView extends React.Component {
               </TouchableHighlight>
             </View>
           )})}
+		  </View>
       </Content>
     );
   }

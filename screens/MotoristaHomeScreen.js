@@ -92,7 +92,7 @@ export default class MotoristaHomeScreen extends React.Component {
             style={{alignSelf: "center", marginTop: 24,backgroundColor:'#ffca28',width:170,height:40,elevation:0}}
             title="Criar uma carona"
           >
-          <Text style={{color:'black',fontWeight:'bold'}}>Criar uma carona</Text>
+          <Text uppercase={false} style={{color:'black',fontWeight:'bold',fontSize:16,left:6}}>Criar uma carona</Text>
           </Button>
         </Content>
       

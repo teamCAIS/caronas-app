@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "expo": "^31.0.2",
+    "expo-cli": "^2.6.0",
     "git": "^0.1.5",
     "native-base": "^2.8.1",
     "react": "16.5.0",
